@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite --mode development",
     "dev:prod": "vite --mode production",
-    "build": "tsc -b && vite build --mode production",
     "build:dev": "tsc -b && vite build --mode development",
+    "build:prod": "tsc -b && vite build --mode production",
     "preview": "vite preview",
     "preview:prod": "vite preview --mode production"
   },
