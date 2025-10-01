@@ -1,0 +1,45 @@
+{
+  "name": "web3project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --mode development",
+    "dev:prod": "vite --mode production",
+    "build": "tsc -b && vite build --mode production",
+    "build:dev": "tsc -b && vite build --mode development",
+    "preview": "vite preview",
+    "preview:prod": "vite preview --mode production"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^6.1.0",
+    "@rainbow-me/rainbowkit": "^2.2.8",
+    "@reduxjs/toolkit": "^2.9.0",
+    "@tanstack/react-query": "^5.90.2",
+    "antd": "^5.27.4",
+    "axios": "^1.12.2",
+    "ethers": "^6.15.0",
+    "less": "^4.4.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.9.3",
+    "viem": "^2.37.9",
+    "wagmi": "^2.17.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.1",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.3",
+    "rollup-plugin-visualizer": "^6.0.3",
+    "typescript": "~5.8.3",
+    "vite": "npm:rolldown-vite@7.1.12",
+    "vite-plugin-imagemin": "^0.6.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "vite": "npm:rolldown-vite@7.1.12"
+    }
+  }
+}

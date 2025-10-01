@@ -1,0 +1,117 @@
+.walletPage {
+  .pageTitle {
+    margin-bottom: 24px;
+    color: #262626;
+  }
+  
+  .connectCard {
+    text-align: center;
+    padding: 60px 0;
+    
+    .connectContent {
+      .ant-typography {
+        margin-bottom: 16px;
+      }
+    }
+  }
+  
+  .assetCard {
+    .balanceSection {
+      text-align: center;
+      padding: 24px 0;
+      
+      .balanceLabel {
+        display: block;
+        font-size: 16px;
+        color: #8c8c8c;
+        margin-bottom: 8px;
+      }
+      
+      .balanceValue {
+        margin: 0 !important;
+        color: #1890ff;
+        font-size: 48px;
+        font-weight: bold;
+      }
+    }
+    
+    .addressSection {
+      margin-bottom: 24px;
+      
+      .addressContainer {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+        
+        .addressText {
+          flex: 1;
+          font-size: 14px;
+          word-break: break-all;
+        }
+      }
+    }
+    
+    .chainSection {
+      .chainInfo {
+        margin-top: 8px;
+      }
+    }
+  }
+  
+  .actionCard {
+    margin-bottom: 24px;
+  }
+  
+  .networkCard {
+    .networkInfo {
+      .networkItem {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid #f0f0f0;
+        
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .walletPage {
+    .assetCard {
+      .balanceSection {
+        .balanceValue {
+          font-size: 36px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .walletPage {
+    .assetCard {
+      .balanceSection {
+        .balanceValue {
+          font-size: 28px;
+        }
+      }
+      
+      .addressSection {
+        .addressContainer {
+          flex-direction: column;
+          align-items: flex-start;
+          
+          .addressText {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}

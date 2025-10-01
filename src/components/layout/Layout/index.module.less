@@ -1,0 +1,50 @@
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  margin-top: 64px; // Header 高度
+  background: #f5f5f5;
+  min-height: calc(100vh - 64px);
+}
+
+.contentWrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px;
+  min-height: calc(100vh - 64px - 200px); // 减去 header 和 footer 高度
+}
+
+// 响应式设计
+@media (max-width: 1200px) {
+  .contentWrapper {
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contentWrapper {
+    padding: 16px 12px; // 移动端内容边距
+  }
+  
+  .layout {
+    .content {
+      margin-top: 64px; // Adjust for fixed header on mobile
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .contentWrapper {
+    padding: 12px 8px; // 小屏幕内容边距
+  }
+}
+
+@media (max-width: 480px) {
+  .contentWrapper {
+    padding: 8px 6px; // 超小屏幕内容边距
+  }
+}

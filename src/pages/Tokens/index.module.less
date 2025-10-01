@@ -1,0 +1,57 @@
+.tokensPage {
+  .pageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .pageTitle {
+    margin: 0 !important;
+    color: #262626;
+  }
+  
+  .tokensCard {
+    .tokensTable {
+      .tokenInfo {
+        .tokenSymbol {
+          font-weight: bold;
+          font-size: 16px;
+          color: #262626;
+        }
+        
+        .tokenName {
+          font-size: 12px;
+          color: #8c8c8c;
+          margin-top: 2px;
+        }
+      }
+      
+      .balance {
+        font-weight: 500;
+        color: #262626;
+      }
+      
+      .value {
+        font-weight: 500;
+        color: #1890ff;
+      }
+      
+      .changeTag {
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .tokensPage {
+    .pageHeader {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+}
