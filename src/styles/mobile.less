@@ -6,6 +6,7 @@
   .ant-layout-content {
     padding: 0 8px; // 移动端内容边距
   }
+
   // 增加触摸目标大小
   .ant-btn {
     min-height: 44px;
@@ -99,6 +100,38 @@
       font-size: 14px;
     }
   }
+
+  // 横屏优化
+  .ant-drawer {
+    .ant-drawer-content {
+      height: 100vh;
+    }
+  }
+
+  // 防止移动端缩放
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+  
+  body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  // 允许输入框选择文本
+  input,
+  textarea {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
 }
 
 // 超小屏幕优化
@@ -145,41 +178,5 @@
   .ant-col {
     padding-left: 4px;
     padding-right: 4px;
-  }
-}
-
-// 横屏优化
-@media (max-width: 768px) and (orientation: landscape) {
-  .ant-drawer {
-    .ant-drawer-content {
-      height: 100vh;
-    }
-  }
-}
-
-// 防止移动端缩放
-@media (max-width: 768px) {
-  html {
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-  }
-  
-  body {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-  
-  // 允许输入框选择文本
-  input,
-  textarea {
-    -webkit-user-select: text;
-    -khtml-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
   }
 }

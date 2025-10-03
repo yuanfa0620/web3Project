@@ -22,65 +22,9 @@
       margin-left: auto;
       margin-right: auto;
     }
-  }
-  
-  .statsSection {
-    margin-bottom: 64px;
-    
-    .sectionTitle {
-      text-align: center;
-      margin-bottom: 32px;
-      color: #262626;
-    }
-  }
-  
-  .statCard {
-    text-align: center;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    
-    &:hover {
-      transform: translateY(-4px);
-    }
-    
-    .statIcon {
-      font-size: 24px;
-      margin-right: 8px;
-    }
-  }
-  
-  .featuresSection {
-    .sectionTitle {
-      text-align: center;
-      margin-bottom: 32px;
-      color: #262626;
-    }
-  }
-  
-  .featureCard {
-    text-align: center;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    height: 100%;
-    
-    &:hover {
-      transform: translateY(-4px);
-    }
-    
-    .featureIcon {
-      font-size: 48px;
-      color: #1890ff;
-      margin-bottom: 16px;
-    }
-  }
-}
 
-// 响应式设计
-@media (max-width: 768px) {
-  .homePage {
-    .hero {
+    // 响应式设计
+    @media (max-width: 768px) {
       padding: 60px 0;
       margin: -16px -16px 32px;
       
@@ -92,16 +36,8 @@
         font-size: 16px;
       }
     }
-    
-    .statsSection {
-      margin-bottom: 48px;
-    }
-  }
-}
 
-@media (max-width: 576px) {
-  .homePage {
-    .hero {
+    @media (max-width: 576px) {
       padding: 40px 0;
       margin: -12px -12px 24px;
       
@@ -113,29 +49,8 @@
         font-size: 14px;
       }
     }
-    
-    .statsSection {
-      .statCard {
-        .balanceValue {
-          font-size: 24px;
-        }
-      }
-    }
-    
-    .featuresSection {
-      .featureCard {
-        .featureIcon {
-          font-size: 36px;
-        }
-      }
-    }
-  }
-}
 
-// 移动端特殊优化
-@media (max-width: 480px) {
-  .homePage {
-    .hero {
+    @media (max-width: 480px) {
       padding: 30px 0;
       margin: -8px -8px 20px;
       
@@ -149,13 +64,77 @@
         margin-bottom: 24px;
       }
     }
+  }
+  
+  .statsSection {
+    margin-bottom: 64px;
     
-    .statsSection {
+    .sectionTitle {
+      text-align: center;
       margin-bottom: 32px;
+      color: #262626;
+    }
+
+    .statCard {
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
       
-      .statCard {
-        .balanceValue {
+      &:hover {
+        transform: translateY(-4px);
+      }
+      
+      .statIcon {
+        font-size: 24px;
+        margin-right: 8px;
+      }
+
+      .balanceValue {
+        @media (max-width: 576px) {
+          font-size: 24px;
+        }
+
+        @media (max-width: 480px) {
           font-size: 20px;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 480px) {
+      margin-bottom: 32px;
+    }
+  }
+  
+  .featuresSection {
+    .sectionTitle {
+      text-align: center;
+      margin-bottom: 32px;
+      color: #262626;
+    }
+
+    .featureCard {
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      height: 100%;
+      
+      &:hover {
+        transform: translateY(-4px);
+      }
+      
+      .featureIcon {
+        font-size: 48px;
+        color: #1890ff;
+        margin-bottom: 16px;
+
+        @media (max-width: 576px) {
+          font-size: 36px;
         }
       }
     }

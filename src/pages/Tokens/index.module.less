@@ -6,6 +6,11 @@
     margin-bottom: 24px;
     flex-wrap: wrap;
     gap: 16px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
   
   .pageTitle {
@@ -42,16 +47,6 @@
       .changeTag {
         font-weight: 500;
       }
-    }
-  }
-}
-
-// 响应式设计
-@media (max-width: 768px) {
-  .tokensPage {
-    .pageHeader {
-      flex-direction: column;
-      align-items: flex-start;
     }
   }
 }
