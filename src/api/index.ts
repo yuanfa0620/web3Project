@@ -1,56 +1,41 @@
 // API 服务统一导出
 export { default as apiService } from './request'
-export * from './data/types'
-import { userApiService, tokenApiService, transactionApiService } from './request'
 
-// 用户相关 API
-export const userApi = {
-  // 获取用户信息
-  getUserInfo: (address: string) => userApiService.get(`/info/${address}`),
-  
-  // 更新用户信息
-  updateUserInfo: (data: { nickname?: string; avatar?: string }) => 
-    userApiService.put('/info', data),
-  
-  // 获取用户交易记录
-  getUserTransactions: (address: string, params?: { page?: number; limit?: number }) =>
-    userApiService.get(`/transactions/${address}`, params),
-}
+// 导出基础类型定义
+export type { ApiResponse, ApiError, RequestConfig, AxiosInstanceConfig } from './data/types'
 
-// 代币相关 API
-export const tokenApi = {
-  // 获取代币列表
-  getTokenList: (params?: { chainId?: number; page?: number; limit?: number }) =>
-    tokenApiService.get('/list', params),
-  
-  // 获取代币详情
-  getTokenDetail: (address: string, chainId: number) =>
-    tokenApiService.get(`/detail/${address}`, { chainId }),
-  
-  // 搜索代币
-  searchTokens: (keyword: string, chainId?: number) =>
-    tokenApiService.get('/search', { keyword, chainId }),
-}
+// 导出分类的API服务
+export { userApi } from './user'
+export { tokenApi } from './token'
+export { transactionApi } from './transaction'
 
-// 交易相关 API
-export const transactionApi = {
-  // 获取交易详情
-  getTransactionDetail: (hash: string) =>
-    transactionApiService.get(`/detail/${hash}`),
-  
-  // 获取交易列表
-  getTransactionList: (params?: { 
-    address?: string; 
-    page?: number; 
-    limit?: number;
-    status?: 'pending' | 'success' | 'failed';
-  }) => transactionApiService.get('/list', params),
-  
-  // 提交交易
-  submitTransaction: (data: {
-    to: string;
-    value: string;
-    data?: string;
-    gasLimit?: string;
-  }) => transactionApiService.post('/submit', data),
-}
+// 导出所有类型定义（使用别名避免冲突）
+export type { 
+  UserInfo as UserInfoClass,
+  UserTransaction,
+  UserTransactionList,
+  GetUserInfoParams,
+  UpdateUserInfoParams,
+  GetUserTransactionsParams
+} from './user/types'
+
+export type {
+  TokenInfo as TokenInfoClass,
+  TokenList,
+  TokenSearchResult,
+  GetTokenListParams,
+  GetTokenDetailParams,
+  SearchTokensParams
+} from './token/types'
+
+export type {
+  TransactionInfo as TransactionInfoClass,
+  TransactionList,
+  TransactionLog,
+  GetTransactionDetailParams,
+  GetTransactionListParams,
+  SubmitTransactionParams
+} from './transaction/types'
+
+// 为了向后兼容，保留原有的API实例导出
+export { userApiService, tokenApiService, transactionApiService } from './request'
