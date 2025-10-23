@@ -1,0 +1,223 @@
+{
+  "common": {
+    "loading": "載入中...",
+    "error": "錯誤",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "確認",
+    "save": "儲存",
+    "edit": "編輯",
+    "delete": "刪除",
+    "search": "搜尋",
+    "filter": "篩選",
+    "refresh": "重新整理",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "close": "關閉",
+    "open": "開啟",
+    "view": "檢視",
+    "details": "詳情",
+    "settings": "設定",
+    "help": "說明",
+    "about": "關於"
+  },
+  "navigation": {
+    "home": "首頁",
+    "wallet": "錢包",
+    "tokens": "代幣",
+    "nfts": "NFT",
+    "defi": "DeFi",
+    "swap": "交換",
+    "staking": "質押",
+    "governance": "治理",
+    "analytics": "分析",
+    "settings": "設定"
+  },
+  "pageTitle": {
+    "home": "Web3 Project",
+    "wallet": "錢包",
+    "tokens": "代幣",
+    "nfts": "NFT",
+    "defi": "DeFi",
+    "swap": "交換",
+    "staking": "質押",
+    "governance": "治理",
+    "analytics": "分析",
+    "settings": "設定",
+    "notFound": "頁面未找到"
+  },
+  "home": {
+    "title": "歡迎使用 Web3",
+    "description": "專業的區塊鏈管理平台，提供錢包管理、代幣交易、NFT 收藏等一站式服務。",
+    "connectWallet": "連接錢包",
+    "learnMore": "了解更多",
+    "assetOverview": "資產概覽",
+    "mainFeatures": "主要功能",
+    "walletManagement": {
+      "title": "錢包管理",
+      "description": "安全可靠的多鏈錢包管理，支援主流區塊鏈網路，輕鬆管理您的數位資產。"
+    },
+    "tokenTrading": {
+      "title": "代幣交易",
+      "description": "便捷的代幣交易功能，支援多種交易對，即時價格更新，交易更高效。"
+    },
+    "nftCollection": {
+      "title": "NFT 收藏",
+      "description": "展示和管理您的 NFT 收藏，支援多種 NFT 標準，收藏更有序。"
+    }
+  },
+  "wallet": {
+    "title": "錢包管理",
+    "connectWallet": "連接錢包",
+    "connectWalletDescription": "請先連接您的錢包以查看資產信息",
+    "disconnect": "斷開連接",
+    "balance": "餘額",
+    "totalBalance": "總餘額",
+    "address": "錢包地址",
+    "currentNetwork": "當前網路",
+    "network": "網路",
+    "transactions": "交易記錄",
+    "send": "發送",
+    "receive": "收款碼",
+    "swap": "兌換",
+    "assetOverview": "資產概覽",
+    "quickActions": "快速操作",
+    "networkInfo": "網路信息",
+    "networkStatus": "網路狀態",
+    "connected": "已連接",
+    "blockHeight": "區塊高度",
+    "gasPrice": "Gas 價格"
+  },
+  "tokens": {
+    "title": "代幣管理",
+    "tokenList": "代幣",
+    "searchTokens": "搜尋代幣",
+    "price": "價值",
+    "marketCap": "市值",
+    "volume24h": "24小時交易量",
+    "priceChange24h": "24h 變化",
+    "addToken": "新增代幣",
+    "removeToken": "移除代幣"
+  },
+  "nfts": {
+    "title": "NFT 收藏",
+    "myCollection": "我的收藏",
+    "explore": "探索",
+    "create": "建立",
+    "name": "名稱",
+    "description": "描述",
+    "image": "圖片",
+    "attributes": "屬性",
+    "noCollections": "暫無 NFT 收藏",
+    "addNFT": "新增 NFT"
+  },
+  "defi": {
+    "title": "DeFi 協議",
+    "lending": "借貸",
+    "farming": "挖礦",
+    "staking": "質押",
+    "yield": "收益",
+    "apy": "年化收益率",
+    "tvl": "總鎖定價值",
+    "noProtocols": "暫無 DeFi 協議",
+    "addProtocol": "新增協議"
+  },
+  "swap": {
+    "title": "代幣兌換",
+    "from": "從",
+    "to": "到",
+    "amount": "數量",
+    "price": "價格",
+    "slippage": "滑點",
+    "gasFee": "Gas 費用",
+    "swap": "交換",
+    "approve": "授權",
+    "developing": "兌換功能開發中",
+    "startSwap": "開始兌換"
+  },
+  "staking": {
+    "title": "質押挖礦",
+    "stake": "質押",
+    "unstake": "解質押",
+    "rewards": "獎勵",
+    "apy": "年化收益率",
+    "lockPeriod": "鎖定期",
+    "claim": "領取獎勵",
+    "developing": "質押功能開發中",
+    "startStaking": "開始質押"
+  },
+  "governance": {
+    "title": "治理投票",
+    "proposals": "提案",
+    "vote": "投票",
+    "delegate": "委託",
+    "votingPower": "投票權",
+    "quorum": "法定人數",
+    "status": "狀態",
+    "developing": "治理功能開發中",
+    "participate": "參與治理"
+  },
+  "analytics": {
+    "title": "數據分析",
+    "overview": "概覽",
+    "charts": "圖表",
+    "trends": "趨勢",
+    "statistics": "統計",
+    "reports": "報告",
+    "developing": "分析功能開發中",
+    "viewAnalytics": "查看分析"
+  },
+  "settings": {
+    "title": "系統設定",
+    "general": "一般",
+    "security": "安全",
+    "privacy": "隱私",
+    "notifications": "通知",
+    "language": "語言",
+    "theme": "主題",
+    "network": "網路",
+    "about": "關於",
+    "developing": "設定功能開發中",
+    "openSettings": "開啟設定"
+  },
+  "language": {
+    "title": "語言設定",
+    "current": "目前語言",
+    "select": "選擇語言",
+    "zhCN": "簡體中文",
+    "zhTW": "繁體中文",
+    "enUS": "English"
+  },
+  "error": {
+    "pageNotFound": "頁面未找到",
+    "networkError": "網路錯誤",
+    "walletNotConnected": "錢包未連接",
+    "transactionFailed": "交易失敗",
+    "insufficientBalance": "餘額不足",
+    "invalidAddress": "無效地址",
+    "unknownError": "未知錯誤"
+  },
+  "notFound": {
+    "description": "抱歉，您訪問的頁面不存在。",
+    "backHome": "返回首頁"
+  },
+  "footer": {
+    "description": "專業的區塊鏈管理平台，提供錢包管理、代幣交易、NFT 收藏等一站式服務。",
+    "products": "產品",
+    "walletManagement": "錢包管理",
+    "tokenTrading": "代幣交易",
+    "nftCollection": "NFT 收藏",
+    "defiProtocols": "DeFi 協議",
+    "support": "支援",
+    "helpCenter": "幫助中心",
+    "documentation": "文檔",
+    "contactUs": "聯繫我們",
+    "statusPage": "狀態頁面",
+    "community": "社區",
+    "copyright": "© 2024 Web3. All rights reserved.",
+    "privacyPolicy": "隱私政策",
+    "termsOfService": "服務條款",
+    "cookiePolicy": "Cookie 政策"
+  }
+}

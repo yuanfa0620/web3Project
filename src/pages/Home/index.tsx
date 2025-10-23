@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card, Row, Col, Statistic, Typography, Button, Space } from 'antd'
 import { WalletOutlined, SwapOutlined, TrophyOutlined, RiseOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 import homeStats from 'mock/homeStats.json'
 import { useWallet } from '@/hooks/useWallet'
 import { PageTitle } from '@/components/PageTitle'
@@ -9,6 +10,7 @@ import styles from './index.module.less'
 const { Title, Paragraph } = Typography
 
 const HomePage: React.FC = () => {
+  const { t } = useTranslation()
   const { isConnected, address, balance } = useWallet()
 
   const iconMap: Record<string, React.ReactNode> = {
@@ -26,22 +28,22 @@ const HomePage: React.FC = () => {
   }))
 
   return (
-    <PageTitle title="Web3 Project">
+    <PageTitle title={t('pageTitle.home')}>
       <div className={styles.homePage}>
         <div className={styles.hero}>
           <Title level={1} className={styles.heroTitle}>
-            欢迎使用 Web3
+            {t('home.title')}
           </Title>
           <Paragraph className={styles.heroDescription}>
-            专业的区块链管理平台，提供钱包管理、代币交易、NFT 收藏等一站式服务。
+            {t('home.description')}
           </Paragraph>
           {!isConnected && (
             <Space size="large">
               <Button type="primary" size="large">
-                连接钱包
+                {t('home.connectWallet')}
               </Button>
               <Button size="large">
-                了解更多
+                {t('home.learnMore')}
               </Button>
             </Space>
           )}
@@ -49,7 +51,7 @@ const HomePage: React.FC = () => {
 
         <div className={styles.statsSection}>
           <Title level={2} className={styles.sectionTitle}>
-            资产概览
+            {t('home.assetOverview')}
           </Title>
           <Row gutter={[24, 24]}>
             {stats.map((stat, index) => (
@@ -76,7 +78,7 @@ const HomePage: React.FC = () => {
 
         <div className={styles.featuresSection}>
           <Title level={2} className={styles.sectionTitle}>
-            主要功能
+            {t('home.mainFeatures')}
           </Title>
           <Row gutter={[24, 24]}>
             <Col xs={24} md={8}>
@@ -84,9 +86,9 @@ const HomePage: React.FC = () => {
                 <div className={styles.featureIcon}>
                   <WalletOutlined />
                 </div>
-                <Title level={4}>钱包管理</Title>
+                <Title level={4}>{t('home.walletManagement.title')}</Title>
                 <Paragraph>
-                  安全可靠的多链钱包管理，支持主流区块链网络，轻松管理您的数字资产。
+                  {t('home.walletManagement.description')}
                 </Paragraph>
               </Card>
             </Col>
@@ -95,9 +97,9 @@ const HomePage: React.FC = () => {
                 <div className={styles.featureIcon}>
                   <SwapOutlined />
                 </div>
-                <Title level={4}>代币交易</Title>
+                <Title level={4}>{t('home.tokenTrading.title')}</Title>
                 <Paragraph>
-                  便捷的代币交易功能，支持多种交易对，实时价格更新，交易更高效。
+                  {t('home.tokenTrading.description')}
                 </Paragraph>
               </Card>
             </Col>
@@ -106,9 +108,9 @@ const HomePage: React.FC = () => {
                 <div className={styles.featureIcon}>
                   <TrophyOutlined />
                 </div>
-                <Title level={4}>NFT 收藏</Title>
+                <Title level={4}>{t('home.nftCollection.title')}</Title>
                 <Paragraph>
-                  展示和管理您的 NFT 收藏，支持多种 NFT 标准，收藏更有序。
+                  {t('home.nftCollection.description')}
                 </Paragraph>
               </Card>
             </Col>

@@ -1,0 +1,223 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "确认",
+    "save": "保存",
+    "edit": "编辑",
+    "delete": "删除",
+    "search": "搜索",
+    "filter": "筛选",
+    "refresh": "刷新",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "close": "关闭",
+    "open": "打开",
+    "view": "查看",
+    "details": "详情",
+    "settings": "设置",
+    "help": "帮助",
+    "about": "关于"
+  },
+  "navigation": {
+    "home": "首页",
+    "wallet": "钱包",
+    "tokens": "代币",
+    "nfts": "NFT",
+    "defi": "DeFi",
+    "swap": "交换",
+    "staking": "质押",
+    "governance": "治理",
+    "analytics": "分析",
+    "settings": "设置"
+  },
+  "pageTitle": {
+    "home": "Web3 Project",
+    "wallet": "钱包",
+    "tokens": "代币",
+    "nfts": "NFT",
+    "defi": "DeFi",
+    "swap": "交换",
+    "staking": "质押",
+    "governance": "治理",
+    "analytics": "分析",
+    "settings": "设置",
+    "notFound": "页面未找到"
+  },
+  "home": {
+    "title": "欢迎使用 Web3",
+    "description": "专业的区块链管理平台，提供钱包管理、代币交易、NFT 收藏等一站式服务。",
+    "connectWallet": "连接钱包",
+    "learnMore": "了解更多",
+    "assetOverview": "资产概览",
+    "mainFeatures": "主要功能",
+    "walletManagement": {
+      "title": "钱包管理",
+      "description": "安全可靠的多链钱包管理，支持主流区块链网络，轻松管理您的数字资产。"
+    },
+    "tokenTrading": {
+      "title": "代币交易",
+      "description": "便捷的代币交易功能，支持多种交易对，实时价格更新，交易更高效。"
+    },
+    "nftCollection": {
+      "title": "NFT 收藏",
+      "description": "展示和管理您的 NFT 收藏，支持多种 NFT 标准，收藏更有序。"
+    }
+  },
+  "wallet": {
+    "title": "钱包管理",
+    "connectWallet": "连接钱包",
+    "connectWalletDescription": "请先连接您的钱包以查看资产信息",
+    "disconnect": "断开连接",
+    "balance": "余额",
+    "totalBalance": "总余额",
+    "address": "钱包地址",
+    "currentNetwork": "当前网络",
+    "network": "网络",
+    "transactions": "交易记录",
+    "send": "发送",
+    "receive": "收款码",
+    "swap": "兑换",
+    "assetOverview": "资产概览",
+    "quickActions": "快速操作",
+    "networkInfo": "网络信息",
+    "networkStatus": "网络状态",
+    "connected": "已连接",
+    "blockHeight": "区块高度",
+    "gasPrice": "Gas 价格"
+  },
+  "tokens": {
+    "title": "代币管理",
+    "tokenList": "代币",
+    "searchTokens": "搜索代币",
+    "price": "价值",
+    "marketCap": "市值",
+    "volume24h": "24小时交易量",
+    "priceChange24h": "24h 变化",
+    "addToken": "添加代币",
+    "removeToken": "移除代币"
+  },
+  "nfts": {
+    "title": "NFT 收藏",
+    "myCollection": "我的收藏",
+    "explore": "探索",
+    "create": "创建",
+    "name": "名称",
+    "description": "描述",
+    "image": "图片",
+    "attributes": "属性",
+    "noCollections": "暂无 NFT 收藏",
+    "addNFT": "添加 NFT"
+  },
+  "defi": {
+    "title": "DeFi 协议",
+    "lending": "借贷",
+    "farming": "挖矿",
+    "staking": "质押",
+    "yield": "收益",
+    "apy": "年化收益率",
+    "tvl": "总锁定价值",
+    "noProtocols": "暂无 DeFi 协议",
+    "addProtocol": "添加协议"
+  },
+  "swap": {
+    "title": "代币兑换",
+    "from": "从",
+    "to": "到",
+    "amount": "数量",
+    "price": "价格",
+    "slippage": "滑点",
+    "gasFee": "Gas 费用",
+    "swap": "交换",
+    "approve": "授权",
+    "developing": "兑换功能开发中",
+    "startSwap": "开始兑换"
+  },
+  "staking": {
+    "title": "质押挖矿",
+    "stake": "质押",
+    "unstake": "解质押",
+    "rewards": "奖励",
+    "apy": "年化收益率",
+    "lockPeriod": "锁定期",
+    "claim": "领取奖励",
+    "developing": "质押功能开发中",
+    "startStaking": "开始质押"
+  },
+  "governance": {
+    "title": "治理投票",
+    "proposals": "提案",
+    "vote": "投票",
+    "delegate": "委托",
+    "votingPower": "投票权",
+    "quorum": "法定人数",
+    "status": "状态",
+    "developing": "治理功能开发中",
+    "participate": "参与治理"
+  },
+  "analytics": {
+    "title": "数据分析",
+    "overview": "概览",
+    "charts": "图表",
+    "trends": "趋势",
+    "statistics": "统计",
+    "reports": "报告",
+    "developing": "分析功能开发中",
+    "viewAnalytics": "查看分析"
+  },
+  "settings": {
+    "title": "系统设置",
+    "general": "常规",
+    "security": "安全",
+    "privacy": "隐私",
+    "notifications": "通知",
+    "language": "语言",
+    "theme": "主题",
+    "network": "网络",
+    "about": "关于",
+    "developing": "设置功能开发中",
+    "openSettings": "打开设置"
+  },
+  "language": {
+    "title": "语言设置",
+    "current": "当前语言",
+    "select": "选择语言",
+    "zhCN": "简体中文",
+    "zhTW": "繁體中文",
+    "enUS": "English"
+  },
+  "error": {
+    "pageNotFound": "页面未找到",
+    "networkError": "网络错误",
+    "walletNotConnected": "钱包未连接",
+    "transactionFailed": "交易失败",
+    "insufficientBalance": "余额不足",
+    "invalidAddress": "无效地址",
+    "unknownError": "未知错误"
+  },
+  "notFound": {
+    "description": "抱歉，您访问的页面不存在。",
+    "backHome": "返回首页"
+  },
+  "footer": {
+    "description": "专业的区块链管理平台，提供钱包管理、代币交易、NFT 收藏等一站式服务。",
+    "products": "产品",
+    "walletManagement": "钱包管理",
+    "tokenTrading": "代币交易",
+    "nftCollection": "NFT 收藏",
+    "defiProtocols": "DeFi 协议",
+    "support": "支持",
+    "helpCenter": "帮助中心",
+    "documentation": "文档",
+    "contactUs": "联系我们",
+    "statusPage": "状态页面",
+    "community": "社区",
+    "copyright": "© 2024 Web3. All rights reserved.",
+    "privacyPolicy": "隐私政策",
+    "termsOfService": "服务条款",
+    "cookiePolicy": "Cookie 政策"
+  }
+}

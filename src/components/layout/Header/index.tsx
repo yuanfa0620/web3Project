@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Layout, Menu, Button, Space, Typography, Drawer } from 'antd'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { 
   WalletOutlined, 
   HomeOutlined, 
@@ -11,68 +12,71 @@ import {
   MenuOutlined,
   CloseOutlined
 } from '@ant-design/icons'
+import { LanguageSelector } from '@/components/LanguageSelector'
 import styles from './index.module.less'
 
 const { Header: AntHeader } = Layout
 const { Title } = Typography
 
-const menuItems = [
-  {
-    key: '/',
-    icon: <HomeOutlined />,
-    label: '首页',
-  },
-  {
-    key: '/wallet',
-    icon: <WalletOutlined />,
-    label: '钱包',
-  },
-  {
-    key: '/tokens',
-    icon: <SwapOutlined />,
-    label: '代币',
-  },
-  {
-    key: '/nfts',
-    icon: <TrophyOutlined />,
-    label: 'NFT',
-  },
-  {
-    key: '/defi',
-    icon: <SwapOutlined />,
-    label: 'DeFi',
-  },
-  {
-    key: '/swap',
-    icon: <SwapOutlined />,
-    label: '交易',
-  },
-  {
-    key: '/staking',
-    icon: <TrophyOutlined />,
-    label: '质押',
-  },
-  {
-    key: '/governance',
-    icon: <TrophyOutlined />,
-    label: '治理',
-  },
-  {
-    key: '/analytics',
-    icon: <TrophyOutlined />,
-    label: '分析',
-  },
-  {
-    key: '/settings',
-    icon: <SettingOutlined />,
-    label: '设置',
-  },
-]
-
 export const Header: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  // 动态生成菜单项
+  const menuItems = [
+    {
+      key: '/',
+      icon: <HomeOutlined />,
+      label: t('navigation.home'),
+    },
+    {
+      key: '/wallet',
+      icon: <WalletOutlined />,
+      label: t('navigation.wallet'),
+    },
+    {
+      key: '/tokens',
+      icon: <SwapOutlined />,
+      label: t('navigation.tokens'),
+    },
+    {
+      key: '/nfts',
+      icon: <TrophyOutlined />,
+      label: t('navigation.nfts'),
+    },
+    {
+      key: '/defi',
+      icon: <SwapOutlined />,
+      label: t('navigation.defi'),
+    },
+    {
+      key: '/swap',
+      icon: <SwapOutlined />,
+      label: t('navigation.swap'),
+    },
+    {
+      key: '/staking',
+      icon: <TrophyOutlined />,
+      label: t('navigation.staking'),
+    },
+    {
+      key: '/governance',
+      icon: <TrophyOutlined />,
+      label: t('navigation.governance'),
+    },
+    {
+      key: '/analytics',
+      icon: <TrophyOutlined />,
+      label: t('navigation.analytics'),
+    },
+    {
+      key: '/settings',
+      icon: <SettingOutlined />,
+      label: t('navigation.settings'),
+    },
+  ]
 
   const handleMenuClick = ({ key }: { key: string }) => {
     navigate(key)
@@ -106,6 +110,11 @@ export const Header: React.FC = () => {
 
         {/* 右侧按钮组 */}
         <div className={styles.rightButtons}>
+          {/* 语言切换器 - 桌面端（H5时隐藏） */}
+          <div className={styles.languageSelector}>
+            <LanguageSelector type="desktop" />
+          </div>
+
           {/* 钱包连接 */}
           <div className={styles.walletContainer}>
             <ConnectButton
@@ -153,6 +162,9 @@ export const Header: React.FC = () => {
         width={280}
         closable={false}
       >
+        {/* 移动端语言切换器 */}
+        <LanguageSelector type="mobile" />
+        
         <Menu
           mode="vertical"
           selectedKeys={[location.pathname]}

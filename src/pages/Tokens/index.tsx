@@ -1,6 +1,8 @@
 import React from 'react'
 import { Card, Table, Typography, Tag, Button, Space, Input } from 'antd'
 import { SearchOutlined, SwapOutlined, SendOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
+import { PageTitle } from '@/components/PageTitle'
 import styles from './index.module.less'
 import tokens from 'mock/tokens.json'
 
@@ -10,9 +12,11 @@ const { Search } = Input
 const mockTokens = tokens
 
 const TokensPage: React.FC = () => {
+  const { t } = useTranslation()
+  
   const columns = [
     {
-      title: '代币',
+      title: t('tokens.tokenList'),
       dataIndex: 'symbol',
       key: 'symbol',
       render: (symbol: string, record: any) => (
@@ -23,7 +27,7 @@ const TokensPage: React.FC = () => {
       ),
     },
     {
-      title: '余额',
+      title: t('wallet.balance'),
       dataIndex: 'balance',
       key: 'balance',
       render: (balance: string) => (
@@ -31,7 +35,7 @@ const TokensPage: React.FC = () => {
       ),
     },
     {
-      title: '价值',
+      title: t('tokens.price'),
       dataIndex: 'value',
       key: 'value',
       render: (value: string) => (
@@ -39,7 +43,7 @@ const TokensPage: React.FC = () => {
       ),
     },
     {
-      title: '24h 变化',
+      title: t('tokens.priceChange24h'),
       dataIndex: 'change',
       key: 'change',
       render: (change: string, record: any) => (
@@ -52,15 +56,15 @@ const TokensPage: React.FC = () => {
       ),
     },
     {
-      title: '操作',
+      title: t('common.settings'),
       key: 'action',
       render: () => (
         <Space>
           <Button type="link" icon={<SendOutlined />}>
-            发送
+            {t('wallet.send')}
           </Button>
           <Button type="link" icon={<SwapOutlined />}>
-            兑换
+            {t('wallet.swap')}
           </Button>
         </Space>
       ),
@@ -68,28 +72,30 @@ const TokensPage: React.FC = () => {
   ]
 
   return (
-    <div className={styles.tokensPage}>
-      <div className={styles.pageHeader}>
-        <Title level={2} className={styles.pageTitle}>
-          代币管理
-        </Title>
-        <Search
-          placeholder="搜索代币"
-          allowClear
-          style={{ width: 300 }}
-          prefix={<SearchOutlined />}
-        />
-      </div>
+    <PageTitle title={t('pageTitle.tokens')}>
+      <div className={styles.tokensPage}>
+        <div className={styles.pageHeader}>
+          <Title level={2} className={styles.pageTitle}>
+            {t('tokens.title')}
+          </Title>
+          <Search
+            placeholder={t('tokens.searchTokens')}
+            allowClear
+            style={{ width: 300 }}
+            prefix={<SearchOutlined />}
+          />
+        </div>
 
-      <Card className={styles.tokensCard}>
-        <Table
-          columns={columns}
-          dataSource={mockTokens}
-          pagination={false}
-          className={styles.tokensTable}
-        />
-      </Card>
-    </div>
+        <Card className={styles.tokensCard}>
+          <Table
+            columns={columns}
+            dataSource={mockTokens}
+            pagination={false}
+            className={styles.tokensTable}
+          />
+        </Card>
+      </div>
+    </PageTitle>
   )
 }
 

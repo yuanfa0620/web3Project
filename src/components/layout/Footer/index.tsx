@@ -1,12 +1,15 @@
 import React from 'react'
 import { Layout, Typography, Space, Divider } from 'antd'
 import { GithubOutlined, TwitterOutlined, DiscordOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 import styles from './index.module.less'
 
 const { Footer: AntFooter } = Layout
 const { Text, Link } = Typography
 
 export const Footer: React.FC = () => {
+  const { t } = useTranslation()
+
   return (
     <AntFooter className={styles.footer}>
       <div className={styles.footerContent}>
@@ -16,53 +19,53 @@ export const Footer: React.FC = () => {
               Web3
             </Text>
             <Text className={styles.footerDescription}>
-              专业的区块链管理平台，提供钱包管理、代币交易、NFT 收藏等一站式服务。
+              {t('footer.description')}
             </Text>
           </div>
 
           <div className={styles.footerSection}>
             <Text strong className={styles.footerTitle}>
-              产品
+              {t('footer.products')}
             </Text>
             <Space direction="vertical" size="small">
               <Link href="#" className={styles.footerLink}>
-                钱包管理
+                {t('footer.walletManagement')}
               </Link>
               <Link href="#" className={styles.footerLink}>
-                代币交易
+                {t('footer.tokenTrading')}
               </Link>
               <Link href="#" className={styles.footerLink}>
-                NFT 收藏
+                {t('footer.nftCollection')}
               </Link>
               <Link href="#" className={styles.footerLink}>
-                DeFi 协议
+                {t('footer.defiProtocols')}
               </Link>
             </Space>
           </div>
 
           <div className={styles.footerSection}>
             <Text strong className={styles.footerTitle}>
-              支持
+              {t('footer.support')}
             </Text>
             <Space direction="vertical" size="small">
               <Link href="#" className={styles.footerLink}>
-                帮助中心
+                {t('footer.helpCenter')}
               </Link>
               <Link href="#" className={styles.footerLink}>
-                文档
+                {t('footer.documentation')}
               </Link>
               <Link href="#" className={styles.footerLink}>
-                联系我们
+                {t('footer.contactUs')}
               </Link>
               <Link href="#" className={styles.footerLink}>
-                状态页面
+                {t('footer.statusPage')}
               </Link>
             </Space>
           </div>
 
           <div className={styles.footerSection}>
             <Text strong className={styles.footerTitle}>
-              社区
+              {t('footer.community')}
             </Text>
             <Space size="large">
               <Link href="#" className={styles.socialLink}>
@@ -82,17 +85,17 @@ export const Footer: React.FC = () => {
 
         <div className={styles.footerBottom}>
           <Text className={styles.copyright}>
-            © 2024 Web3. All rights reserved.
+            {t('footer.copyright')}
           </Text>
           <Space size="large">
             <Link href="#" className={styles.footerLink}>
-              隐私政策
+              {t('footer.privacyPolicy')}
             </Link>
             <Link href="#" className={styles.footerLink}>
-              服务条款
+              {t('footer.termsOfService')}
             </Link>
             <Link href="#" className={styles.footerLink}>
-              Cookie 政策
+              {t('footer.cookiePolicy')}
             </Link>
           </Space>
         </div>

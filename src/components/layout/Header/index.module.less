@@ -86,8 +86,17 @@
     .rightButtons {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
       flex-shrink: 0;
+
+      .languageSelector {
+        flex-shrink: 0;
+        
+        // H5时隐藏语言选择器
+        @media (max-width: 768px) {
+          display: none;
+        }
+      }
 
       .walletContainer {
         flex-shrink: 0;

@@ -1,0 +1,223 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "search": "Search",
+    "filter": "Filter",
+    "refresh": "Refresh",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "open": "Open",
+    "view": "View",
+    "details": "Details",
+    "settings": "Settings",
+    "help": "Help",
+    "about": "About"
+  },
+  "navigation": {
+    "home": "Home",
+    "wallet": "Wallet",
+    "tokens": "Tokens",
+    "nfts": "NFTs",
+    "defi": "DeFi",
+    "swap": "Swap",
+    "staking": "Staking",
+    "governance": "Governance",
+    "analytics": "Analytics",
+    "settings": "Settings"
+  },
+  "pageTitle": {
+    "home": "Web3 Project",
+    "wallet": "Wallet",
+    "tokens": "Tokens",
+    "nfts": "NFTs",
+    "defi": "DeFi",
+    "swap": "Swap",
+    "staking": "Staking",
+    "governance": "Governance",
+    "analytics": "Analytics",
+    "settings": "Settings",
+    "notFound": "Page Not Found"
+  },
+  "home": {
+    "title": "Welcome to Web3",
+    "description": "Professional blockchain management platform providing wallet management, token trading, NFT collection and other one-stop services.",
+    "connectWallet": "Connect Wallet",
+    "learnMore": "Learn More",
+    "assetOverview": "Asset Overview",
+    "mainFeatures": "Main Features",
+    "walletManagement": {
+      "title": "Wallet Management",
+      "description": "Secure and reliable multi-chain wallet management, supporting mainstream blockchain networks, easily manage your digital assets."
+    },
+    "tokenTrading": {
+      "title": "Token Trading",
+      "description": "Convenient token trading features, supporting multiple trading pairs, real-time price updates, more efficient trading."
+    },
+    "nftCollection": {
+      "title": "NFT Collection",
+      "description": "Display and manage your NFT collection, supporting multiple NFT standards, more organized collection."
+    }
+  },
+  "wallet": {
+    "title": "Wallet Management",
+    "connectWallet": "Connect Wallet",
+    "connectWalletDescription": "Please connect your wallet first to view asset information",
+    "disconnect": "Disconnect",
+    "balance": "Balance",
+    "totalBalance": "Total Balance",
+    "address": "Wallet Address",
+    "currentNetwork": "Current Network",
+    "network": "Network",
+    "transactions": "Transactions",
+    "send": "Send",
+    "receive": "Receive QR",
+    "swap": "Swap",
+    "assetOverview": "Asset Overview",
+    "quickActions": "Quick Actions",
+    "networkInfo": "Network Info",
+    "networkStatus": "Network Status",
+    "connected": "Connected",
+    "blockHeight": "Block Height",
+    "gasPrice": "Gas Price"
+  },
+  "tokens": {
+    "title": "Token Management",
+    "tokenList": "Token",
+    "searchTokens": "Search Tokens",
+    "price": "Value",
+    "marketCap": "Market Cap",
+    "volume24h": "24h Volume",
+    "priceChange24h": "24h Change",
+    "addToken": "Add Token",
+    "removeToken": "Remove Token"
+  },
+  "nfts": {
+    "title": "NFT Collection",
+    "myCollection": "My Collection",
+    "explore": "Explore",
+    "create": "Create",
+    "name": "Name",
+    "description": "Description",
+    "image": "Image",
+    "attributes": "Attributes",
+    "noCollections": "No NFT Collections",
+    "addNFT": "Add NFT"
+  },
+  "defi": {
+    "title": "DeFi Protocols",
+    "lending": "Lending",
+    "farming": "Farming",
+    "staking": "Staking",
+    "yield": "Yield",
+    "apy": "APY",
+    "tvl": "TVL",
+    "noProtocols": "No DeFi Protocols",
+    "addProtocol": "Add Protocol"
+  },
+  "swap": {
+    "title": "Token Swap",
+    "from": "From",
+    "to": "To",
+    "amount": "Amount",
+    "price": "Price",
+    "slippage": "Slippage",
+    "gasFee": "Gas Fee",
+    "swap": "Swap",
+    "approve": "Approve",
+    "developing": "Swap feature under development",
+    "startSwap": "Start Swap"
+  },
+  "staking": {
+    "title": "Staking",
+    "stake": "Stake",
+    "unstake": "Unstake",
+    "rewards": "Rewards",
+    "apy": "APY",
+    "lockPeriod": "Lock Period",
+    "claim": "Claim Rewards",
+    "developing": "Staking feature under development",
+    "startStaking": "Start Staking"
+  },
+  "governance": {
+    "title": "Governance",
+    "proposals": "Proposals",
+    "vote": "Vote",
+    "delegate": "Delegate",
+    "votingPower": "Voting Power",
+    "quorum": "Quorum",
+    "status": "Status",
+    "developing": "Governance feature under development",
+    "participate": "Participate in Governance"
+  },
+  "analytics": {
+    "title": "Analytics",
+    "overview": "Overview",
+    "charts": "Charts",
+    "trends": "Trends",
+    "statistics": "Statistics",
+    "reports": "Reports",
+    "developing": "Analytics feature under development",
+    "viewAnalytics": "View Analytics"
+  },
+  "settings": {
+    "title": "System Settings",
+    "general": "General",
+    "security": "Security",
+    "privacy": "Privacy",
+    "notifications": "Notifications",
+    "language": "Language",
+    "theme": "Theme",
+    "network": "Network",
+    "about": "About",
+    "developing": "Settings feature under development",
+    "openSettings": "Open Settings"
+  },
+  "language": {
+    "title": "Language Settings",
+    "current": "Current Language",
+    "select": "Select Language",
+    "zhCN": "简体中文",
+    "zhTW": "繁體中文",
+    "enUS": "English"
+  },
+  "error": {
+    "pageNotFound": "Page Not Found",
+    "networkError": "Network Error",
+    "walletNotConnected": "Wallet Not Connected",
+    "transactionFailed": "Transaction Failed",
+    "insufficientBalance": "Insufficient Balance",
+    "invalidAddress": "Invalid Address",
+    "unknownError": "Unknown Error"
+  },
+  "notFound": {
+    "description": "Sorry, the page you visited does not exist.",
+    "backHome": "Back to Home"
+  },
+  "footer": {
+    "description": "Professional blockchain management platform providing wallet management, token trading, NFT collection and other one-stop services.",
+    "products": "Products",
+    "walletManagement": "Wallet Management",
+    "tokenTrading": "Token Trading",
+    "nftCollection": "NFT Collection",
+    "defiProtocols": "DeFi Protocols",
+    "support": "Support",
+    "helpCenter": "Help Center",
+    "documentation": "Documentation",
+    "contactUs": "Contact Us",
+    "statusPage": "Status Page",
+    "community": "Community",
+    "copyright": "© 2024 Web3. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "cookiePolicy": "Cookie Policy"
+  }
+}
