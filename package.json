@@ -8,8 +8,10 @@
     "dev:prod": "vite --mode production",
     "build:dev": "tsc -b && vite build --mode development",
     "build:prod": "tsc -b && vite build --mode production",
+    "build:optimize": "tsc -b && vite build --config vite.optimize.config.ts --mode production",
     "preview": "vite preview",
-    "preview:prod": "vite preview --mode production"
+    "preview:prod": "vite preview --mode production",
+    "analyze": "vite build --mode production && npx vite-bundle-analyzer dist/stats.html"
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.0",
@@ -36,7 +38,11 @@
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.3",
+    "autoprefixer": "^10.4.21",
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "cssnano": "^7.1.1",
     "rollup-plugin-visualizer": "^6.0.3",
+    "terser": "^5.44.0",
     "typescript": "~5.8.3",
     "vite": "npm:rolldown-vite@7.1.12",
     "vite-plugin-imagemin": "^0.6.1"
