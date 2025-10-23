@@ -81,7 +81,7 @@ const TokensPage: React.FC = () => {
           <Search
             placeholder={t('tokens.searchTokens')}
             allowClear
-            style={{ width: 300 }}
+            className={styles.searchInput}
             prefix={<SearchOutlined />}
           />
         </div>
@@ -92,6 +92,7 @@ const TokensPage: React.FC = () => {
             dataSource={mockTokens}
             pagination={false}
             className={styles.tokensTable}
+            scroll={{ x: true }}
           />
         </Card>
       </div>

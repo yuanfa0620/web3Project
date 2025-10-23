@@ -8,10 +8,7 @@
     "dev:prod": "vite --mode production",
     "build:dev": "tsc -b && vite build --mode development",
     "build:prod": "tsc -b && vite build --mode production",
-    "build:optimize": "tsc -b && vite build --config vite.optimize.config.ts --mode production",
-    "preview": "vite preview",
-    "preview:prod": "vite preview --mode production",
-    "analyze": "vite build --mode production && npx vite-bundle-analyzer dist/stats.html"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.0",
