@@ -5,6 +5,7 @@ import { mainnet, polygon, bsc, arbitrum, optimism, avalanche } from 'wagmi/chai
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RPC_URLS } from '@/constants/chains'
 import { getWalletConnectProjectId } from '@/config/constants'
+import { useAppDispatch, useAppSelector } from '@/store'
 
 // 配置支持的链
 export const wagmiConfig = getDefaultConfig({
@@ -22,10 +23,12 @@ interface WalletProviderProps {
 }
 
 export const WalletProvider = ({ children }: WalletProviderProps) => {
+  const currentLanguage = useAppSelector(state => state.app.language)
+
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider theme={lightTheme()} locale="zh-CN" showRecentTransactions>
+        <RainbowKitProvider theme={lightTheme()} locale={currentLanguage} showRecentTransactions>
           {children}
         </RainbowKitProvider>
       </QueryClientProvider>

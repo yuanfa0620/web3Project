@@ -1,5 +1,7 @@
-import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
+import React, { createContext, useContext, useEffect, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useAppDispatch, useAppSelector } from '@/store'
+import { setLanguage } from '@/store/reducers/appSlice'
 import { supportedLanguages, defaultLanguage } from '@/i18n'
 
 interface LanguageContextType {
@@ -16,24 +18,22 @@ interface LanguageProviderProps {
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
   const { i18n } = useTranslation()
-  const [currentLanguage, setCurrentLanguage] = useState<string>(defaultLanguage)
+  const dispatch = useAppDispatch()
+  const currentLanguage = useAppSelector(state => state.app.language)
 
-  // 初始化语言
+  // 同步Redux状态到i18n - Redux Persist会自动恢复状态
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('i18nextLng')
-    if (savedLanguage && supportedLanguages.some(lang => lang.code === savedLanguage)) {
-      setCurrentLanguage(savedLanguage)
-      i18n.changeLanguage(savedLanguage)
-    } else {
-      setCurrentLanguage(defaultLanguage)
-      i18n.changeLanguage(defaultLanguage)
+    if (i18n.language !== currentLanguage) {
+      i18n.changeLanguage(currentLanguage)
     }
-  }, [i18n])
+  }, [currentLanguage, i18n])
 
-  // 监听语言变化
+  // 监听i18n语言变化，同步到Redux
   useEffect(() => {
     const handleLanguageChange = (lng: string) => {
-      setCurrentLanguage(lng)
+      if (supportedLanguages.some(lang => lang.code === lng)) {
+        dispatch(setLanguage(lng as 'zh-CN' | 'zh-TW' | 'en-US'))
+      }
     }
 
     i18n.on('languageChanged', handleLanguageChange)
@@ -41,12 +41,12 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     return () => {
       i18n.off('languageChanged', handleLanguageChange)
     }
-  }, [i18n])
+  }, [i18n, dispatch])
 
   const changeLanguage = (language: string) => {
     if (supportedLanguages.some(lang => lang.code === language)) {
+      dispatch(setLanguage(language as 'zh-CN' | 'zh-TW' | 'en-US'))
       i18n.changeLanguage(language)
-      localStorage.setItem('i18nextLng', language)
     }
   }
 

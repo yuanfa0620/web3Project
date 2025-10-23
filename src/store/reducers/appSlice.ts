@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 interface AppState {
   theme: 'light' | 'dark'
-  language: 'zh' | 'en'
+  language: 'zh-CN' | 'zh-TW' | 'en-US'
   collapsed: boolean
   loading: boolean
   network: 'mainnet' | 'testnet'
@@ -10,7 +10,7 @@ interface AppState {
 
 const initialState: AppState = {
   theme: 'light',
-  language: 'zh',
+  language: 'zh-CN',
   collapsed: false,
   loading: false,
   network: 'mainnet',
@@ -23,7 +23,7 @@ const appSlice = createSlice({
     setTheme: (state, action: PayloadAction<'light' | 'dark'>) => {
       state.theme = action.payload
     },
-    setLanguage: (state, action: PayloadAction<'zh' | 'en'>) => {
+    setLanguage: (state, action: PayloadAction<'zh-CN' | 'zh-TW' | 'en-US'>) => {
       state.language = action.payload
     },
     setCollapsed: (state, action: PayloadAction<boolean>) => {
