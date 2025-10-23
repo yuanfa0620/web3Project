@@ -5,11 +5,15 @@ import { Provider } from 'react-redux'
 import { store } from '@/store'
 import { Header } from '../Header'
 import { Footer } from '../Footer'
+import { usePageTitle } from '@/hooks/usePageTitle'
 import styles from './index.module.less'
 
 const { Content } = AntLayout
 
 export const Layout: React.FC = () => {
+  // 使用页面标题Hook
+  usePageTitle()
+
   return (
     <Provider store={store}>
       <ConfigProvider
