@@ -1,13 +1,64 @@
 .nftsPage {
+  padding: 24px;
+  min-height: 100vh;
+
   .pageTitle {
     margin-bottom: 24px;
     color: #262626;
   }
-  
-  .nftsCard {
+
+  .loadingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     min-height: 400px;
+    gap: 16px;
+
+    p {
+      color: #8c8c8c;
+      margin: 0;
+    }
+  }
+
+  .nftsGrid {
+    margin-bottom: 24px;
+  }
+
+  .loadMoreTrigger {
+    min-height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 24px;
+  }
+
+  .loadingMore {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: #8c8c8c;
+
+    span {
+      font-size: 14px;
+    }
+  }
+
+  .noMore {
+    text-align: center;
+    color: #8c8c8c;
+    padding: 24px;
+
+    p {
+      margin: 0;
+      font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .nftsPage {
+    padding: 16px;
   }
 }
