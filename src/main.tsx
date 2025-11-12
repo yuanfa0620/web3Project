@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import '@ant-design/v5-patch-for-react-19';
 import { Router } from '@/router'
 import { WalletProvider } from '@/providers/WalletProvider'
 import { LanguageProvider } from '@/contexts/LanguageContext'

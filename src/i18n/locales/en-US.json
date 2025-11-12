@@ -88,7 +88,15 @@
     "networkStatus": "Network Status",
     "connected": "Connected",
     "blockHeight": "Block Height",
-    "gasPrice": "Gas Price"
+    "gasPrice": "Gas Price",
+    "receiveModal": {
+      "title": "Receive QR Code",
+      "networkWarning": "Only assets on the current network can be received",
+      "currentNetwork": "Current Network",
+      "walletAddress": "Wallet Address",
+      "downloadQR": "Download QR Code",
+      "downloadSuccess": "QR code saved successfully"
+    }
   },
   "tokens": {
     "title": "Token Management",

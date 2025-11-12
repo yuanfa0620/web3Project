@@ -88,7 +88,15 @@
     "networkStatus": "网络状态",
     "connected": "已连接",
     "blockHeight": "区块高度",
-    "gasPrice": "Gas 价格"
+    "gasPrice": "Gas 价格",
+    "receiveModal": {
+      "title": "收款码",
+      "networkWarning": "只能收取当前网络的资产",
+      "currentNetwork": "当前网络",
+      "walletAddress": "钱包地址",
+      "downloadQR": "下载二维码",
+      "downloadSuccess": "二维码已保存"
+    }
   },
   "tokens": {
     "title": "代币管理",

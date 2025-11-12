@@ -88,7 +88,15 @@
     "networkStatus": "網路狀態",
     "connected": "已連接",
     "blockHeight": "區塊高度",
-    "gasPrice": "Gas 價格"
+    "gasPrice": "Gas 價格",
+    "receiveModal": {
+      "title": "收款碼",
+      "networkWarning": "只能收取當前網路的資產",
+      "currentNetwork": "當前網路",
+      "walletAddress": "錢包地址",
+      "downloadQR": "下載二維碼",
+      "downloadSuccess": "二維碼已保存"
+    }
   },
   "tokens": {
     "title": "代幣管理",
