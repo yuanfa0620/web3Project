@@ -11,9 +11,8 @@ export const useTokenBalance = (token: TokenConfig | null, chainId: number | nul
 
   // 主网币余额（使用wagmi）
   const { data: nativeBalance, isLoading: nativeLoading } = useBalance({
-    address,
+    address: isConnected && !!token?.isNative && !!chainId ? address : undefined,
     chainId: chainId || undefined,
-    enabled: isConnected && !!token?.isNative && !!chainId,
   })
 
   // ERC20代币余额

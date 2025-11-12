@@ -161,7 +161,7 @@ export class ERC20Service {
       abi: this.abi,
       functionName,
       args,
-      chainId: this.chainId,
+      chainId: this.chainId as any,
     })
   }
 
@@ -172,7 +172,7 @@ export class ERC20Service {
       abi: this.abi,
       functionName,
       args,
-      chainId: this.chainId,
+      chainId: this.chainId as any,
     })
   }
 }
