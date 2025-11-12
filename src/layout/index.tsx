@@ -3,8 +3,8 @@ import { Layout as AntLayout, ConfigProvider } from 'antd'
 import { Outlet } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from '@/store'
-import { Header } from '../Header'
-import { Footer } from '../Footer'
+import { Header } from './Header'
+import { Footer } from './Footer'
 import { usePageTitle } from '@/hooks/usePageTitle'
 import styles from './index.module.less'
 
@@ -37,3 +37,4 @@ export const Layout: React.FC = () => {
     </Provider>
   )
 }
+
