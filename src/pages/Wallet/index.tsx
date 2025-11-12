@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react'
-import { Card, Row, Col, Typography, Button, Space, Tag, Divider, Modal, Alert, message, QRCode } from 'antd'
+import { Card, Row, Col, Typography, Button, Space, Tag, Divider, Modal, Alert, message, QRCode, Spin } from 'antd'
 import { CopyOutlined, QrcodeOutlined, SendOutlined, SwapOutlined, DownloadOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { PageTitle } from '@/components/PageTitle'
 import { useWallet } from '@/hooks/useWallet'
+import { useNetworkInfo } from '@/hooks/useNetworkInfo'
 import { CHAIN_INFO } from '@/constants/chains'
 import styles from './index.module.less'
 
@@ -14,6 +15,14 @@ const WalletPage: React.FC = () => {
   const { address, chainId, isConnected, balance } = useWallet()
   const [receiveModalVisible, setReceiveModalVisible] = useState(false)
   const qrCodeRef = useRef<HTMLDivElement>(null)
+
+  // 获取网络信息（区块高度和 Gas 价格）
+  const { blockNumber, gasPrice, blockNumberLoading, gasPriceLoading } = useNetworkInfo(chainId)
+
+  // 根据链 ID 获取代币符号
+  const tokenSymbol = chainId 
+    ? (CHAIN_INFO[chainId as keyof typeof CHAIN_INFO]?.symbol || 'ETH')
+    : 'ETH'
 
   // 下载二维码
   const handleDownloadQR = () => {
@@ -67,7 +76,7 @@ const WalletPage: React.FC = () => {
               <div className={styles.balanceSection}>
                 <Text className={styles.balanceLabel}>{t('wallet.totalBalance')}</Text>
                 <Title level={1} className={styles.balanceValue}>
-                  {balance || '0.00'} ETH
+                  {balance || '0.00'} {tokenSymbol}
                 </Title>
               </div>
               
@@ -137,11 +146,19 @@ const WalletPage: React.FC = () => {
                 </div>
                 <div className={styles.networkItem}>
                   <Text>{t('wallet.blockHeight')}</Text>
-                  <Text>18,234,567</Text>
+                  {blockNumberLoading ? (
+                    <Spin size="small" />
+                  ) : (
+                    <Text>{blockNumber}</Text>
+                  )}
                 </div>
                 <div className={styles.networkItem}>
                   <Text>{t('wallet.gasPrice')}</Text>
-                  <Text>20 Gwei</Text>
+                  {gasPriceLoading ? (
+                    <Spin size="small" />
+                  ) : (
+                    <Text>{gasPrice}</Text>
+                  )}
                 </div>
               </div>
             </Card>
