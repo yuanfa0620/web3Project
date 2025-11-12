@@ -105,26 +105,21 @@ const SwapPage: React.FC = () => {
     checkNetwork(token, chainId)
   }, [fromToken, fromTokenChainId])
 
-  // 处理to的chainId变化（当to修改网络时，清空fromToken）
+  // 处理to的chainId变化（只有当用户选择了新代币时才更新）
   const handleToChainChange = useCallback((chainId: number) => {
-    if (fromToken && fromTokenChainId !== chainId) {
-      setFromToken(null)
-      setFromTokenChainId(null)
-      setFromAmount('')
-    }
+    // 只有当用户实际选择了新代币时，才会调用这个函数
+    // 此时不需要清空 fromToken，因为用户可能只是切换了网络但没有选择新代币
     setToTokenChainId(chainId)
     setSharedChainId(chainId) // 更新共享网络状态
-  }, [fromToken, fromTokenChainId])
+  }, [])
 
-  // 处理from的chainId变化
+  // 处理from的chainId变化（只有当用户选择了新代币时才更新）
   const handleFromChainChange = useCallback((chainId: number) => {
-    if (toToken && toTokenChainId !== chainId) {
-      setToToken(null)
-      setToTokenChainId(null)
-    }
+    // 只有当用户实际选择了新代币时，才会调用这个函数
+    // 此时不需要清空 toToken，因为用户可能只是切换了网络但没有选择新代币
     setFromTokenChainId(chainId)
     setSharedChainId(chainId) // 更新共享网络状态
-  }, [toToken, toTokenChainId])
+  }, [])
 
   // 检查网络
   const checkNetwork = (token: TokenConfig, tokenChainId?: number | null) => {
@@ -393,22 +388,24 @@ const SwapPage: React.FC = () => {
             </div>
 
             <div className={styles.swapBody}>
-              <SwapInput
-                label={t('swap.from')}
-                token={fromToken}
-                amount={displayFromAmount}
-                balance={fromBalance.balance}
-                loading={fromBalance.loading || (activeInput === 'to' && reverseQuoteLoading)}
-                onTokenSelect={handleFromTokenSelect}
-                onAmountChange={handleFromAmountChange}
-                onMaxClick={handleMaxClick}
-                showMax={true}
-                disabled={false}
-                selectedChainId={fromTokenChainId}
-                onChainSelect={setFromTokenChainId}
-                defaultChainId={sharedChainId || toTokenChainId}
-                onChainChange={handleFromChainChange}
-              />
+                <SwapInput
+                  label={t('swap.from')}
+                  token={fromToken}
+                  amount={displayFromAmount}
+                  balance={fromBalance.balance}
+                  loading={fromBalance.loading || (activeInput === 'to' && reverseQuoteLoading)}
+                  onTokenSelect={handleFromTokenSelect}
+                  onAmountChange={handleFromAmountChange}
+                  onMaxClick={handleMaxClick}
+                  showMax={true}
+                  disabled={false}
+                  selectedChainId={fromTokenChainId}
+                  onChainSelect={setFromTokenChainId}
+                  defaultChainId={sharedChainId || toTokenChainId}
+                  onChainChange={handleFromChainChange}
+                  otherSelectedToken={toToken}
+                  otherSelectedChainId={toTokenChainId}
+                />
 
               <div className={styles.swapArrow}>
                 <Button
@@ -444,21 +441,23 @@ const SwapPage: React.FC = () => {
                 />
               </div>
 
-              <SwapInput
-                label={t('swap.to')}
-                token={toToken}
-                amount={displayToAmount}
-                balance={toBalance.balance}
-                loading={toBalance.loading || (activeInput === 'from' && quoteLoading)}
-                onTokenSelect={handleToTokenSelect}
-                onAmountChange={handleToAmountChange}
-                disabled={false}
-                showMax={false}
-                selectedChainId={toTokenChainId}
-                onChainSelect={setToTokenChainId}
-                defaultChainId={sharedChainId || fromTokenChainId}
-                onChainChange={handleToChainChange}
-              />
+                <SwapInput
+                  label={t('swap.to')}
+                  token={toToken}
+                  amount={displayToAmount}
+                  balance={toBalance.balance}
+                  loading={toBalance.loading || (activeInput === 'from' && quoteLoading)}
+                  onTokenSelect={handleToTokenSelect}
+                  onAmountChange={handleToAmountChange}
+                  disabled={false}
+                  showMax={false}
+                  selectedChainId={toTokenChainId}
+                  onChainSelect={setToTokenChainId}
+                  defaultChainId={sharedChainId || fromTokenChainId}
+                  onChainChange={handleToChainChange}
+                  otherSelectedToken={fromToken}
+                  otherSelectedChainId={fromTokenChainId}
+                />
 
               {!walletConnected ? (
                 <div className={styles.connectButtonWrapper}>

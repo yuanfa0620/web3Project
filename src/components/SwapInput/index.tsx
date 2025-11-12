@@ -23,6 +23,8 @@ interface SwapInputProps {
   onChainSelect?: (chainId: number) => void
   defaultChainId?: number | null
   onChainChange?: (chainId: number) => void
+  otherSelectedToken?: TokenConfig | null // 另一个输入框已选择的代币（用于双向绑定显示）
+  otherSelectedChainId?: number | null // 另一个输入框已选择的网络ID
 }
 
 export const SwapInput: React.FC<SwapInputProps> = ({
@@ -41,6 +43,8 @@ export const SwapInput: React.FC<SwapInputProps> = ({
   onChainSelect,
   defaultChainId,
   onChainChange,
+  otherSelectedToken,
+  otherSelectedChainId,
 }) => {
   const { t } = useTranslation()
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,6 +105,8 @@ export const SwapInput: React.FC<SwapInputProps> = ({
             onChainSelect={onChainSelect}
             defaultChainId={defaultChainId}
             onChainChange={onChainChange}
+            otherSelectedToken={otherSelectedToken}
+            otherSelectedChainId={otherSelectedChainId}
           />
         </div>
       </div>

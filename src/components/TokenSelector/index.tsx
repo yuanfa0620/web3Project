@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { Button, Avatar, Input, Typography, Modal, Divider, Switch, Tooltip, Spin, message } from 'antd'
-import { SearchOutlined, DownOutlined, CloseOutlined, PlusOutlined } from '@ant-design/icons'
+import { SearchOutlined, DownOutlined, CloseOutlined, PlusOutlined, CheckCircleOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { CHAIN_INFO, CHAIN_IDS, supportedChains } from '@/constants/chains'
 import { getChainIconUrl } from '@/utils/chainIcons'
@@ -55,6 +55,8 @@ interface TokenSelectorProps {
   onChainSelect?: (chainId: number) => void
   defaultChainId?: number | null
   onChainChange?: (chainId: number) => void
+  otherSelectedToken?: TokenConfig | null // 另一个输入框已选择的代币（用于双向绑定显示）
+  otherSelectedChainId?: number | null // 另一个输入框已选择的网络ID
 }
 
 export const TokenSelector: React.FC<TokenSelectorProps> = ({
@@ -67,6 +69,8 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
   onChainSelect,
   defaultChainId,
   onChainChange,
+  otherSelectedToken,
+  otherSelectedChainId,
 }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
@@ -99,13 +103,26 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
     }
   }, [defaultChainId, selectedChainId, currentChainId])
 
-  // 当打开弹窗时，如果有defaultChainId且当前没有选择链，则设置默认链
+  // 当打开弹窗时，设置默认链（只在弹窗刚打开时执行一次）
   useEffect(() => {
-    if (modalVisible && defaultChainId && !currentChainId && !selectedChainId) {
-      setCurrentChainId(defaultChainId)
-      setIsTestnet((TESTNET_CHAIN_IDS as readonly number[]).includes(defaultChainId))
+    if (modalVisible) {
+      // 如果有 defaultChainId 或 selectedChainId，使用它们
+      if (defaultChainId || selectedChainId) {
+        const targetChainId = selectedChainId || defaultChainId
+        if (targetChainId) {
+          setCurrentChainId(targetChainId)
+          setIsTestnet((TESTNET_CHAIN_IDS as readonly number[]).includes(targetChainId))
+        }
+      } else {
+        // 如果没有缓存（没有 defaultChainId 和 selectedChainId），且当前没有选择链，默认选择以太坊
+        // 注意：如果用户已经切换了测试网开关，不要强制重置
+        if (currentChainId === null) {
+          setCurrentChainId(CHAIN_IDS.ETHEREUM)
+          setIsTestnet(false) // 以太坊是主网
+        }
+      }
     }
-  }, [modalVisible, defaultChainId, currentChainId, selectedChainId])
+  }, [modalVisible, defaultChainId, selectedChainId])
 
   // 如果外部传入了tokens，使用外部的
   useEffect(() => {
@@ -235,29 +252,42 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
     setContractToken(null)
   }, [searchText, tokens, currentChainId, fetchTokenFromContract])
 
-  // 处理链选择
+  // 处理链选择（只在弹窗内切换，不立即更新外部状态）
   const handleChainSelect = (chainId: number) => {
     setCurrentChainId(chainId)
     setSearchText('')
-    if (onChainSelect) {
-      onChainSelect(chainId)
-    }
-    if (onChainChange) {
-      onChainChange(chainId)
-    }
+    // 只更新弹窗内的选择，不触发外部回调
+    // 只有当用户选择代币时，才会通过 handleTokenSelect 更新网络
   }
 
   // 处理主网/测试网切换
   const handleTestnetToggle = (checked: boolean) => {
     setIsTestnet(checked)
-    setCurrentChainId(null)
+    // 切换时，根据新的网络类型设置默认链
+    if (checked) {
+      // 切换到测试网，默认选择第一个测试网（Sepolia）
+      setCurrentChainId(CHAIN_IDS.SEPOLIA)
+    } else {
+      // 切换到主网，默认选择以太坊
+      setCurrentChainId(CHAIN_IDS.ETHEREUM)
+    }
     setSearchText('')
   }
 
   // 处理token选择
   const handleTokenSelect = (token: TokenConfig) => {
     const tokenWithChainId = { ...token, chainId: currentChainId || undefined }
-    onSelect(tokenWithChainId, currentChainId || undefined)
+    const selectedChainId = currentChainId || token.chainId || undefined
+    
+    // 当用户选择代币时，才更新网络状态
+    if (selectedChainId && onChainSelect) {
+      onChainSelect(selectedChainId)
+    }
+    if (selectedChainId && onChainChange) {
+      onChainChange(selectedChainId)
+    }
+    
+    onSelect(tokenWithChainId, selectedChainId)
     setModalVisible(false)
     setSearchText('')
     setContractToken(null)
@@ -311,7 +341,16 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
 
       <Modal
         open={modalVisible}
-        onCancel={() => setModalVisible(false)}
+        onCancel={() => {
+          // 关闭弹窗时，如果没有选择新代币，恢复之前的网络选择
+          if (selectedChainId && currentChainId !== selectedChainId) {
+            setCurrentChainId(selectedChainId)
+            setIsTestnet((TESTNET_CHAIN_IDS as readonly number[]).includes(selectedChainId))
+          }
+          setModalVisible(false)
+          setSearchText('')
+          setContractToken(null)
+        }}
         footer={null}
         width={420}
         className={styles.tokenModal}
@@ -418,10 +457,17 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
                        selectedChainId === currentChainId ||
                        (selectedToken.chainId && token.chainId && selectedToken.chainId === token.chainId))
                     
+                    // 检查是否为另一个输入框已选择的代币（用于双向绑定显示）
+                    const isOtherSelected = otherSelectedToken && 
+                      otherSelectedToken.address.toLowerCase() === token.address.toLowerCase() &&
+                      (otherSelectedToken.chainId === currentChainId || 
+                       otherSelectedChainId === currentChainId ||
+                       (otherSelectedToken.chainId && token.chainId && otherSelectedToken.chainId === token.chainId))
+                    
                     return (
                       <div
                         key={`${token.address}-${token.symbol}`}
-                        className={`${styles.tokenOption} ${isSelected ? styles.tokenOptionSelected : ''}`}
+                        className={`${styles.tokenOption} ${isSelected ? styles.tokenOptionSelected : ''} ${isOtherSelected ? styles.tokenOptionOtherSelected : ''}`}
                         onClick={() => handleTokenSelect(token)}
                       >
                         <Avatar
@@ -436,17 +482,25 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
                             <Text strong className={styles.tokenSymbol}>
                               {token.symbol}
                             </Text>
-                            {showAddButton && (
-                              <Button
-                                type="primary"
-                                size="small"
-                                icon={<PlusOutlined />}
-                                onClick={(e) => handleAddCustomToken(e, token)}
-                                className={styles.addTokenButton}
-                              >
-                                {t('swap.addToken')}
-                              </Button>
-                            )}
+                            <div className={styles.tokenActions}>
+                              {isSelected && (
+                                <CheckCircleOutlined className={styles.selectedIcon} />
+                              )}
+                              {isOtherSelected && !isSelected && (
+                                <CheckCircleOutlined className={styles.otherSelectedIcon} />
+                              )}
+                              {showAddButton && (
+                                <Button
+                                  type="primary"
+                                  size="small"
+                                  icon={<PlusOutlined />}
+                                  onClick={(e) => handleAddCustomToken(e, token)}
+                                  className={styles.addTokenButton}
+                                >
+                                  {t('swap.addToken')}
+                                </Button>
+                              )}
+                            </div>
                           </div>
                           <div className={styles.tokenInfoFooter}>
                             <Text type="secondary" className={styles.tokenName}>
