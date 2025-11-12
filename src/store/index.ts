@@ -6,13 +6,14 @@ import { combineReducers } from '@reduxjs/toolkit'
 import userReducer from '@/store/reducers/userSlice'
 import walletReducer from '@/store/reducers/walletSlice'
 import appReducer from '@/store/reducers/appSlice'
+import customTokensReducer from '@/store/reducers/customTokensSlice'
 
 // 持久化配置
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: ['app'], // 只持久化app状态（包含语言设置）
+  whitelist: ['app', 'customTokens'], // 持久化app状态和自定义代币
 }
 
 // 合并reducers
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   wallet: walletReducer,
   app: appReducer,
+  customTokens: customTokensReducer,
 })
 
 // 创建持久化reducer

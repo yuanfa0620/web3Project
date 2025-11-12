@@ -1,0 +1,110 @@
+{
+  "1": {
+    "chainName": "Ethereum Mainnet",
+    "routers": [
+      {
+        "name": "Uniswap V2",
+        "type": "uniswap_v2",
+        "address": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+        "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+        "note": "Uniswap V2 Router on Ethereum Mainnet"
+      },
+      {
+        "name": "Uniswap V3",
+        "type": "uniswap_v3",
+        "address": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+        "quoter": "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6",
+        "note": "Uniswap V3 Router on Ethereum Mainnet"
+      },
+      {
+        "name": "SushiSwap",
+        "type": "sushiswap",
+        "address": "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F",
+        "factory": "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac",
+        "note": "SushiSwap Router on Ethereum Mainnet"
+      }
+    ]
+  },
+  "137": {
+    "chainName": "Polygon Mainnet",
+    "routers": [
+      {
+        "name": "Uniswap V3",
+        "type": "uniswap_v3",
+        "address": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+        "quoter": "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6",
+        "note": "Uniswap V3 Router on Polygon Mainnet"
+      },
+      {
+        "name": "QuickSwap",
+        "type": "quickswap",
+        "address": "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff",
+        "factory": "0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32",
+        "note": "QuickSwap Router on Polygon Mainnet"
+      }
+    ]
+  },
+  "56": {
+    "chainName": "BNB Smart Chain",
+    "routers": [
+      {
+        "name": "PancakeSwap V2",
+        "type": "pancakeswap_v2",
+        "address": "0x10ED43C718714eb63d5aA57B78B54704E256024E",
+        "factory": "0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73",
+        "note": "PancakeSwap V2 Router on BSC"
+      },
+      {
+        "name": "PancakeSwap V3",
+        "type": "pancakeswap_v3",
+        "address": "0x13f4EA83D0bd40E75C8222255bc855a974568Dd4",
+        "quoter": "0xB048Bbc1Ee6b733FFfCFb9e9CeF7375518e25997",
+        "note": "PancakeSwap V3 Router on BSC"
+      }
+    ]
+  },
+  "42161": {
+    "chainName": "Arbitrum One",
+    "routers": [
+      {
+        "name": "Uniswap V3",
+        "type": "uniswap_v3",
+        "address": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+        "quoter": "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6",
+        "note": "Uniswap V3 Router on Arbitrum One"
+      }
+    ]
+  },
+  "10": {
+    "chainName": "Optimism",
+    "routers": [
+      {
+        "name": "Uniswap V3",
+        "type": "uniswap_v3",
+        "address": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+        "quoter": "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6",
+        "note": "Uniswap V3 Router on Optimism"
+      }
+    ]
+  },
+  "43114": {
+    "chainName": "Avalanche",
+    "routers": [
+      {
+        "name": "Pangolin",
+        "type": "pangolin",
+        "address": "0xE54Ca86531e17Ef3616d22Ca28b0D458b6C89106",
+        "factory": "0xefa94DE7a4656D787667C749f7E6223D71C96068",
+        "note": "Pangolin Router on Avalanche"
+      },
+      {
+        "name": "Trader Joe",
+        "type": "traderjoe",
+        "address": "0x60aE616a2155Ee3d9A68541Ba4544862310933d4",
+        "factory": "0x9Ad6C38BE94206cA50bb0d90783181662f0Cfa10",
+        "note": "Trader Joe Router on Avalanche"
+      }
+    ]
+  }
+}
+

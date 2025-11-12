@@ -1,0 +1,275 @@
+.tokenSelectorButton {
+  width: 100%;
+  min-width: 150px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+
+  &:hover:not(:disabled) {
+    border-color: #1890ff;
+  }
+
+  &:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+  }
+
+  .dropdownIcon {
+    margin-left: 8px;
+    font-size: 12px;
+    color: #8c8c8c;
+  }
+
+  .selectedToken {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .tokenIcon {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+}
+
+.tokenModal {
+  :global(.ant-modal-content) {
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  :global(.ant-modal-header) {
+    padding: 0;
+    border: none;
+  }
+
+  :global(.ant-modal-body) {
+    padding: 0;
+  }
+
+  :global(.ant-modal-close) {
+    top: 16px;
+    right: 16px;
+  }
+
+  .modalContent {
+    padding: 0;
+    max-height: 600px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .modalHeader {
+      padding: 20px 24px;
+      border-bottom: 1px solid #f0f0f0;
+      flex-shrink: 0;
+
+      .modalTitle {
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+
+    .chainSelector {
+      padding: 16px 8px;
+      flex-shrink: 0;
+
+      .chainSelectorHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+
+        .chainSelectorTitle {
+          font-size: 14px;
+          font-weight: 500;
+          display: block;
+        }
+
+        .testnetToggle {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          .testnetLabel {
+            font-size: 12px;
+          }
+        }
+      }
+
+      .chainList {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 12px;
+        padding: 4px 0;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+
+        &::-webkit-scrollbar {
+          display: none; /* Chrome, Safari, Opera */
+        }
+
+        .chainIconWrapper {
+          position: relative;
+          display: inline-block;
+          flex-shrink: 0;
+        }
+
+        .chainIcon {
+          flex-shrink: 0;
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+          transition: all 0.2s;
+          position: relative;
+          border: 2px solid transparent;
+
+          &:hover {
+            transform: scale(1.1);
+          }
+
+          &.chainIconActive {
+            border-color: #1890ff;
+          }
+        }
+
+        .testnetBadge {
+          position: absolute;
+          top: -4px;
+          left: -4px;
+          background: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%);
+          color: #fff;
+          font-size: 10px;
+          font-weight: 600;
+          padding: 2px 4px;
+          border-radius: 4px;
+          line-height: 1;
+          white-space: nowrap;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          z-index: 10;
+          border: 1px solid #fff;
+        }
+      }
+    }
+
+    .searchWrapper {
+      background: #fafafa;
+      flex-shrink: 0;
+
+      .searchInput {
+        border-radius: 12px;
+        height: 48px;
+      }
+    }
+
+    .tokenList {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0;
+      min-height: 0;
+
+      .tokenOption {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        border-radius: 8px;
+        border: 2px solid transparent;
+
+        &:hover {
+          background-color: #f5f5f5;
+        }
+
+        &:active {
+          background-color: #e6f7ff;
+        }
+
+        &.tokenOptionSelected {
+          background-color: #e6f7ff;
+          border-color: #1890ff;
+          box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+        }
+
+        .tokenIcon {
+          margin-right: 12px;
+          flex-shrink: 0;
+          width: 32px;
+          height: 32px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: #fff;
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .tokenInfo {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          min-width: 0;
+          gap: 2px;
+
+          .tokenInfoHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+          }
+
+          .tokenSymbol {
+            font-size: 16px;
+            font-weight: 600;
+          }
+
+          .tokenInfoFooter {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          }
+
+          .tokenName {
+            font-size: 12px;
+            color: #8c8c8c;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+          }
+
+          .customTag {
+            font-size: 11px;
+            color: #1890ff;
+            background: #e6f7ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            white-space: nowrap;
+          }
+
+          .addTokenButton {
+            flex-shrink: 0;
+            height: 24px;
+            font-size: 12px;
+            padding: 0 8px;
+          }
+        }
+      }
+    }
+
+    .emptyState {
+      padding: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+  }
+}

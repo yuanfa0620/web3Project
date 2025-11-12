@@ -161,6 +161,7 @@ export class ERC20Service {
       abi: this.abi,
       functionName,
       args,
+      chainId: this.chainId,
     })
   }
 
@@ -171,6 +172,7 @@ export class ERC20Service {
       abi: this.abi,
       functionName,
       args,
+      chainId: this.chainId,
     })
   }
 }

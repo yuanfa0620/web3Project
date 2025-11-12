@@ -1,0 +1,31 @@
+{
+  "chainId": 42161,
+  "chainName": "Arbitrum One",
+  "tokens": [
+    {
+      "name": "Ethereum",
+      "symbol": "ETH",
+      "address": "0x0000000000000000000000000000000000000000",
+      "decimals": 18,
+      "icon": "",
+      "isNative": true
+    },
+    {
+      "name": "Wrapped Ethereum",
+      "symbol": "WETH",
+      "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "decimals": 18,
+      "icon": "",
+      "isNative": false
+    },
+    {
+      "name": "USD Coin",
+      "symbol": "USDC",
+      "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+      "decimals": 6,
+      "icon": "",
+      "isNative": false
+    }
+  ]
+}
+
