@@ -1,87 +1,29 @@
+import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import type { RouteObject } from 'react-router-dom'
 import { Layout } from '@/layout'
-import HomePage from '@/pages/Home'
-import WalletPage from '@/pages/Wallet'
-import TokensPage from '@/pages/Tokens'
-import NFTsPage from '@/pages/NFTs'
-import DeFiPage from '@/pages/DeFi'
-import SwapPage from '@/pages/Swap'
-import StakingPage from '@/pages/Staking'
-import GovernancePage from '@/pages/Governance'
-import AnalyticsPage from '@/pages/Analytics'
-import SettingsPage from '@/pages/Settings'
-import NotFoundPage from '@/pages/NotFoundPage'
+import { allRoutes, type RouteConfig } from './routes'
 
-// 路由配置接口
-interface RouteConfig {
-  path: string
-  element: React.ReactElement
-  title?: string
-  children?: RouteConfig[]
+// 将 RouteConfig 转换为 react-router-dom 的 RouteObject
+const convertToRouteObject = (config: RouteConfig): RouteObject => {
+  const route: RouteObject = {
+    path: config.path,
+    element: config.element,
+  }
+  
+  if (config.children && config.children.length > 0) {
+    route.children = config.children.map(convertToRouteObject)
+  }
+  
+  return route
 }
 
 // 路由配置
-const routes: RouteConfig[] = [
+const routes: RouteObject[] = [
   {
     path: '/',
     element: <Layout />,
-    children: [
-      {
-        path: '',
-        element: <HomePage />,
-        title: '首页',
-      },
-      {
-        path: 'wallet',
-        element: <WalletPage />,
-        title: '钱包',
-      },
-      {
-        path: 'tokens',
-        element: <TokensPage />,
-        title: '代币',
-      },
-      {
-        path: 'nfts',
-        element: <NFTsPage />,
-        title: 'NFT',
-      },
-      {
-        path: 'defi',
-        element: <DeFiPage />,
-        title: 'DeFi',
-      },
-      {
-        path: 'swap',
-        element: <SwapPage />,
-        title: '交换',
-      },
-      {
-        path: 'staking',
-        element: <StakingPage />,
-        title: '质押',
-      },
-      {
-        path: 'governance',
-        element: <GovernancePage />,
-        title: '治理',
-      },
-      {
-        path: 'analytics',
-        element: <AnalyticsPage />,
-        title: '分析',
-      },
-      {
-        path: 'settings',
-        element: <SettingsPage />,
-        title: '设置',
-      },
-      {
-        path: '*',
-        element: <NotFoundPage />,
-        title: '页面未找到',
-      },
-    ],
+    children: allRoutes.map(convertToRouteObject),
   },
 ]
 

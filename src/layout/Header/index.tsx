@@ -1,18 +1,12 @@
-import React, { useState } from 'react'
-import { Layout, Menu, Button, Space, Typography, Drawer } from 'antd'
+import React, { useState, useMemo } from 'react'
+import { Layout, Menu, Button, Typography, Drawer } from 'antd'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { 
-  WalletOutlined, 
-  HomeOutlined, 
-  SwapOutlined, 
-  TrophyOutlined, 
-  SettingOutlined,
-  MenuOutlined,
-  CloseOutlined
-} from '@ant-design/icons'
+import { MenuOutlined, CloseOutlined } from '@ant-design/icons'
 import { LanguageSelector } from '@/components/LanguageSelector'
+import { allRoutes } from '@/router/routes'
+import { getMenuItemsFromRoutes } from '@/router/routes/utils'
 import styles from './index.module.less'
 
 const { Header: AntHeader } = Layout
@@ -24,59 +18,10 @@ export const Header: React.FC = () => {
   const { t } = useTranslation()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  // 动态生成菜单项
-  const menuItems = [
-    {
-      key: '/',
-      icon: <HomeOutlined />,
-      label: t('navigation.home'),
-    },
-    {
-      key: '/wallet',
-      icon: <WalletOutlined />,
-      label: t('navigation.wallet'),
-    },
-    {
-      key: '/tokens',
-      icon: <SwapOutlined />,
-      label: t('navigation.tokens'),
-    },
-    {
-      key: '/nfts',
-      icon: <TrophyOutlined />,
-      label: t('navigation.nfts'),
-    },
-    {
-      key: '/defi',
-      icon: <SwapOutlined />,
-      label: t('navigation.defi'),
-    },
-    {
-      key: '/swap',
-      icon: <SwapOutlined />,
-      label: t('navigation.swap'),
-    },
-    {
-      key: '/staking',
-      icon: <TrophyOutlined />,
-      label: t('navigation.staking'),
-    },
-    {
-      key: '/governance',
-      icon: <TrophyOutlined />,
-      label: t('navigation.governance'),
-    },
-    {
-      key: '/analytics',
-      icon: <TrophyOutlined />,
-      label: t('navigation.analytics'),
-    },
-    {
-      key: '/settings',
-      icon: <SettingOutlined />,
-      label: t('navigation.settings'),
-    },
-  ]
+  // 从路由配置中生成菜单项
+  const menuItems = useMemo(() => {
+    return getMenuItemsFromRoutes(allRoutes, t)
+  }, [t])
 
   const handleMenuClick = ({ key }: { key: string }) => {
     navigate(key)
@@ -85,6 +30,23 @@ export const Header: React.FC = () => {
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
+  }
+
+  // 获取菜单高亮的key，如果是二级页面，返回父路由路径
+  const getSelectedKey = (pathname: string): string => {
+    // 查找所有带子路由的父路由
+    const parentRoutes = allRoutes.filter(route => route.children && route.children.length > 0)
+    
+    // 检查当前路径是否匹配某个父路由的子路由
+    for (const parentRoute of parentRoutes) {
+      const parentPath = `/${parentRoute.path}`
+      if (pathname.startsWith(`${parentPath}/`) || pathname === parentPath) {
+        return parentPath
+      }
+    }
+    
+    // 其他情况返回完整路径
+    return pathname
   }
 
   return (
@@ -101,7 +63,7 @@ export const Header: React.FC = () => {
         <div className={styles.desktopMenu}>
           <Menu
             mode="horizontal"
-            selectedKeys={[location.pathname]}
+            selectedKeys={[getSelectedKey(location.pathname)]}
             onClick={handleMenuClick}
             items={menuItems}
             className={styles.menu}
@@ -167,7 +129,7 @@ export const Header: React.FC = () => {
         
         <Menu
           mode="vertical"
-          selectedKeys={[location.pathname]}
+          selectedKeys={[getSelectedKey(location.pathname)]}
           onClick={handleMenuClick}
           items={menuItems}
           className={styles.mobileMenu}
