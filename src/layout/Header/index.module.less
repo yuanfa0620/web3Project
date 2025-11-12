@@ -17,13 +17,13 @@
     margin: 0 auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     height: 100%;
     padding: 0 24px;
 
     .logo {
-      flex-shrink: 0;
-      margin-right: 40px;
+      flex: 0 0 370px; // 固定宽度，与右侧按钮组保持一致
+      display: flex;
+      align-items: center;
 
       .logoText {
         margin: 0 !important;
@@ -38,7 +38,6 @@
       justify-content: center;
       min-width: 0;
       overflow: hidden;
-      max-width: calc(100% - 200px); // 为左右两侧留出空间
 
       .menu {
         border: none;
@@ -84,10 +83,11 @@
     }
 
     .rightButtons {
+      flex: 0 0 370px; // 固定宽度，与左侧 logo 保持一致
       display: flex;
       align-items: center;
+      justify-content: flex-end;
       gap: 12px;
-      flex-shrink: 0;
 
       .languageSelector {
         flex-shrink: 0;
@@ -180,9 +180,15 @@
   // 高分辨率显示器优化 (2K, 4K等)
   @media (min-width: 1920px) {
     .headerContent {
-      .desktopMenu {
-        max-width: calc(100% - 300px); // 高分辨率下为左右两侧留更多空间
+      .logo {
+        flex: 0 0 410px; // 高分辨率下增加宽度
+      }
 
+      .rightButtons {
+        flex: 0 0 410px; // 高分辨率下增加宽度
+      }
+
+      .desktopMenu {
         .menu {
           .ant-menu-item {
             max-width: min(calc((100vw - 500px) / 10), 100px); // 高分辨率下动态计算宽度
@@ -197,9 +203,15 @@
   // 超高分辨率显示器 (4K等)
   @media (min-width: 2560px) {
     .headerContent {
-      .desktopMenu {
-        max-width: calc(100% - 400px); // 超高分辨率下为左右两侧留更多空间
+      .logo {
+        flex: 0 0 470px; // 超高分辨率下进一步增加宽度
+      }
 
+      .rightButtons {
+        flex: 0 0 470px; // 超高分辨率下进一步增加宽度
+      }
+
+      .desktopMenu {
         .menu {
           .ant-menu-item {
             max-width: min(calc((100vw - 600px) / 10), 80px); // 超高分辨率下进一步限制
@@ -269,6 +281,7 @@
 
       .logo {
         order: 1; // logo 保持在最左边
+        flex: 0 0 auto; // 移动端恢复自动宽度
         margin-right: 0; // 移除右边距
 
         .logoText {
@@ -282,6 +295,7 @@
 
       .rightButtons {
         order: 2; // 右侧按钮组
+        flex: 0 0 auto; // 移动端恢复自动宽度
         gap: 8px; // 钱包按钮和菜单按钮之间的间距
 
         .mobileMenuButton {
@@ -305,6 +319,7 @@
       padding: 0; // 移除内部 padding
 
       .logo {
+        flex: 0 0 auto; // 小屏幕恢复自动宽度
         margin-right: 0; // 移除右边距
 
         .logoText {
@@ -313,6 +328,7 @@
       }
 
       .rightButtons {
+        flex: 0 0 auto; // 小屏幕恢复自动宽度
         gap: 6px; // 小屏幕下减少按钮间距
 
         .walletContainer {

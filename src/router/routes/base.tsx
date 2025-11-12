@@ -61,26 +61,26 @@ export const baseRoutes: RouteConfig[] = [
     icon: <TrophyOutlined />,
     menuLabel: 'navigation.staking',
   },
-  {
-    path: 'governance',
-    element: <GovernancePage />,
-    title: '治理',
-    icon: <TrophyOutlined />,
-    menuLabel: 'navigation.governance',
-  },
-  {
-    path: 'analytics',
-    element: <AnalyticsPage />,
-    title: '分析',
-    icon: <TrophyOutlined />,
-    menuLabel: 'navigation.analytics',
-  },
-  {
-    path: 'settings',
-    element: <SettingsPage />,
-    title: '设置',
-    icon: <SettingOutlined />,
-    menuLabel: 'navigation.settings',
-  },
+  // {
+  //   path: 'governance',
+  //   element: <GovernancePage />,
+  //   title: '治理',
+  //   icon: <TrophyOutlined />,
+  //   menuLabel: 'navigation.governance',
+  // },
+  // {
+  //   path: 'analytics',
+  //   element: <AnalyticsPage />,
+  //   title: '分析',
+  //   icon: <TrophyOutlined />,
+  //   menuLabel: 'navigation.analytics',
+  // },
+  // {
+  //   path: 'settings',
+  //   element: <SettingsPage />,
+  //   title: '设置',
+  //   icon: <SettingOutlined />,
+  //   menuLabel: 'navigation.settings',
+  // },
 ]
 
