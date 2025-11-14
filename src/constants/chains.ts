@@ -54,24 +54,25 @@ export const CHAIN_IDS = {
   BASE_SEPOLIA: 84532,
 } as const
 
-// RPC URLs
+// RPC URLs（主网 + 测试网统一管理）
 const rpcUrls = getRpcUrls()
 export const RPC_URLS = {
+  // 主网
   [CHAIN_IDS.ETHEREUM]: rpcUrls.ETHEREUM,
   [CHAIN_IDS.POLYGON]: rpcUrls.POLYGON,
   [CHAIN_IDS.BSC]: rpcUrls.BSC,
   [CHAIN_IDS.ARBITRUM]: rpcUrls.ARBITRUM,
   [CHAIN_IDS.OPTIMISM]: rpcUrls.OPTIMISM,
   [CHAIN_IDS.AVALANCHE]: rpcUrls.AVALANCHE,
-  [CHAIN_IDS.BASE]: 'https://mainnet.base.org',
-  // 测试网 RPC URLs（如果没有配置，使用默认值）
-  [CHAIN_IDS.SEPOLIA]: 'https://rpc.sepolia.org',
-  [CHAIN_IDS.POLYGON_MUMBAI]: 'https://rpc-mumbai.maticvigil.com',
-  [CHAIN_IDS.BSC_TESTNET]: 'https://data-seed-prebsc-1-s1.binance.org:8545',
-  [CHAIN_IDS.ARBITRUM_SEPOLIA]: 'https://sepolia-rollup.arbitrum.io/rpc',
-  [CHAIN_IDS.OPTIMISM_SEPOLIA]: 'https://sepolia.optimism.io',
-  [CHAIN_IDS.AVALANCHE_FUJI]: 'https://api.avax-test.network/ext/bc/C/rpc',
-  [CHAIN_IDS.BASE_SEPOLIA]: 'https://sepolia.base.org',
+  [CHAIN_IDS.BASE]: rpcUrls.BASE,
+  // 测试网
+  [CHAIN_IDS.SEPOLIA]: rpcUrls.SEPOLIA,
+  [CHAIN_IDS.POLYGON_MUMBAI]: rpcUrls.POLYGON_MUMBAI,
+  [CHAIN_IDS.BSC_TESTNET]: rpcUrls.BSC_TESTNET,
+  [CHAIN_IDS.ARBITRUM_SEPOLIA]: rpcUrls.ARBITRUM_SEPOLIA,
+  [CHAIN_IDS.OPTIMISM_SEPOLIA]: rpcUrls.OPTIMISM_SEPOLIA,
+  [CHAIN_IDS.AVALANCHE_FUJI]: rpcUrls.AVALANCHE_FUJI,
+  [CHAIN_IDS.BASE_SEPOLIA]: rpcUrls.BASE_SEPOLIA,
 } as const
 
 // 链信息（使用 chainlist.org 的图标）
