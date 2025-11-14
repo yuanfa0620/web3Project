@@ -4,7 +4,7 @@
 
 ## 目录结构
 
-```
+```text
 src/api/
 ├── user/           # 用户相关API
 │   ├── index.ts    # 用户API接口
