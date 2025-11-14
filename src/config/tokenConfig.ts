@@ -11,7 +11,6 @@ import tokens10 from './tokens/10.json'
 import tokens43114 from './tokens/43114.json'
 import tokens8453 from './tokens/8453.json'
 // 测试网
-import tokens5 from './tokens/5.json'
 import tokens11155111 from './tokens/11155111.json'
 import tokens80001 from './tokens/80001.json'
 import tokens97 from './tokens/97.json'
@@ -30,7 +29,6 @@ const tokenConfigs: Record<number, any> = {
   43114: tokens43114,
   8453: tokens8453,
   // 测试网
-  5: tokens5, // Sepolia (Goerli)
   11155111: tokens11155111, // Sepolia
   80001: tokens80001, // Polygon Mumbai
   97: tokens97, // BSC Testnet
@@ -81,6 +79,6 @@ export const getSupportedChainIds = (): number[] => {
 
 // 获取测试网链ID（如果需要）
 export const getTestnetChainIds = (): number[] => {
-  return [5, 80001, 97, 421613, 420, 43113] // 测试网
+  return [11155111, 80001, 97, 421613, 420, 43113] // 测试网
 }
 
