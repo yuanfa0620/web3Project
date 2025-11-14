@@ -29,25 +29,42 @@ const SwapPage: React.FC = () => {
   const [toAmountInput, setToAmountInput] = useState<string>('') // to输入框的值
   const [fromTokenChainId, setFromTokenChainId] = useState<number | null>(null)
   const [toTokenChainId, setToTokenChainId] = useState<number | null>(null)
-  // 共享的网络选择状态，用于两个代币选择框
-  // 默认网络：如果连接了钱包，使用当前连接的网络；否则使用以太坊主网
-  const [sharedChainId, setSharedChainId] = useState<number | null>(
-    isConnected && chainId ? chainId : CHAIN_IDS.ETHEREUM
-  )
+  // 跟踪最后选择的代币网络（用于确定默认网络）
+  const [lastSelectedChainId, setLastSelectedChainId] = useState<number | null>(null)
   // 跟踪当前正在编辑的输入框：'from' | 'to' | null
   const [activeInput, setActiveInput] = useState<'from' | 'to' | null>(null)
 
-  // 当钱包连接状态或链ID变化时，更新默认网络（仅在用户未手动修改的情况下）
+  // 当钱包连接状态或链ID变化时，如果用户没有选择代币，更新最后选择的网络
   useEffect(() => {
-    // 如果用户还没有选择代币，则根据钱包状态更新默认网络
-    if (!fromToken && !toToken) {
-      if (isConnected && chainId) {
-        setSharedChainId(chainId)
-      } else {
-        setSharedChainId(CHAIN_IDS.ETHEREUM)
-      }
+    // 如果用户还没有选择代币，则根据钱包状态更新最后选择的网络
+    if (!fromToken && !toToken && isConnected && chainId) {
+      setLastSelectedChainId(chainId)
     }
-  }, [isConnected, chainId, fromToken, toToken, CHAIN_IDS.ETHEREUM])
+  }, [isConnected, chainId, fromToken, toToken])
+
+  // 计算默认网络ID的逻辑：
+  // 1. 如果用户已经选择了代币，使用最后选择的代币的网络
+  // 2. 如果两个代币网络不一样，使用最后选择的代币的网络
+  // 3. 如果用户没有选择代币，使用连接钱包的网络
+  const getDefaultChainId = useMemo(() => {
+    // 如果用户已经选择了代币，优先使用最后选择的代币的网络
+    if (lastSelectedChainId) {
+      return lastSelectedChainId
+    }
+    // 如果用户已经选择了代币，使用其中一个代币的网络
+    if (toTokenChainId) {
+      return toTokenChainId
+    }
+    if (fromTokenChainId) {
+      return fromTokenChainId
+    }
+    // 如果用户没有选择代币，使用连接钱包的网络
+    if (isConnected && chainId) {
+      return chainId
+    }
+    // 默认使用以太坊主网
+    return CHAIN_IDS.ETHEREUM
+  }, [lastSelectedChainId, fromTokenChainId, toTokenChainId, isConnected, chainId])
 
   // 余额（使用token的chainId，而不是当前连接的chainId）
   const fromBalance = useTokenBalance(fromToken, fromTokenChainId)
@@ -90,7 +107,7 @@ const SwapPage: React.FC = () => {
     const chainId = selectedChainId || token.chainId
     if (chainId) {
       setFromTokenChainId(chainId)
-      setSharedChainId(chainId) // 更新共享网络状态
+      setLastSelectedChainId(chainId) // 更新最后选择的网络
     }
     // 清空输入状态
     setFromAmount('')
@@ -110,7 +127,7 @@ const SwapPage: React.FC = () => {
     const chainId = selectedChainId || token.chainId
     if (chainId) {
       setToTokenChainId(chainId)
-      setSharedChainId(chainId) // 更新共享网络状态
+      setLastSelectedChainId(chainId) // 更新最后选择的网络
     }
     // 清空输入状态
     setFromAmount('')
@@ -124,7 +141,7 @@ const SwapPage: React.FC = () => {
     // 只有当用户实际选择了新代币时，才会调用这个函数
     // 此时不需要清空 fromToken，因为用户可能只是切换了网络但没有选择新代币
     setToTokenChainId(chainId)
-    setSharedChainId(chainId) // 更新共享网络状态
+    setLastSelectedChainId(chainId) // 更新最后选择的网络
   }, [])
 
   // 处理from的chainId变化（只有当用户选择了新代币时才更新）
@@ -132,7 +149,7 @@ const SwapPage: React.FC = () => {
     // 只有当用户实际选择了新代币时，才会调用这个函数
     // 此时不需要清空 toToken，因为用户可能只是切换了网络但没有选择新代币
     setFromTokenChainId(chainId)
-    setSharedChainId(chainId) // 更新共享网络状态
+    setLastSelectedChainId(chainId) // 更新最后选择的网络
   }, [])
 
   // 无感切换网络（不显示弹窗，直接切换）
@@ -449,7 +466,7 @@ const SwapPage: React.FC = () => {
                   disabled={false}
                   selectedChainId={fromTokenChainId}
                   onChainSelect={setFromTokenChainId}
-                  defaultChainId={sharedChainId || toTokenChainId}
+                  defaultChainId={getDefaultChainId}
                   onChainChange={handleFromChainChange}
                   otherSelectedToken={toToken}
                   otherSelectedChainId={toTokenChainId}
@@ -479,11 +496,11 @@ const SwapPage: React.FC = () => {
                     setToTokenChainId(tempChainId)
                     // 交换activeInput
                     setActiveInput(activeInput === 'from' ? 'to' : 'from')
-                    // 更新共享网络状态为当前有效的网络
+                    // 更新最后选择的网络为当前有效的网络
                     if (toTokenChainId) {
-                      setSharedChainId(toTokenChainId)
+                      setLastSelectedChainId(toTokenChainId)
                     } else if (fromTokenChainId) {
-                      setSharedChainId(fromTokenChainId)
+                      setLastSelectedChainId(fromTokenChainId)
                     }
                   }}
                 />
@@ -501,7 +518,7 @@ const SwapPage: React.FC = () => {
                   showMax={false}
                   selectedChainId={toTokenChainId}
                   onChainSelect={setToTokenChainId}
-                  defaultChainId={sharedChainId || fromTokenChainId}
+                  defaultChainId={getDefaultChainId}
                   onChainChange={handleToChainChange}
                   otherSelectedToken={fromToken}
                   otherSelectedChainId={fromTokenChainId}

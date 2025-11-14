@@ -87,6 +87,34 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
   const [loadingContract, setLoadingContract] = useState(false)
   // 用于跟踪弹窗是否已经初始化，避免在弹窗打开后被外部状态覆盖
   const modalInitializedRef = React.useRef(false)
+  
+  // localStorage key 用于保存用户手动选择的网络
+  const LAST_SELECTED_CHAIN_ID_KEY = 'tokenSelector_lastSelectedChainId'
+  
+  // 获取保存的网络ID
+  const getSavedChainId = (): number | null => {
+    try {
+      const saved = localStorage.getItem(LAST_SELECTED_CHAIN_ID_KEY)
+      if (saved) {
+        const chainId = parseInt(saved, 10)
+        if (!isNaN(chainId)) {
+          return chainId
+        }
+      }
+    } catch (error) {
+      console.error('读取保存的网络ID失败:', error)
+    }
+    return null
+  }
+  
+  // 保存网络ID
+  const saveChainId = (chainId: number) => {
+    try {
+      localStorage.setItem(LAST_SELECTED_CHAIN_ID_KEY, chainId.toString())
+    } catch (error) {
+      console.error('保存网络ID失败:', error)
+    }
+  }
 
   // 根据主网/测试网切换显示对应的链列表
   const supportedChainIds = useMemo(() => {
@@ -111,21 +139,35 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
   // 当打开弹窗时，设置默认链（只在弹窗刚打开时执行一次）
   useEffect(() => {
     if (modalVisible && !modalInitializedRef.current) {
-      // 如果有 defaultChainId 或 selectedChainId，使用它们
-      if (defaultChainId || selectedChainId) {
-        const targetChainId = selectedChainId || defaultChainId
-        if (targetChainId) {
-          setCurrentChainId(targetChainId)
-          setIsTestnet((TESTNET_CHAIN_IDS as readonly number[]).includes(targetChainId))
-        }
+      // 优先级：
+      // 1. selectedChainId（已选择的代币的网络）
+      // 2. 保存的用户手动选择的网络
+      // 3. defaultChainId（从外部传入的默认网络）
+      // 4. 以太坊主网
+      let targetChainId: number | null = null
+      
+      if (selectedChainId) {
+        // 如果已经有选择的代币，使用代币的网络
+        targetChainId = selectedChainId
       } else {
-        // 如果没有缓存（没有 defaultChainId 和 selectedChainId），且当前没有选择链
-        // 默认选择以太坊主网（这个逻辑会在 Swap 页面通过 defaultChainId 传入）
-        if (currentChainId === null) {
-          setCurrentChainId(CHAIN_IDS.ETHEREUM)
-          setIsTestnet(false) // 以太坊是主网
+        // 如果没有选择的代币，优先使用保存的用户手动选择的网络
+        const savedChainId = getSavedChainId()
+        if (savedChainId) {
+          targetChainId = savedChainId
+        } else if (defaultChainId) {
+          // 如果没有保存的网络，使用传入的默认网络
+          targetChainId = defaultChainId
+        } else {
+          // 最后默认使用以太坊主网
+          targetChainId = CHAIN_IDS.ETHEREUM
         }
       }
+      
+      if (targetChainId) {
+        setCurrentChainId(targetChainId)
+        setIsTestnet((TESTNET_CHAIN_IDS as readonly number[]).includes(targetChainId))
+      }
+      
       modalInitializedRef.current = true
     } else if (!modalVisible) {
       // 弹窗关闭时，重置初始化标志
@@ -266,6 +308,8 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
     setCurrentChainId(chainId)
     // 根据选择的链ID更新测试网状态
     setIsTestnet((TESTNET_CHAIN_IDS as readonly number[]).includes(chainId))
+    // 保存用户手动选择的网络
+    saveChainId(chainId)
     setSearchText('')
     // 只更新弹窗内的选择，不触发外部回调
     // 只有当用户选择代币时，才会通过 handleTokenSelect 更新网络
@@ -275,22 +319,28 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
   const handleTestnetToggle = (checked: boolean) => {
     setIsTestnet(checked)
     // 切换时，根据新的网络类型设置默认链
+    let newChainId: number | null = null
     if (checked) {
       // 切换到测试网，默认选择第一个测试网（Sepolia）
       // 如果当前链是测试网，保持当前链；否则切换到第一个测试网
       if (currentChainId && (TESTNET_CHAIN_IDS as readonly number[]).includes(currentChainId)) {
-        // 保持当前测试网
+        newChainId = currentChainId
       } else {
-        setCurrentChainId(CHAIN_IDS.SEPOLIA)
+        newChainId = CHAIN_IDS.SEPOLIA
       }
     } else {
       // 切换到主网，默认选择以太坊
       // 如果当前链是主网，保持当前链；否则切换到以太坊
       if (currentChainId && (MAINNET_CHAIN_IDS as readonly number[]).includes(currentChainId)) {
-        // 保持当前主网
+        newChainId = currentChainId
       } else {
-        setCurrentChainId(CHAIN_IDS.ETHEREUM)
+        newChainId = CHAIN_IDS.ETHEREUM
       }
+    }
+    if (newChainId) {
+      setCurrentChainId(newChainId)
+      // 保存用户手动选择的网络
+      saveChainId(newChainId)
     }
     setSearchText('')
   }
