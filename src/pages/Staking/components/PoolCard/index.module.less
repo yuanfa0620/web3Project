@@ -1,0 +1,119 @@
+.poolCard {
+  height: 100%;
+  border-radius: 12px;
+  transition: all 0.3s;
+  
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+
+    .tokenPair {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .tokenIcons {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        .tokenIcon {
+          border: 2px solid #fff;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+          &:first-child {
+            z-index: 2;
+          }
+
+          &:last-child {
+            margin-left: -12px;
+            z-index: 1;
+          }
+        }
+      }
+
+      .tokenInfo {
+        .poolName {
+          margin: 0;
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        .poolType {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .statusTag {
+      margin: 0;
+    }
+  }
+
+  .cardBody {
+    margin-bottom: 20px;
+
+    .statRow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .statLabel {
+        font-size: 14px;
+      }
+
+      .apyValue {
+        font-size: 20px;
+        color: #52c41a;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .cardFooter {
+    margin-top: auto;
+  }
+}
+
+// 移动端适配
+@media (max-width: 768px) {
+  .poolCard {
+    .cardHeader {
+      .tokenPair {
+        .tokenInfo {
+          .poolName {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+
+    .cardBody {
+      .statRow {
+        padding: 10px 0;
+
+        .statLabel {
+          font-size: 13px;
+        }
+
+        .apyValue {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,141 @@
+[
+  {
+    "id": "pool-1",
+    "lpPair": {
+      "tokenA": {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "icon": "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+        "address": "0x0000000000000000000000000000000000000000"
+      },
+      "tokenB": {
+        "symbol": "USDT",
+        "name": "Tether USD",
+        "icon": "https://cryptologos.cc/logos/tether-usdt-logo.png",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      }
+    },
+    "stakedAmount": "1234567.89",
+    "apy": 45.67,
+    "totalRewards": "123456.78",
+    "tvl": "12345678.90",
+    "rewardToken": {
+      "symbol": "REWARD",
+      "name": "Reward Token",
+      "address": "0x1234567890123456789012345678901234567890"
+    },
+    "lockPeriod": 30,
+    "isActive": true
+  },
+  {
+    "id": "pool-2",
+    "lpPair": {
+      "tokenA": {
+        "symbol": "BTC",
+        "name": "Bitcoin",
+        "icon": "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+      },
+      "tokenB": {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "icon": "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+        "address": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    "stakedAmount": "987654.32",
+    "apy": 52.34,
+    "totalRewards": "98765.43",
+    "tvl": "9876543.21",
+    "rewardToken": {
+      "symbol": "REWARD",
+      "name": "Reward Token",
+      "address": "0x1234567890123456789012345678901234567890"
+    },
+    "lockPeriod": 60,
+    "isActive": true
+  },
+  {
+    "id": "pool-3",
+    "lpPair": {
+      "tokenA": {
+        "symbol": "BNB",
+        "name": "Binance Coin",
+        "icon": "https://cryptologos.cc/logos/bnb-bnb-logo.png",
+        "address": "0xB8c77482e45F1F44dE1745F52C74426C631bDD52"
+      },
+      "tokenB": {
+        "symbol": "USDC",
+        "name": "USD Coin",
+        "icon": "https://cryptologos.cc/logos/usd-coin-usdc-logo.png",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      }
+    },
+    "stakedAmount": "2345678.90",
+    "apy": 38.92,
+    "totalRewards": "234567.89",
+    "tvl": "23456789.01",
+    "rewardToken": {
+      "symbol": "REWARD",
+      "name": "Reward Token",
+      "address": "0x1234567890123456789012345678901234567890"
+    },
+    "isActive": true
+  },
+  {
+    "id": "pool-4",
+    "lpPair": {
+      "tokenA": {
+        "symbol": "MATIC",
+        "name": "Polygon",
+        "icon": "https://cryptologos.cc/logos/polygon-matic-logo.png",
+        "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
+      },
+      "tokenB": {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "icon": "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+        "address": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    "stakedAmount": "567890.12",
+    "apy": 41.23,
+    "totalRewards": "56789.01",
+    "tvl": "5678901.23",
+    "rewardToken": {
+      "symbol": "REWARD",
+      "name": "Reward Token",
+      "address": "0x1234567890123456789012345678901234567890"
+    },
+    "lockPeriod": 90,
+    "isActive": true
+  },
+  {
+    "id": "pool-5",
+    "lpPair": {
+      "tokenA": {
+        "symbol": "LINK",
+        "name": "Chainlink",
+        "icon": "https://cryptologos.cc/logos/chainlink-link-logo.png",
+        "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA"
+      },
+      "tokenB": {
+        "symbol": "USDT",
+        "name": "Tether USD",
+        "icon": "https://cryptologos.cc/logos/tether-usdt-logo.png",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      }
+    },
+    "stakedAmount": "345678.90",
+    "apy": 35.67,
+    "totalRewards": "34567.89",
+    "tvl": "3456789.01",
+    "rewardToken": {
+      "symbol": "REWARD",
+      "name": "Reward Token",
+      "address": "0x1234567890123456789012345678901234567890"
+    },
+    "isActive": true
+  }
+]
+

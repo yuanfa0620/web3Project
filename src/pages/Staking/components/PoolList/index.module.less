@@ -1,0 +1,19 @@
+.poolList {
+  .emptyState {
+    padding: 60px 0;
+  }
+}
+
+// 移动端适配
+@media (max-width: 768px) {
+  .poolList {
+    :global(.ant-row) {
+      margin: 0 -8px;
+    }
+
+    :global(.ant-col) {
+      padding: 0 8px;
+    }
+  }
+}
+

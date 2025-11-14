@@ -1,13 +1,22 @@
 .stakingPage {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+
   .pageTitle {
     margin-bottom: 24px;
     color: #262626;
   }
-  
-  .stakingCard {
-    min-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+}
+
+// 移动端适配
+@media (max-width: 768px) {
+  .stakingPage {
+    padding: 0;
+
+    .pageTitle {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
   }
 }

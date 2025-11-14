@@ -11,7 +11,9 @@ import WalletPage from '@/pages/Wallet'
 import TokensPage from '@/pages/Tokens'
 import NFTsPage from '@/pages/NFTs'
 import SwapPage from '@/pages/Swap'
+import StakingLayout from '@/pages/Staking/StakingLayout'
 import StakingPage from '@/pages/Staking'
+import StakingPoolDetailPage from '@/pages/StakingPoolDetail'
 import GovernancePage from '@/pages/Governance'
 import AnalyticsPage from '@/pages/Analytics'
 import SettingsPage from '@/pages/Settings'
@@ -56,10 +58,24 @@ export const baseRoutes: RouteConfig[] = [
   },
   {
     path: 'staking',
-    element: <StakingPage />,
+    element: <StakingLayout />,
     title: '质押',
     icon: <TrophyOutlined />,
     menuLabel: 'navigation.staking',
+    children: [
+      {
+        path: '',
+        element: <StakingPage />,
+        title: '质押',
+        showInMenu: false,
+      },
+      {
+        path: ':poolId',
+        element: <StakingPoolDetailPage />,
+        title: '质押池详情',
+        showInMenu: false,
+      },
+    ],
   },
   // {
   //   path: 'governance',
