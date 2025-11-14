@@ -6,6 +6,7 @@ import { PageTitle } from '@/components/PageTitle'
 import { useWallet } from '@/hooks/useWallet'
 import { useNetworkInfo } from '@/hooks/useNetworkInfo'
 import { CHAIN_INFO } from '@/constants/chains'
+import { AnimatedNumber } from '@/components/AnimatedNumber'
 import styles from './index.module.less'
 
 const { Title, Text, Paragraph } = Typography
@@ -76,7 +77,13 @@ const WalletPage: React.FC = () => {
               <div className={styles.balanceSection}>
                 <Text className={styles.balanceLabel}>{t('wallet.totalBalance')}</Text>
                 <Title level={1} className={styles.balanceValue}>
-                  {balance || '0.00'} {tokenSymbol}
+                  <AnimatedNumber
+                    value={balance}
+                    suffix={tokenSymbol}
+                    defaultValue="0.00"
+                    decimals={2}
+                    enableAnimation={true}
+                  />
                 </Title>
               </div>
               

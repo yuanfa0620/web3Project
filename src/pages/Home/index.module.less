@@ -85,18 +85,51 @@
         transform: translateY(-4px);
       }
 
-      .statIcon {
-        font-size: 24px;
-        margin-right: 8px;
-      }
+      // 统一的自定义统计项包装器
+      .statisticWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
 
-      .balanceValue {
-        @media (max-width: 576px) {
+        .statIcon {
           font-size: 24px;
+          margin-bottom: 8px;
+          margin-right: 0;
+          margin-top: 0;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
         }
 
-        @media (max-width: 480px) {
-          font-size: 20px;
+        .statisticContent {
+          width: 100%;
+
+          .statisticTitle {
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.45);
+            margin-bottom: 4px;
+            line-height: 22px;
+          }
+
+          .statisticValue {
+            font-size: 30px;
+            line-height: 38px;
+            color: rgba(0, 0, 0, 0.85);
+            font-weight: 600;
+            word-break: break-word;
+            overflow-wrap: break-word;
+
+            @media (max-width: 576px) {
+              font-size: 24px;
+              line-height: 32px;
+            }
+
+            @media (max-width: 480px) {
+              font-size: 20px;
+              line-height: 28px;
+            }
+          }
         }
       }
     }

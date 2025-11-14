@@ -3,6 +3,7 @@ import { Card, Table, Typography, Tag, Button, Space, Input } from 'antd'
 import { SearchOutlined, SwapOutlined, SendOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { PageTitle } from '@/components/PageTitle'
+import { AnimatedNumber } from '@/components/AnimatedNumber'
 import styles from './index.module.less'
 import tokens from 'mock/tokens.json'
 
@@ -31,7 +32,14 @@ const TokensPage: React.FC = () => {
       dataIndex: 'balance',
       key: 'balance',
       render: (balance: string) => (
-        <span className={styles.balance}>{balance}</span>
+        <span className={styles.balance}>
+          <AnimatedNumber
+            value={balance}
+            defaultValue="0.00"
+            decimals={2}
+            enableAnimation={true}
+          />
+        </span>
       ),
     },
     {

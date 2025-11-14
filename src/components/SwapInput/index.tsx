@@ -2,6 +2,7 @@ import React from 'react'
 import { Input, Button, Typography, Space } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { TokenSelector } from '@/components/TokenSelector'
+import { AnimatedNumber } from '@/components/AnimatedNumber'
 import type { TokenConfig } from '@/types/swap'
 import styles from './index.module.less'
 
@@ -71,8 +72,15 @@ export const SwapInput: React.FC<SwapInputProps> = ({
         </Text>
         {token && (
           <Text type="secondary" className={styles.balance}>
-            {t('swap.balance')}: {loading ? '...' : balance}
-            {showMax && parseFloat(balance) > 0 && (
+            {t('swap.balance')}:{' '}
+            <AnimatedNumber
+              value={balance}
+              loading={loading}
+              defaultValue="0.00"
+              decimals={token.decimals || 2}
+              enableAnimation={true}
+            />
+            {showMax && parseFloat(balance || '0') > 0 && (
               <Button
                 type="link"
                 size="small"
