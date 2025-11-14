@@ -1,0 +1,15 @@
+{
+  "chainId": 43113,
+  "chainName": "Avalanche Fuji",
+  "tokens": [
+    {
+      "name": "Avalanche",
+      "symbol": "AVAX",
+      "address": "0x0000000000000000000000000000000000000000",
+      "decimals": 18,
+      "icon": "",
+      "isNative": true
+    }
+  ]
+}
+

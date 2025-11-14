@@ -1,0 +1,15 @@
+{
+  "chainId": 11155111,
+  "chainName": "Sepolia",
+  "tokens": [
+    {
+      "name": "Ethereum",
+      "symbol": "ETH",
+      "address": "0x0000000000000000000000000000000000000000",
+      "decimals": 18,
+      "icon": "",
+      "isNative": true
+    }
+  ]
+}
+

@@ -31,6 +31,7 @@ const TokensPage: React.FC = () => {
       title: t('wallet.balance'),
       dataIndex: 'balance',
       key: 'balance',
+      width: 150,
       render: (balance: string) => (
         <span className={styles.balance}>
           <AnimatedNumber

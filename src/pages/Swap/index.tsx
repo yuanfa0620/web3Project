@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import { CHAIN_IDS } from '@/constants/chains'
 import { Card, Button, Typography, Space, Modal, message } from 'antd'
 import { SwapOutlined, ArrowDownOutlined } from '@ant-design/icons'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
@@ -29,9 +30,24 @@ const SwapPage: React.FC = () => {
   const [fromTokenChainId, setFromTokenChainId] = useState<number | null>(null)
   const [toTokenChainId, setToTokenChainId] = useState<number | null>(null)
   // 共享的网络选择状态，用于两个代币选择框
-  const [sharedChainId, setSharedChainId] = useState<number | null>(null)
+  // 默认网络：如果连接了钱包，使用当前连接的网络；否则使用以太坊主网
+  const [sharedChainId, setSharedChainId] = useState<number | null>(
+    isConnected && chainId ? chainId : CHAIN_IDS.ETHEREUM
+  )
   // 跟踪当前正在编辑的输入框：'from' | 'to' | null
   const [activeInput, setActiveInput] = useState<'from' | 'to' | null>(null)
+
+  // 当钱包连接状态或链ID变化时，更新默认网络（仅在用户未手动修改的情况下）
+  useEffect(() => {
+    // 如果用户还没有选择代币，则根据钱包状态更新默认网络
+    if (!fromToken && !toToken) {
+      if (isConnected && chainId) {
+        setSharedChainId(chainId)
+      } else {
+        setSharedChainId(CHAIN_IDS.ETHEREUM)
+      }
+    }
+  }, [isConnected, chainId, fromToken, toToken, CHAIN_IDS.ETHEREUM])
 
   // 余额（使用token的chainId，而不是当前连接的chainId）
   const fromBalance = useTokenBalance(fromToken, fromTokenChainId)

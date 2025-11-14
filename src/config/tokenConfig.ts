@@ -10,8 +10,18 @@ import tokens42161 from './tokens/42161.json'
 import tokens10 from './tokens/10.json'
 import tokens43114 from './tokens/43114.json'
 import tokens8453 from './tokens/8453.json'
+// 测试网
+import tokens5 from './tokens/5.json'
+import tokens11155111 from './tokens/11155111.json'
+import tokens80001 from './tokens/80001.json'
+import tokens97 from './tokens/97.json'
+import tokens421613 from './tokens/421613.json'
+import tokens420 from './tokens/420.json'
+import tokens43113 from './tokens/43113.json'
+import tokens84532 from './tokens/84532.json'
 
 const tokenConfigs: Record<number, any> = {
+  // 主网
   1: tokens1,
   137: tokens137,
   56: tokens56,
@@ -19,6 +29,15 @@ const tokenConfigs: Record<number, any> = {
   10: tokens10,
   43114: tokens43114,
   8453: tokens8453,
+  // 测试网
+  5: tokens5, // Sepolia (Goerli)
+  11155111: tokens11155111, // Sepolia
+  80001: tokens80001, // Polygon Mumbai
+  97: tokens97, // BSC Testnet
+  421613: tokens421613, // Arbitrum Sepolia
+  420: tokens420, // Optimism Sepolia
+  43113: tokens43113, // Avalanche Fuji
+  84532: tokens84532, // Base Sepolia
 }
 
 // 加载token配置（合并自定义代币）

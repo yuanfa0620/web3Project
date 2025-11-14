@@ -114,8 +114,8 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
           setIsTestnet((TESTNET_CHAIN_IDS as readonly number[]).includes(targetChainId))
         }
       } else {
-        // 如果没有缓存（没有 defaultChainId 和 selectedChainId），且当前没有选择链，默认选择以太坊
-        // 注意：如果用户已经切换了测试网开关，不要强制重置
+        // 如果没有缓存（没有 defaultChainId 和 selectedChainId），且当前没有选择链
+        // 默认选择以太坊主网（这个逻辑会在 Swap 页面通过 defaultChainId 传入）
         if (currentChainId === null) {
           setCurrentChainId(CHAIN_IDS.ETHEREUM)
           setIsTestnet(false) // 以太坊是主网

@@ -87,13 +87,32 @@ export const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
     }
   }, [numericValue])
 
+  // 格式化数字，去掉小数末尾的0
+  const formatNumber = useMemo(() => {
+    return (num: number, decimalPlaces: number): string => {
+      // 先格式化为指定小数位数
+      const fixed = num.toFixed(decimalPlaces)
+      // 去掉末尾的0和小数点（如果小数部分全是0）
+      // 使用 parseFloat 会自动去掉末尾的0，然后转回字符串
+      const cleaned = parseFloat(fixed).toString()
+      return cleaned
+    }
+  }, [])
+
   // 格式化显示值
   const displayValue = useMemo(() => {
     if (loading) return loadingPlaceholder
-    if (numericValue === null) return defaultValue
+    if (numericValue === null) {
+      // 对默认值也进行格式化
+      const defaultNum = parseFloat(defaultValue)
+      if (!isNaN(defaultNum)) {
+        return formatNumber(defaultNum, decimals)
+      }
+      return defaultValue
+    }
     
-    return numericValue.toFixed(decimals)
-  }, [numericValue, loading, loadingPlaceholder, defaultValue, decimals])
+    return formatNumber(numericValue, decimals)
+  }, [numericValue, loading, loadingPlaceholder, defaultValue, decimals, formatNumber])
 
   // 如果正在加载，显示加载状态
   if (loading) {
@@ -131,6 +150,22 @@ export const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
   // 使用 CountUp 显示动画
   const startValue = prevValueRef.current !== null ? prevValueRef.current : 0
   
+  // CountUp 的格式化函数，去掉末尾的0，同时保留千位分隔符
+  const formatCountUpValue = useMemo(() => {
+    return (value: number): string => {
+      // 先格式化为指定小数位数
+      const fixed = value.toFixed(decimals)
+      // 去掉末尾的0
+      const cleaned = parseFloat(fixed).toString()
+      
+      // 添加千位分隔符
+      const parts = cleaned.split('.')
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      
+      return parts.join('.')
+    }
+  }, [decimals])
+  
   return (
     <span className={className} style={style}>
       {prefix}
@@ -142,6 +177,7 @@ export const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
         separator=","
         decimal="."
         preserveValue
+        formattingFn={formatCountUpValue}
       />
       {suffix && ` ${suffix}`}
     </span>
