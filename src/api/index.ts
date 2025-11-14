@@ -2,12 +2,12 @@
 export { default as apiService } from './request'
 
 // 导出基础类型定义
-export type { ApiResponse, ApiError, RequestConfig, AxiosInstanceConfig } from './data/types'
+export type { ApiResponse, ApiError, RequestConfig, AxiosInstanceConfig } from './modules/data/types'
 
 // 导出分类的API服务
-export { userApi } from './user'
-export { tokenApi } from './token'
-export { transactionApi } from './transaction'
+export { userApi } from './modules/user'
+export { tokenApi } from './modules/token'
+export { transactionApi } from './modules/transaction'
 
 // 导出所有类型定义（使用别名避免冲突）
 export type { 
@@ -17,7 +17,7 @@ export type {
   GetUserInfoParams,
   UpdateUserInfoParams,
   GetUserTransactionsParams
-} from './user/types'
+} from './modules/user/types'
 
 export type {
   TokenInfo as TokenInfoClass,
@@ -26,7 +26,7 @@ export type {
   GetTokenListParams,
   GetTokenDetailParams,
   SearchTokensParams
-} from './token/types'
+} from './modules/token/types'
 
 export type {
   TransactionInfo as TransactionInfoClass,
@@ -35,7 +35,7 @@ export type {
   GetTransactionDetailParams,
   GetTransactionListParams,
   SubmitTransactionParams
-} from './transaction/types'
+} from './modules/transaction/types'
 
 // 为了向后兼容，保留原有的API实例导出
 export { userApiService, tokenApiService, transactionApiService } from './request'

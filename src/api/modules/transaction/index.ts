@@ -1,5 +1,5 @@
 // 交易相关API接口
-import { transactionApiService } from '../request'
+import { transactionApiService } from '../../request'
 import {
   TransactionInfo,
   TransactionList,

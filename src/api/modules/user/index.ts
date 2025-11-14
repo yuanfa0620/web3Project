@@ -1,5 +1,5 @@
 // 用户相关API接口
-import { userApiService } from '../request'
+import { userApiService } from '../../request'
 import { 
   UserInfo, 
   UserTransactionList, 

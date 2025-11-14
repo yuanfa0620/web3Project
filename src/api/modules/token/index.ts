@@ -1,5 +1,5 @@
 // 代币相关API接口
-import { tokenApiService } from '../request'
+import { tokenApiService } from '../../request'
 import  { 
   TokenInfo, 
   TokenList, 

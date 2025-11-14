@@ -2,7 +2,7 @@ import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse,
 import { message, Spin } from 'antd'
 import { createRoot } from 'react-dom/client'
 import React from 'react'
-import type { ApiResponse, ApiError, RequestConfig, AxiosInstanceConfig } from './data/types'
+import type { ApiResponse, ApiError, RequestConfig, AxiosInstanceConfig } from './modules/data/types'
 
 // 全局 loading 状态管理
 class LoadingManager {
