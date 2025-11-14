@@ -88,5 +88,6 @@ export interface ContractCallResult<T = any> {
   success: boolean
   data?: T
   error?: string
+  warning?: string // 警告信息（部分请求失败但仍返回了部分数据）
   transactionHash?: string
 }

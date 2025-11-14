@@ -2,6 +2,8 @@ import { readContract, writeContract, waitForTransactionReceipt } from 'wagmi/ac
 import type { ContractCallResult, ERC721TokenInfo, ERC721TransferParams, ERC721ApprovalParams, ERC721TokenMetadata } from './data/types'
 import { wagmiConfig } from '@/providers/WalletProvider'
 import ERC721_ABI from './abi/ERC721.json'
+import { getErrorMessage } from '@/utils/error'
+import { getSettledString, getSettledBigInt } from '@/utils/promise'
 
 export class ERC721Service {
   private address: string
@@ -17,11 +19,44 @@ export class ERC721Service {
   // 获取 NFT 基本信息
   async getTokenInfo(userAddress: string): Promise<ContractCallResult<ERC721TokenInfo>> {
     try {
-      const name = (await this.readContract('name')) as unknown as string
-      const symbol = (await this.readContract('symbol')) as unknown as string
-      const totalSupply = (await this.readContract('totalSupply')) as unknown as bigint
-      const balance = (await this.readContract('balanceOf', [userAddress])) as unknown as bigint
+      // 使用 Promise.allSettled 并行执行所有请求，即使部分失败也能返回成功的数据
+      const [nameResult, symbolResult, totalSupplyResult, balanceResult] = await Promise.allSettled([
+        this.readContract('name'),
+        this.readContract('symbol'),
+        this.readContract('totalSupply'),
+        this.readContract('balanceOf', [userAddress]),
+      ])
 
+      // 提取成功的结果，失败的使用默认值或空值
+      const name = getSettledString(nameResult, '')
+      const symbol = getSettledString(symbolResult, '')
+      const totalSupply = getSettledBigInt(totalSupplyResult, BigInt(0))
+      const balance = getSettledBigInt(balanceResult, BigInt(0))
+
+      // 收集错误信息
+      const errors: string[] = []
+      if (nameResult.status === 'rejected') {
+        errors.push(`获取名称失败: ${getErrorMessage(nameResult.reason)}`)
+      }
+      if (symbolResult.status === 'rejected') {
+        errors.push(`获取符号失败: ${getErrorMessage(symbolResult.reason)}`)
+      }
+      if (totalSupplyResult.status === 'rejected') {
+        errors.push(`获取总供应量失败: ${getErrorMessage(totalSupplyResult.reason)}`)
+      }
+      if (balanceResult.status === 'rejected') {
+        errors.push(`获取余额失败: ${getErrorMessage(balanceResult.reason)}`)
+      }
+
+      // 如果所有请求都失败，返回错误
+      if (errors.length === 4) {
+        return {
+          success: false,
+          error: `获取 NFT 信息失败: ${errors.join('; ')}`,
+        }
+      }
+
+      // 如果至少有一个请求成功，返回部分数据（即使有部分失败）
       return {
         success: true,
         data: {
@@ -31,11 +66,13 @@ export class ERC721Service {
           balance: balance.toString(),
           owner: userAddress,
         },
+        // 如果有部分失败，在返回数据中包含警告信息
+        ...(errors.length > 0 && { warning: `部分数据获取失败: ${errors.join('; ')}` }),
       }
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '获取 NFT 信息失败',
+        error: getErrorMessage(error) || '获取 NFT 信息失败',
       }
     }
   }
@@ -51,7 +88,7 @@ export class ERC721Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '获取余额失败',
+        error: getErrorMessage(error) || '获取余额失败',
       }
     }
   }
@@ -67,7 +104,7 @@ export class ERC721Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '获取所有者失败',
+        error: getErrorMessage(error) || '获取所有者失败',
       }
     }
   }
@@ -83,7 +120,7 @@ export class ERC721Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '获取授权信息失败',
+        error: getErrorMessage(error) || '获取授权信息失败',
       }
     }
   }
@@ -99,7 +136,7 @@ export class ERC721Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '检查授权失败',
+        error: getErrorMessage(error) || '检查授权失败',
       }
     }
   }
@@ -115,7 +152,7 @@ export class ERC721Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '获取 Token URI 失败',
+        error: getErrorMessage(error) || '获取 Token URI 失败',
       }
     }
   }
@@ -148,7 +185,7 @@ export class ERC721Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '获取 Token 元数据失败',
+        error: getErrorMessage(error) || '获取 Token 元数据失败',
       }
     }
   }
@@ -165,7 +202,7 @@ export class ERC721Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '转账失败',
+        error: getErrorMessage(error) || '转账失败',
       }
     }
   }
@@ -182,7 +219,7 @@ export class ERC721Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '代授权转账失败',
+        error: getErrorMessage(error) || '代授权转账失败',
       }
     }
   }
@@ -199,7 +236,7 @@ export class ERC721Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '授权失败',
+        error: getErrorMessage(error) || '授权失败',
       }
     }
   }
@@ -216,7 +253,7 @@ export class ERC721Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '设置全部授权失败',
+        error: getErrorMessage(error) || '设置全部授权失败',
       }
     }
   }
@@ -234,7 +271,7 @@ export class ERC721Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '等待交易确认失败',
+        error: getErrorMessage(error) || '等待交易确认失败',
       }
     }
   }

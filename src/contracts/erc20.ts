@@ -3,6 +3,8 @@ import { parseUnits, formatUnits } from 'viem'
 import { wagmiConfig } from '@/providers/WalletProvider'
 import type { ContractCallResult, ERC20TokenInfo, ERC20TransferParams, ERC20ApprovalParams } from './data/types'
 import ERC20_ABI from './abi/ERC20.json'
+import { getErrorMessage } from '@/utils/error'
+import { getSettledString, getSettledNumber, getSettledBigInt } from '@/utils/promise'
 
 export class ERC20Service {
   private address: string
@@ -18,12 +20,49 @@ export class ERC20Service {
   // 获取代币基本信息
   async getTokenInfo(userAddress: string): Promise<ContractCallResult<ERC20TokenInfo>> {
     try {
-      const name = (await this.readContract('name')) as unknown as string
-      const symbol = (await this.readContract('symbol')) as unknown as string
-      const decimals = Number((await this.readContract('decimals')) as unknown as number)
-      const totalSupply = (await this.readContract('totalSupply')) as unknown as bigint
-      const balance = (await this.readContract('balanceOf', [userAddress])) as unknown as bigint
+      // 使用 Promise.allSettled 并行执行所有请求，即使部分失败也能返回成功的数据
+      const [nameResult, symbolResult, decimalsResult, totalSupplyResult, balanceResult] = await Promise.allSettled([
+        this.readContract('name'),
+        this.readContract('symbol'),
+        this.readContract('decimals'),
+        this.readContract('totalSupply'),
+        this.readContract('balanceOf', [userAddress]),
+      ])
 
+      // 提取成功的结果，失败的使用默认值或空值
+      const name = getSettledString(nameResult, '')
+      const symbol = getSettledString(symbolResult, '')
+      const decimals = getSettledNumber(decimalsResult, 18)
+      const totalSupply = getSettledBigInt(totalSupplyResult, BigInt(0))
+      const balance = getSettledBigInt(balanceResult, BigInt(0))
+
+      // 收集错误信息
+      const errors: string[] = []
+      if (nameResult.status === 'rejected') {
+        errors.push(`获取名称失败: ${getErrorMessage(nameResult.reason)}`)
+      }
+      if (symbolResult.status === 'rejected') {
+        errors.push(`获取符号失败: ${getErrorMessage(symbolResult.reason)}`)
+      }
+      if (decimalsResult.status === 'rejected') {
+        errors.push(`获取精度失败: ${getErrorMessage(decimalsResult.reason)}`)
+      }
+      if (totalSupplyResult.status === 'rejected') {
+        errors.push(`获取总供应量失败: ${getErrorMessage(totalSupplyResult.reason)}`)
+      }
+      if (balanceResult.status === 'rejected') {
+        errors.push(`获取余额失败: ${getErrorMessage(balanceResult.reason)}`)
+      }
+
+      // 如果所有请求都失败，返回错误
+      if (errors.length === 5) {
+        return {
+          success: false,
+          error: `获取代币信息失败: ${errors.join('; ')}`,
+        }
+      }
+
+      // 如果至少有一个请求成功，返回部分数据（即使有部分失败）
       return {
         success: true,
         data: {
@@ -33,11 +72,13 @@ export class ERC20Service {
           totalSupply: formatUnits(totalSupply, Number(decimals)),
           balance: formatUnits(balance, Number(decimals)),
         },
+        // 如果有部分失败，在返回数据中包含警告信息
+        ...(errors.length > 0 && { warning: `部分数据获取失败: ${errors.join('; ')}` }),
       }
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '获取代币信息失败',
+        error: getErrorMessage(error) || '获取代币信息失败',
       }
     }
   }
@@ -45,16 +86,44 @@ export class ERC20Service {
   // 获取余额
   async getBalance(userAddress: string): Promise<ContractCallResult<string>> {
     try {
-      const balance = (await this.readContract('balanceOf', [userAddress])) as unknown as bigint
-      const decimals = Number((await this.readContract('decimals')) as unknown as number)
+      // 并行获取余额和精度，即使其中一个失败也能处理
+      const [balanceResult, decimalsResult] = await Promise.allSettled([
+        this.readContract('balanceOf', [userAddress]),
+        this.readContract('decimals'),
+      ])
+
+      // 如果两个请求都失败，返回错误
+      if (balanceResult.status === 'rejected' && decimalsResult.status === 'rejected') {
+        return {
+          success: false,
+          error: `获取余额失败: 余额查询失败(${getErrorMessage(balanceResult.reason)}); 精度查询失败(${getErrorMessage(decimalsResult.reason)})`,
+        }
+      }
+
+      // 提取成功的结果，失败的使用默认值
+      const balance = getSettledBigInt(balanceResult, BigInt(0))
+      const decimals = getSettledNumber(decimalsResult, 18) // 默认精度为 18
+
+      // 如果余额查询失败，返回错误（因为这是主要数据）
+      if (balanceResult.status === 'rejected') {
+        return {
+          success: false,
+          error: `获取余额失败: ${getErrorMessage(balanceResult.reason)}`,
+        }
+      }
+
       return {
         success: true,
-        data: formatUnits(balance, Number(decimals)),
+        data: formatUnits(balance, decimals),
+        // 如果精度查询失败但使用了默认值，添加警告
+        ...(decimalsResult.status === 'rejected' && {
+          warning: `精度查询失败，使用默认值 18: ${getErrorMessage(decimalsResult.reason)}`
+        }),
       }
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '获取余额失败',
+        error: getErrorMessage(error) || '获取余额失败',
       }
     }
   }
@@ -62,16 +131,44 @@ export class ERC20Service {
   // 获取授权额度
   async getAllowance(owner: string, spender: string): Promise<ContractCallResult<string>> {
     try {
-      const allowance = (await this.readContract('allowance', [owner, spender])) as unknown as bigint
-      const decimals = Number((await this.readContract('decimals')) as unknown as number)
+      // 并行获取授权额度和精度，即使其中一个失败也能处理
+      const [allowanceResult, decimalsResult] = await Promise.allSettled([
+        this.readContract('allowance', [owner, spender]),
+        this.readContract('decimals'),
+      ])
+
+      // 如果两个请求都失败，返回错误
+      if (allowanceResult.status === 'rejected' && decimalsResult.status === 'rejected') {
+        return {
+          success: false,
+          error: `获取授权额度失败: 授权额度查询失败(${getErrorMessage(allowanceResult.reason)}); 精度查询失败(${getErrorMessage(decimalsResult.reason)})`,
+        }
+      }
+
+      // 提取成功的结果，失败的使用默认值
+      const allowance = getSettledBigInt(allowanceResult, BigInt(0))
+      const decimals = getSettledNumber(decimalsResult, 18) // 默认精度为 18
+
+      // 如果授权额度查询失败，返回错误（因为这是主要数据）
+      if (allowanceResult.status === 'rejected') {
+        return {
+          success: false,
+          error: `获取授权额度失败: ${getErrorMessage(allowanceResult.reason)}`,
+        }
+      }
+
       return {
         success: true,
-        data: formatUnits(allowance, Number(decimals)),
+        data: formatUnits(allowance, decimals),
+        // 如果精度查询失败但使用了默认值，添加警告
+        ...(decimalsResult.status === 'rejected' && {
+          warning: `精度查询失败，使用默认值 18: ${getErrorMessage(decimalsResult.reason)}`
+        }),
       }
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '获取授权额度失败',
+        error: getErrorMessage(error) || '获取授权额度失败',
       }
     }
   }
@@ -91,7 +188,7 @@ export class ERC20Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '转账失败',
+        error: getErrorMessage(error) || '转账失败',
       }
     }
   }
@@ -111,7 +208,7 @@ export class ERC20Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '授权失败',
+        error: getErrorMessage(error) || '授权失败',
       }
     }
   }
@@ -131,7 +228,7 @@ export class ERC20Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '代授权转账失败',
+        error: getErrorMessage(error) || '代授权转账失败',
       }
     }
   }
@@ -149,7 +246,7 @@ export class ERC20Service {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : '等待交易确认失败',
+        error: getErrorMessage(error) || '等待交易确认失败',
       }
     }
   }
