@@ -1,5 +1,5 @@
 // API 服务统一导出
-export { default as apiService } from './request'
+export { defaultRequest as apiService, createRequest, default as defaultRequest } from './request'
 
 // 导出基础类型定义
 export type { ApiResponse, ApiError, RequestConfig, AxiosInstanceConfig } from './modules/data/types'
@@ -36,6 +36,3 @@ export type {
   GetTransactionListParams,
   SubmitTransactionParams
 } from './modules/transaction/types'
-
-// 为了向后兼容，保留原有的API实例导出
-export { userApiService, tokenApiService, transactionApiService } from './request'
