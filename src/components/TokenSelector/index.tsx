@@ -85,14 +85,19 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
   const [modalVisible, setModalVisible] = useState(false)
   const [contractToken, setContractToken] = useState<TokenConfig | null>(null)
   const [loadingContract, setLoadingContract] = useState(false)
+  // 用于跟踪弹窗是否已经初始化，避免在弹窗打开后被外部状态覆盖
+  const modalInitializedRef = React.useRef(false)
 
   // 根据主网/测试网切换显示对应的链列表
   const supportedChainIds = useMemo(() => {
     return isTestnet ? TESTNET_CHAIN_IDS : MAINNET_CHAIN_IDS
   }, [isTestnet])
 
-  // 当defaultChainId变化时，更新currentChainId（如果没有已选择的链）
+  // 当defaultChainId变化时，更新currentChainId（如果没有已选择的链，且弹窗未打开）
   useEffect(() => {
+    // 如果弹窗已打开，不更新状态，让用户在弹窗内自由切换
+    if (modalVisible) return
+    
     if (defaultChainId && !selectedChainId) {
       // 如果当前没有选择链，或者当前链与默认链不同，则更新
       if (!currentChainId || currentChainId !== defaultChainId) {
@@ -101,11 +106,11 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
         setIsTestnet((TESTNET_CHAIN_IDS as readonly number[]).includes(defaultChainId))
       }
     }
-  }, [defaultChainId, selectedChainId, currentChainId])
+  }, [defaultChainId, selectedChainId, currentChainId, modalVisible])
 
   // 当打开弹窗时，设置默认链（只在弹窗刚打开时执行一次）
   useEffect(() => {
-    if (modalVisible) {
+    if (modalVisible && !modalInitializedRef.current) {
       // 如果有 defaultChainId 或 selectedChainId，使用它们
       if (defaultChainId || selectedChainId) {
         const targetChainId = selectedChainId || defaultChainId
@@ -121,8 +126,12 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
           setIsTestnet(false) // 以太坊是主网
         }
       }
+      modalInitializedRef.current = true
+    } else if (!modalVisible) {
+      // 弹窗关闭时，重置初始化标志
+      modalInitializedRef.current = false
     }
-  }, [modalVisible, defaultChainId, selectedChainId])
+  }, [modalVisible, defaultChainId, selectedChainId, currentChainId])
 
   // 如果外部传入了tokens，使用外部的
   useEffect(() => {
@@ -255,6 +264,8 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
   // 处理链选择（只在弹窗内切换，不立即更新外部状态）
   const handleChainSelect = (chainId: number) => {
     setCurrentChainId(chainId)
+    // 根据选择的链ID更新测试网状态
+    setIsTestnet((TESTNET_CHAIN_IDS as readonly number[]).includes(chainId))
     setSearchText('')
     // 只更新弹窗内的选择，不触发外部回调
     // 只有当用户选择代币时，才会通过 handleTokenSelect 更新网络
@@ -266,10 +277,20 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
     // 切换时，根据新的网络类型设置默认链
     if (checked) {
       // 切换到测试网，默认选择第一个测试网（Sepolia）
-      setCurrentChainId(CHAIN_IDS.SEPOLIA)
+      // 如果当前链是测试网，保持当前链；否则切换到第一个测试网
+      if (currentChainId && (TESTNET_CHAIN_IDS as readonly number[]).includes(currentChainId)) {
+        // 保持当前测试网
+      } else {
+        setCurrentChainId(CHAIN_IDS.SEPOLIA)
+      }
     } else {
       // 切换到主网，默认选择以太坊
-      setCurrentChainId(CHAIN_IDS.ETHEREUM)
+      // 如果当前链是主网，保持当前链；否则切换到以太坊
+      if (currentChainId && (MAINNET_CHAIN_IDS as readonly number[]).includes(currentChainId)) {
+        // 保持当前主网
+      } else {
+        setCurrentChainId(CHAIN_IDS.ETHEREUM)
+      }
     }
     setSearchText('')
   }

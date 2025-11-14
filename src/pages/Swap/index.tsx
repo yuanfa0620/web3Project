@@ -96,8 +96,7 @@ const SwapPage: React.FC = () => {
     setFromAmount('')
     setToAmountInput('')
     setActiveInput(null)
-    // 检查网络
-    checkNetwork(token, chainId)
+    // 不再在选择代币时检查网络，只在授权/交易时切换
   }, [toToken, toTokenChainId])
 
   // 处理toToken选择
@@ -117,8 +116,7 @@ const SwapPage: React.FC = () => {
     setFromAmount('')
     setToAmountInput('')
     setActiveInput(null)
-    // 检查网络
-    checkNetwork(token, chainId)
+    // 不再在选择代币时检查网络，只在授权/交易时切换
   }, [fromToken, fromTokenChainId])
 
   // 处理to的chainId变化（只有当用户选择了新代币时才更新）
@@ -137,21 +135,28 @@ const SwapPage: React.FC = () => {
     setSharedChainId(chainId) // 更新共享网络状态
   }, [])
 
-  // 检查网络
-  const checkNetwork = (token: TokenConfig, tokenChainId?: number | null) => {
-    const targetChainId = tokenChainId || token.chainId
-    if (targetChainId && chainId && targetChainId !== chainId) {
-      Modal.warning({
-        title: t('swap.switchNetwork'),
-        content: t('swap.switchNetworkTip', { chainName: `Chain ${targetChainId}` }),
-        onOk: () => {
-          if (switchChain) {
-            switchChain({ chainId: targetChainId })
-          }
-        },
-      })
+  // 无感切换网络（不显示弹窗，直接切换）
+  const switchNetworkSilently = useCallback(async (targetChainId: number): Promise<boolean> => {
+    if (!isConnected || !chainId) {
+      return false
     }
-  }
+    
+    if (targetChainId === chainId) {
+      return true // 已经是目标网络
+    }
+    
+    try {
+      if (switchChain) {
+        await switchChain({ chainId: targetChainId })
+        // 等待网络切换完成（通过监听 chainId 变化）
+        return true
+      }
+      return false
+    } catch (error) {
+      console.error('切换网络失败:', error)
+      return false
+    }
+  }, [isConnected, chainId, switchChain])
 
   // Max按钮
   const handleMaxClick = useCallback(() => {
@@ -220,48 +225,20 @@ const SwapPage: React.FC = () => {
     return formatAmount(rawAmount)
   }, [activeInput, fromAmountFromTo, fromAmount, formatAmount])
 
-  // 交换按钮
-  const handleSwapClick = useCallback(() => {
-    if (!walletConnected) {
-      // 不显示消息，因为按钮会触发ConnectButton
-      return
-    }
-
-    if (!fromToken || !toToken) {
-      message.warning(t('swap.noTokenSelected'))
-      return
-    }
-
-    // 使用实际输入的值（根据activeInput决定）
-    const actualFromAmount = activeInput === 'to' ? fromAmountFromTo : fromAmount
-    if (!actualFromAmount || parseFloat(actualFromAmount) <= 0) {
-      message.warning(t('swap.enterAmount'))
-      return
-    }
-
-    if (parseFloat(actualFromAmount) > parseFloat(fromBalance.balance || '0')) {
-      message.error(t('swap.insufficientBalance'))
-      return
-    }
-
-    if (needApprove && !fromToken.isNative) {
-      handleApprove()
-    } else {
-      handleSwap()
-    }
-  }, [
-    walletConnected,
-    fromToken,
-    toToken,
-    fromAmount,
-    fromBalance.balance,
-    needApprove,
-    t,
-  ])
-
   // 授权
-  const handleApprove = async () => {
+  const handleApprove = useCallback(async () => {
     if (!fromToken || !fromTokenChainId || !address) return
+
+    // 如果网络不匹配，先无感切换网络
+    if (isConnected && chainId && fromTokenChainId !== chainId) {
+      const switched = await switchNetworkSilently(fromTokenChainId)
+      if (!switched) {
+        message.error('切换网络失败，请手动切换网络')
+        return
+      }
+      // 等待网络切换完成（简单延迟，实际应该监听 chainId 变化）
+      await new Promise(resolve => setTimeout(resolve, 1000))
+    }
 
     try {
       // 获取DEX Router地址
@@ -311,13 +288,68 @@ const SwapPage: React.FC = () => {
       console.error('授权失败:', error)
       message.error('授权失败')
     }
-  }
+  }, [fromToken, fromTokenChainId, address, isConnected, chainId, switchNetworkSilently, t])
 
   // 执行交换
-  const handleSwap = async () => {
+  const handleSwap = useCallback(async () => {
+    // 如果网络不匹配，先无感切换网络
+    if (isConnected && chainId && fromTokenChainId && fromTokenChainId !== chainId) {
+      const switched = await switchNetworkSilently(fromTokenChainId)
+      if (!switched) {
+        message.error('切换网络失败，请手动切换网络')
+        return
+      }
+      // 等待网络切换完成（简单延迟，实际应该监听 chainId 变化）
+      await new Promise(resolve => setTimeout(resolve, 1000))
+    }
+    
     // TODO: 实现实际的交换逻辑
     message.info('交换功能开发中...')
-  }
+  }, [isConnected, chainId, fromTokenChainId, switchNetworkSilently])
+
+  // 交换按钮
+  const handleSwapClick = useCallback(() => {
+    if (!walletConnected) {
+      // 不显示消息，因为按钮会触发ConnectButton
+      return
+    }
+
+    if (!fromToken || !toToken) {
+      message.warning(t('swap.noTokenSelected'))
+      return
+    }
+
+    // 使用实际输入的值（根据activeInput决定）
+    const actualFromAmount = activeInput === 'to' ? fromAmountFromTo : fromAmount
+    if (!actualFromAmount || parseFloat(actualFromAmount) <= 0) {
+      message.warning(t('swap.enterAmount'))
+      return
+    }
+
+    if (parseFloat(actualFromAmount) > parseFloat(fromBalance.balance || '0')) {
+      message.error(t('swap.insufficientBalance'))
+      return
+    }
+
+    if (needApprove && !fromToken.isNative) {
+      handleApprove()
+    } else {
+      handleSwap()
+    }
+  }, [
+    walletConnected,
+    fromToken,
+    toToken,
+    fromAmount,
+    fromAmountFromTo,
+    toAmountInput,
+    fromBalance.balance,
+    needApprove,
+    activeInput,
+    handleApprove,
+    handleSwap,
+    t,
+  ])
 
   // 获取按钮状态
   const getButtonState = () => {

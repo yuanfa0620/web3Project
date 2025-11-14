@@ -114,6 +114,26 @@ export const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
     return formatNumber(numericValue, decimals)
   }, [numericValue, loading, loadingPlaceholder, defaultValue, decimals, formatNumber])
 
+  // CountUp 的格式化函数，去掉末尾的0，同时保留千位分隔符
+  // 必须在所有条件返回之前定义，确保 hooks 调用顺序一致
+  const formatCountUpValue = useMemo(() => {
+    return (value: number): string => {
+      // 先格式化为指定小数位数
+      const fixed = value.toFixed(decimals)
+      // 去掉末尾的0
+      const cleaned = parseFloat(fixed).toString()
+      
+      // 添加千位分隔符
+      const parts = cleaned.split('.')
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      
+      return parts.join('.')
+    }
+  }, [decimals])
+
+  // 使用 CountUp 显示动画时的起始值
+  const startValue = prevValueRef.current !== null ? prevValueRef.current : 0
+
   // 如果正在加载，显示加载状态
   if (loading) {
     return (
@@ -146,25 +166,6 @@ export const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
       </span>
     )
   }
-
-  // 使用 CountUp 显示动画
-  const startValue = prevValueRef.current !== null ? prevValueRef.current : 0
-  
-  // CountUp 的格式化函数，去掉末尾的0，同时保留千位分隔符
-  const formatCountUpValue = useMemo(() => {
-    return (value: number): string => {
-      // 先格式化为指定小数位数
-      const fixed = value.toFixed(decimals)
-      // 去掉末尾的0
-      const cleaned = parseFloat(fixed).toString()
-      
-      // 添加千位分隔符
-      const parts = cleaned.split('.')
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-      
-      return parts.join('.')
-    }
-  }, [decimals])
   
   return (
     <span className={className} style={style}>
