@@ -3,6 +3,7 @@ import { useAccount } from 'wagmi'
 import { message } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { createERC20Service } from '@/contracts/erc20'
+import { MAX_TOKEN_APPROVAL_AMOUNT } from '@/constants/approval'
 import type { TokenConfig } from '@/types/swap'
 
 interface UseSwapActionsParams {
@@ -72,10 +73,9 @@ export const useSwapActions = ({
       const erc20Service = createERC20Service(fromToken.address, fromTokenChainId)
       
       // 授权最大额度
-      const maxAmount = '115792089237316195423570985008687907853269984665640564039457'
       const result = await erc20Service.approve({
         spender: routerAddress,
-        amount: maxAmount,
+        amount: MAX_TOKEN_APPROVAL_AMOUNT,
       })
 
       if (result.success && result.transactionHash) {
