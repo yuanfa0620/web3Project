@@ -1,84 +1,27 @@
 import React from 'react'
-import { Card, Table, Typography, Tag, Button, Space, Input } from 'antd'
-import { SearchOutlined, SwapOutlined, SendOutlined } from '@ant-design/icons'
+import { Card, Table, Typography, Input } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { PageTitle } from '@/components/PageTitle'
-import { AnimatedNumber } from '@/components/AnimatedNumber'
+import { useTokenColumns } from './hooks/useTokenColumns'
+import { useTokenSearch } from './hooks/useTokenSearch'
+import { useTokenData } from './hooks/useTokenData'
 import styles from './index.module.less'
-import tokens from 'mock/tokens.json'
 
 const { Title } = Typography
 const { Search } = Input
 
-const mockTokens = tokens
-
 const TokensPage: React.FC = () => {
   const { t } = useTranslation()
-  
-  const columns = [
-    {
-      title: t('tokens.tokenList'),
-      dataIndex: 'symbol',
-      key: 'symbol',
-      render: (symbol: string, record: any) => (
-        <div className={styles.tokenInfo}>
-          <div className={styles.tokenSymbol}>{symbol}</div>
-          <div className={styles.tokenName}>{record.name}</div>
-        </div>
-      ),
-    },
-    {
-      title: t('wallet.balance'),
-      dataIndex: 'balance',
-      key: 'balance',
-      width: 150,
-      render: (balance: string) => (
-        <span className={styles.balance}>
-          <AnimatedNumber
-            value={balance}
-            defaultValue="0.00"
-            decimals={2}
-            enableAnimation={true}
-          />
-        </span>
-      ),
-    },
-    {
-      title: t('tokens.price'),
-      dataIndex: 'value',
-      key: 'value',
-      render: (value: string) => (
-        <span className={styles.value}>{value}</span>
-      ),
-    },
-    {
-      title: t('tokens.priceChange24h'),
-      dataIndex: 'change',
-      key: 'change',
-      render: (change: string, record: any) => (
-        <Tag 
-          color={record.changeType === 'positive' ? 'green' : 'red'}
-          className={styles.changeTag}
-        >
-          {change}
-        </Tag>
-      ),
-    },
-    {
-      title: t('common.settings'),
-      key: 'action',
-      render: () => (
-        <Space>
-          <Button type="link" icon={<SendOutlined />}>
-            {t('wallet.send')}
-          </Button>
-          <Button type="link" icon={<SwapOutlined />}>
-            {t('wallet.swap')}
-          </Button>
-        </Space>
-      ),
-    },
-  ]
+
+  // 获取代币数据
+  const { tokenList } = useTokenData()
+
+  // 搜索功能
+  const { searchText, filteredTokens, handleSearchChange } = useTokenSearch(tokenList)
+
+  // 表格列定义
+  const { columns } = useTokenColumns()
 
   return (
     <PageTitle title={t('pageTitle.tokens')}>
@@ -92,16 +35,20 @@ const TokensPage: React.FC = () => {
             allowClear
             className={styles.searchInput}
             prefix={<SearchOutlined />}
+            value={searchText}
+            onChange={(e) => handleSearchChange(e.target.value)}
+            onSearch={handleSearchChange}
           />
         </div>
 
         <Card className={styles.tokensCard}>
           <Table
             columns={columns}
-            dataSource={mockTokens}
+            dataSource={filteredTokens}
             pagination={false}
             className={styles.tokensTable}
             scroll={{ x: true }}
+            rowKey="key"
           />
         </Card>
       </div>

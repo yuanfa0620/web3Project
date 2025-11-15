@@ -1,0 +1,129 @@
+import { useEffect, useCallback } from 'react'
+import { useAccount, useSendTransaction, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { parseUnits, isAddress } from 'viem'
+import type { Address } from 'viem'
+import { message } from 'antd'
+import { useTranslation } from 'react-i18next'
+import type { FormInstance } from 'antd'
+import ERC20_ABI from '@/contracts/abi/ERC20.json'
+import type { TokenType } from './useSendTokenState'
+
+interface UseSendTokenTransactionParams {
+  tokenType: TokenType
+  selectedTokenAddress: string
+  tokenDecimals: number
+  form: FormInstance
+  onSuccess?: (hash: string) => void
+  onCancel: () => void
+}
+
+/**
+ * SendToken 组件的交易发送 Hook
+ */
+export const useSendTokenTransaction = ({
+  tokenType,
+  selectedTokenAddress,
+  tokenDecimals,
+  form,
+  onSuccess,
+  onCancel,
+}: UseSendTokenTransactionParams) => {
+  const { t } = useTranslation()
+  const { address } = useAccount()
+
+  // 发送主网币交易
+  const {
+    data: sendHash,
+    isPending: isSending,
+    error: sendError,
+    sendTransaction,
+  } = useSendTransaction()
+
+  // 发送ERC20代币交易
+  const {
+    data: erc20Hash,
+    isPending: isErc20Sending,
+    error: erc20Error,
+    writeContract,
+  } = useWriteContract()
+
+  // 等待交易确认
+  const transactionHash = sendHash || erc20Hash
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash: transactionHash,
+  })
+
+  // 交易成功后的处理
+  useEffect(() => {
+    if (isConfirmed && transactionHash) {
+      message.success(t('wallet.sendToken.transactionSuccess'))
+      form.resetFields()
+      onSuccess?.(transactionHash)
+      onCancel()
+    }
+  }, [isConfirmed, transactionHash, form, onSuccess, onCancel, t])
+
+  // 错误处理
+  useEffect(() => {
+    if (sendError) {
+      message.error(sendError.message || t('wallet.sendToken.sendFailed'))
+    }
+    if (erc20Error) {
+      message.error(erc20Error.message || t('wallet.sendToken.sendFailed'))
+    }
+  }, [sendError, erc20Error, t])
+
+  // 处理发送
+  const handleSend = useCallback(async () => {
+    try {
+      const values = await form.validateFields()
+      const { to, amount } = values
+
+      if (!isAddress(to)) {
+        message.error(t('wallet.sendToken.toAddressInvalid'))
+        return
+      }
+
+      if (!address) {
+        message.error(t('wallet.sendToken.connectWalletFirst'))
+        return
+      }
+
+      const amountInWei = parseUnits(amount, tokenDecimals)
+
+      if (tokenType === 'native') {
+        // 发送主网币
+        sendTransaction({
+          to: to as Address,
+          value: amountInWei,
+        })
+      } else {
+        // 发送ERC20代币
+        if (!selectedTokenAddress) {
+          message.error(t('wallet.sendToken.selectToken'))
+          return
+        }
+
+        writeContract({
+          address: selectedTokenAddress as Address,
+          abi: ERC20_ABI,
+          functionName: 'transfer',
+          args: [to as Address, amountInWei],
+        })
+      }
+    } catch (error) {
+      console.error('发送失败:', error)
+    }
+  }, [tokenType, selectedTokenAddress, tokenDecimals, form, address, sendTransaction, writeContract, t])
+
+  const isLoading = isSending || isErc20Sending || isConfirming
+
+  return {
+    transactionHash,
+    isLoading,
+    isConfirming,
+    isConfirmed,
+    handleSend,
+  }
+}
+

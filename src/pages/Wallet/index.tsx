@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Card, Row, Col, Typography, Button, Space, Tag, Divider, Spin } from 'antd'
 import { CopyOutlined, QrcodeOutlined, SendOutlined, SwapOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { PageTitle } from '@/components/PageTitle'
 import { useWallet } from '@/hooks/useWallet'
 import { useNetworkInfo } from '@/hooks/useNetworkInfo'
-import { CHAIN_INFO } from '@/constants/chains'
 import { AnimatedNumber } from '@/components/AnimatedNumber'
+import { useWalletModalState } from './hooks/useWalletModalState'
+import { useTokenSymbol } from './hooks/useTokenSymbol'
+import { useCopyAddress } from './hooks/useCopyAddress'
+import { useWalletActions } from './hooks/useWalletActions'
 import ReceiveModal from './components/ReceiveModal'
 import SendToken from './components/SendToken'
 import styles from './index.module.less'
@@ -16,16 +19,31 @@ const { Title, Text, Paragraph } = Typography
 const WalletPage: React.FC = () => {
   const { t } = useTranslation()
   const { address, chainId, isConnected, balance } = useWallet()
-  const [receiveModalVisible, setReceiveModalVisible] = useState(false)
-  const [sendTokenVisible, setSendTokenVisible] = useState(false)
+
+  // 模态框状态管理
+  const {
+    receiveModalVisible,
+    sendTokenVisible,
+    openReceiveModal,
+    closeReceiveModal,
+    openSendTokenModal,
+    closeSendTokenModal,
+  } = useWalletModalState()
 
   // 获取网络信息（区块高度和 Gas 价格）
-  const { blockNumber, gasPrice, blockNumberLoading, gasPriceLoading } = useNetworkInfo(chainId)
+  const { blockNumber, gasPrice, blockNumberLoading, gasPriceLoading } = useNetworkInfo(chainId || undefined)
 
-  // 根据链 ID 获取代币符号
-  const tokenSymbol = chainId
-    ? (CHAIN_INFO[chainId as keyof typeof CHAIN_INFO]?.symbol || 'ETH')
-    : 'ETH'
+  // 获取代币符号
+  const { tokenSymbol } = useTokenSymbol(chainId || undefined)
+
+  // 地址复制功能
+  const { handleCopyAddress } = useCopyAddress()
+
+  // 快速操作
+  const { handleSend, handleSwap, handleReceive } = useWalletActions({
+    openSendTokenModal,
+    openReceiveModal,
+  })
 
   if (!isConnected) {
     return (
@@ -78,7 +96,7 @@ const WalletPage: React.FC = () => {
                   <Button
                     type="text"
                     icon={<CopyOutlined />}
-                    onClick={() => navigator.clipboard.writeText(address || '')}
+                    onClick={() => handleCopyAddress(address || '')}
                   >
                     {t('common.copy')}
                   </Button>
@@ -104,7 +122,7 @@ const WalletPage: React.FC = () => {
                   block
                   size="large"
                   icon={<SendOutlined />}
-                  onClick={() => setSendTokenVisible(true)}
+                  onClick={handleSend}
                 >
                   {t('wallet.send')}
                 </Button>
@@ -112,6 +130,7 @@ const WalletPage: React.FC = () => {
                   block
                   size="large"
                   icon={<SwapOutlined />}
+                  onClick={handleSwap}
                 >
                   {t('wallet.swap')}
                 </Button>
@@ -119,7 +138,7 @@ const WalletPage: React.FC = () => {
                   block
                   size="large"
                   icon={<QrcodeOutlined />}
-                  onClick={() => setReceiveModalVisible(true)}
+                  onClick={handleReceive}
                 >
                   {t('wallet.receive')}
                 </Button>
@@ -156,7 +175,7 @@ const WalletPage: React.FC = () => {
         {/* 收款码弹窗 */}
         <ReceiveModal
           open={receiveModalVisible}
-          onCancel={() => setReceiveModalVisible(false)}
+          onCancel={closeReceiveModal}
           address={address || undefined}
           chainId={chainId || undefined}
         />
@@ -164,7 +183,7 @@ const WalletPage: React.FC = () => {
         {/* 发送代币弹窗 */}
         <SendToken
           open={sendTokenVisible}
-          onCancel={() => setSendTokenVisible(false)}
+          onCancel={closeSendTokenModal}
           chainId={chainId || undefined}
           address={address || undefined}
         />
