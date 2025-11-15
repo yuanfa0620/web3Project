@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { useAccount, useBalance } from 'wagmi'
-import { formatUnits } from 'viem'
 import type { Address } from 'viem'
 import { message } from 'antd'
 import { useTranslation } from 'react-i18next'
@@ -57,7 +56,8 @@ export const useSendTokenBalance = ({
 
           if (result.success && result.data) {
             const { balance, decimals, symbol } = result.data
-            setTokenBalance(formatUnits(BigInt(balance), decimals))
+            // balance 已经在 getTokenInfo 中通过 formatUnits 格式化过了，直接使用
+            setTokenBalance(balance)
             setTokenDecimals(decimals)
             setTokenSymbol(symbol)
           } else {

@@ -57,11 +57,10 @@ export const useSendTokenTransaction = ({
   useEffect(() => {
     if (isConfirmed && transactionHash) {
       message.success(t('wallet.sendToken.transactionSuccess'))
-      form.resetFields()
+      // 调用成功回调，由父组件处理清空数据和关闭弹窗
       onSuccess?.(transactionHash)
-      onCancel()
     }
-  }, [isConfirmed, transactionHash, form, onSuccess, onCancel, t])
+  }, [isConfirmed, transactionHash, onSuccess, t])
 
   // 错误处理
   useEffect(() => {

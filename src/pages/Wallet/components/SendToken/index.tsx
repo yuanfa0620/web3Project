@@ -38,6 +38,8 @@ const SendToken: React.FC<SendTokenProps> = ({ open, onCancel, onSuccess, chainI
     tokenSymbol,
     handleTokenTypeChange,
     handleTokenAddressChange,
+    setTokenType,
+    setSelectedTokenAddress,
     setTokenBalance,
     setBalanceLoading,
     setTokenDecimals,
@@ -55,14 +57,37 @@ const SendToken: React.FC<SendTokenProps> = ({ open, onCancel, onSuccess, chainI
     setTokenSymbol,
   })
 
+  // 重置所有状态和表单数据
+  const resetAllData = () => {
+    form.resetFields()
+    setTokenType('native')
+    setSelectedTokenAddress('')
+    setTokenBalance('0')
+    setTokenDecimals(18)
+    setTokenSymbol('ETH')
+  }
+
+  // 当弹窗关闭时重置数据
+  const handleModalCancel = () => {
+    resetAllData()
+    onCancel()
+  }
+
+  // 交易成功后重置数据并关闭弹窗
+  const handleTransactionSuccess = (hash: string) => {
+    resetAllData()
+    onSuccess?.(hash)
+    onCancel()
+  }
+
   // 交易发送
   const { transactionHash, isLoading, isConfirming, isConfirmed, handleSend } = useSendTokenTransaction({
     tokenType,
     selectedTokenAddress,
     tokenDecimals,
     form,
-    onSuccess,
-    onCancel,
+    onSuccess: handleTransactionSuccess,
+    onCancel: handleModalCancel,
   })
 
   // 表单验证
@@ -115,7 +140,7 @@ const SendToken: React.FC<SendTokenProps> = ({ open, onCancel, onSuccess, chainI
         </Space>
       }
       open={open}
-      onCancel={onCancel}
+      onCancel={handleModalCancel}
       footer={null}
       width={500}
       destroyOnHidden
@@ -228,7 +253,7 @@ const SendToken: React.FC<SendTokenProps> = ({ open, onCancel, onSuccess, chainI
 
           <Form.Item>
             <Space style={{ width: '100%', justifyContent: 'flex-end' }}>
-              <Button onClick={onCancel}>
+              <Button onClick={handleModalCancel}>
                 {t('common.cancel')}
               </Button>
               <Button
