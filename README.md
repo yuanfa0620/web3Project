@@ -77,7 +77,7 @@ pnpm build:dev
 
 ## 项目结构
 
-```
+```text
 src/
 ├── api/                    # API 请求封装
 │   ├── data/              # API 数据类型
@@ -120,6 +120,7 @@ src/
 ### 链配置
 
 支持的区块链网络：
+
 - Ethereum (主网)
 - Polygon
 - BSC (BNB Smart Chain)
@@ -144,6 +145,7 @@ src/
 ### 状态管理
 
 使用 Redux Toolkit 进行状态管理：
+
 - `src/store/reducers/userSlice.ts`: 用户状态
 - `src/store/reducers/walletSlice.ts`: 钱包状态
 - `src/store/reducers/appSlice.ts`: 应用状态
@@ -153,6 +155,7 @@ src/
 ### 构建优化
 
 项目已配置以下优化：
+
 - 代码分割（Code Splitting）
 - 图片压缩
 - 打包分析

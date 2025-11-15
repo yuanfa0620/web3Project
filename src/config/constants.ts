@@ -9,12 +9,12 @@ export const CONFIG = {
     OPTIMISM: 10,
     AVALANCHE: 43114,
   },
-  
+
   // API 配置
   API: {
     BASE_URL: import.meta.env.VITE_API_BASE_URL || '/api',
   },
-  
+
   // 应用配置
   APP: {
     TITLE: import.meta.env.VITE_APP_TITLE || 'Web3',
@@ -24,7 +24,7 @@ export const CONFIG = {
 
 // 根据环境变量动态生成 RPC URLs（主网 + 测试网）
 export const getRpcUrls = () => {
-  const infuraKey = import.meta.env.VITE_INFURA_KEY
+  const infuraKey = getInfuraKey()
   return {
     // 主网
     ETHEREUM: `https://eth-mainnet.g.alchemy.com/v2/${infuraKey}`,
@@ -47,10 +47,10 @@ export const getRpcUrls = () => {
 
 // 获取 WalletConnect Project ID
 export const getWalletConnectProjectId = () => {
-  return import.meta.env.VITE_WC_PROJECT_ID
+  return import.meta.env.VITE_WC_PROJECT_ID || ''
 }
 
 // 获取 Infura Key
 export const getInfuraKey = () => {
-  return import.meta.env.VITE_INFURA_KEY
+  return import.meta.env.VITE_INFURA_KEY || ''
 }

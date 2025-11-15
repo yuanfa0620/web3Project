@@ -1,6 +1,28 @@
 [
-  {"title":"总资产","value":"2.34","suffix":"ETH","icon":"WalletOutlined","color":"#1890ff"},
-  {"title":"交易次数","value":128,"icon":"SwapOutlined","color":"#52c41a"},
-  {"title":"NFT 数量","value":24,"icon":"TrophyOutlined","color":"#faad14"},
-  {"title":"收益率","value":12.5,"suffix":"%","icon":"RiseOutlined","color":"#f5222d"}
+  {
+    "title": "总资产",
+    "value": "2.34",
+    "suffix": "ETH",
+    "icon": "WalletOutlined",
+    "color": "#1890ff"
+  },
+  {
+    "title": "交易次数",
+    "value": 128,
+    "icon": "SwapOutlined",
+    "color": "#52c41a"
+  },
+  {
+    "title": "NFT 数量",
+    "value": 24,
+    "icon": "TrophyOutlined",
+    "color": "#faad14"
+  },
+  {
+    "title": "收益率",
+    "value": 12.5,
+    "suffix": "%",
+    "icon": "RiseOutlined",
+    "color": "#f5222d"
+  }
 ]

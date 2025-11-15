@@ -83,7 +83,7 @@ const MyComponent: React.FC = () => {
 
 ## 语言文件结构
 
-```
+```text
 src/i18n/
 ├── index.ts              # 国际化配置
 └── locales/
