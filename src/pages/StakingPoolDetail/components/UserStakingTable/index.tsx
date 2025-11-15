@@ -148,7 +148,7 @@ export const UserStakingTable: React.FC<UserStakingTableProps> = ({
           showQuickJumper: !isMobile,
           hideOnSinglePage: false,
         }}
-        scroll={{ x: true }}
+        scroll={{ x: !isMobile ? true : 1000 }}
         className={styles.table}
       />
     </div>
