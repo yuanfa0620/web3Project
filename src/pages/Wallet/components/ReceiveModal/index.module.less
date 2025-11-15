@@ -1,0 +1,167 @@
+// 收款码弹窗样式（Modal 内容渲染到 body 下，需要独立样式）
+.receiveModalContent {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 24px;
+
+  // 警告提示样式优化
+  :global(.ant-alert) {
+    border-radius: 12px;
+    border: none;
+    background: #fff7e6;
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.1);
+  }
+
+  // 网络信息卡片
+  .networkInfo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #e6f7ff 0%, #f0f9ff 100%);
+    border-radius: 12px;
+    border: 1px solid #91d5ff;
+    box-shadow: 0 2px 8px rgba(24, 144, 255, 0.08);
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(24, 144, 255, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .ant-typography {
+      margin: 0 !important;
+      font-size: 14px;
+      font-weight: 500;
+      color: #1890ff;
+    }
+
+    .ant-tag {
+      margin: 0 !important;
+      font-size: 13px;
+      padding: 4px 14px;
+      border-radius: 16px;
+      border: none;
+      background: #1890ff;
+      color: #ffffff;
+      font-weight: 500;
+      box-shadow: 0 2px 4px rgba(24, 144, 255, 0.2);
+    }
+  }
+
+  // 二维码容器 - 精美设计
+  .qrCodeContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+    border-radius: 20px;
+    border: 2px solid #e2e8f0;
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.06),
+      0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    margin: 0;
+
+    // 装饰性背景元素
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(24, 144, 255, 0.03) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 18px;
+      padding: 2px;
+      background: linear-gradient(135deg, rgba(24, 144, 255, 0.1), rgba(135, 206, 250, 0.1));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+      border-color: #91d5ff;
+    }
+
+    :global(.ant-qrcode) {
+      position: relative;
+      z-index: 1;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(0, 0, 0, 0.04);
+      transition: all 0.3s ease;
+
+      &:hover {
+        box-shadow: 
+          0 6px 16px rgba(0, 0, 0, 0.12),
+          0 0 0 1px rgba(0, 0, 0, 0.06);
+      }
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 576px) {
+    gap: 20px;
+
+    .networkInfo {
+      padding: 14px 16px;
+      flex-direction: column;
+      gap: 8px;
+
+      .ant-typography {
+        font-size: 13px;
+      }
+
+      .ant-tag {
+        font-size: 12px;
+        padding: 3px 12px;
+      }
+    }
+
+    .qrCodeContainer {
+      padding: 30px 20px;
+
+      :global(.ant-qrcode) {
+        padding: 16px;
+      }
+    }
+  }
+}
+
+// 旋转动画
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+

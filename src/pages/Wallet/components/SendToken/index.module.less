@@ -1,0 +1,61 @@
+.sendTokenContent {
+  padding: 8px 0;
+
+  :global(.ant-form-item-label) {
+    > label {
+      font-weight: 500;
+      color: #262626;
+    }
+  }
+
+  :global(.ant-input),
+  :global(.ant-select-selector) {
+    border-radius: 8px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: #91d5ff;
+    }
+
+    &:focus,
+    &:focus-within {
+      border-color: #1890ff;
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+    }
+  }
+
+  :global(.ant-input-suffix) {
+    .ant-btn-link {
+      padding: 0 4px;
+      height: auto;
+      font-size: 12px;
+    }
+  }
+
+  :global(.ant-alert) {
+    border-radius: 8px;
+  }
+
+  :global(.ant-form-item) {
+    margin-bottom: 20px;
+  }
+
+  :global(.ant-btn-primary) {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(24, 144, 255, 0.2);
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(24, 144, 255, 0.3);
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 576px) {
+    :global(.ant-form-item) {
+      margin-bottom: 16px;
+    }
+  }
+}
+
