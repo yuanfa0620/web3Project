@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useAccount } from 'wagmi'
 import { isAddress } from 'viem'
 import { CHAIN_INFO } from '@/constants/chains'
+import { AnimatedNumber } from '@/components/AnimatedNumber'
 import { useSendTokenState } from './hooks/useSendTokenState'
 import { useSendTokenBalance } from './hooks/useSendTokenBalance'
 import { useSendTokenTransaction } from './hooks/useSendTokenTransaction'
@@ -205,13 +206,15 @@ const SendToken: React.FC<SendTokenProps> = ({ open, onCancel, onSuccess, chainI
             label={
               <Space>
                 <span>{t('wallet.sendToken.balance')}:</span>
-                {displayBalanceLoading ? (
-                  <Spin size="small" />
-                ) : (
-                  <Text strong style={{ color: '#1890ff' }}>
-                    {displayBalance || '0'} {tokenSymbol}
-                  </Text>
-                )}
+                <AnimatedNumber
+                  value={displayBalance || '0'}
+                  suffix={tokenSymbol}
+                  loading={displayBalanceLoading}
+                  defaultValue="0"
+                  decimals={6}
+                  enableAnimation={true}
+                  style={{ fontWeight: 'bold', color: '#1890ff' }}
+                />
               </Space>
             }
           />

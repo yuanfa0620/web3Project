@@ -21,7 +21,9 @@
     "settings": "设置",
     "help": "帮助",
     "about": "关于",
-    "copy": "复制"
+    "copy": "复制",
+    "copySuccess": "复制成功",
+    "copyFailed": "复制失败"
   },
   "navigation": {
     "home": "首页",

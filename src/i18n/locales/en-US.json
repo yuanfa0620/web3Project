@@ -21,7 +21,9 @@
     "settings": "Settings",
     "help": "Help",
     "about": "About",
-    "copy": "Copy"
+    "copy": "Copy",
+    "copySuccess": "Copied successfully",
+    "copyFailed": "Copy failed"
   },
   "navigation": {
     "home": "Home",
