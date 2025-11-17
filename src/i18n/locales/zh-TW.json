@@ -37,7 +37,8 @@
     "staking": "質押",
     "governance": "治理",
     "analytics": "分析",
-    "settings": "設定"
+    "settings": "設定",
+    "profile": "個人中心"
   },
   "pageTitle": {
     "home": "Web3 Project",
@@ -52,7 +53,9 @@
     "governance": "治理",
     "analytics": "分析",
     "settings": "設定",
-    "notFound": "頁面未找到"
+    "notFound": "頁面未找到",
+    "profile": "個人中心",
+    "nftDetail": "NFT詳情"
   },
   "home": {
     "title": "歡迎使用 Web3",
@@ -376,6 +379,52 @@
   "notFound": {
     "description": "抱歉，您訪問的頁面不存在。",
     "backHome": "返回首頁"
+  },
+  "profile": {
+    "title": "個人中心",
+    "connectWalletFirst": "請先連接錢包",
+    "transactionHistory": "交易記錄",
+    "myNFTs": "我的NFT",
+    "transactionHash": "交易哈希",
+    "type": "類型",
+    "network": "網絡",
+    "amount": "金額",
+    "statusLabel": "狀態",
+    "time": "時間",
+    "from": "發送方",
+    "to": "接收方",
+    "blockNumber": "區塊號",
+    "nftImage": "NFT圖片",
+    "nftName": "NFT名稱",
+    "collectionName": "合集名稱",
+    "tokenId": "Token ID",
+    "actions": "操作",
+    "viewDetail": "查看詳情",
+    "noTransactions": "暫無交易記錄",
+    "noNFTs": "暫無NFT",
+    "backToProfile": "返回個人中心",
+    "nftNotFound": "未找到該NFT",
+    "contractAddress": "合約地址",
+    "owner": "持有者",
+    "viewOnExplorer": "在瀏覽器中查看",
+    "openInExplorer": "在區塊鏈瀏覽器中打開",
+    "attributes": "屬性",
+    "transactionType": {
+      "transfer": "轉賬",
+      "swap": "兌換",
+      "stake": "質押",
+      "unstake": "取消質押",
+      "contract": "合約調用",
+      "approve": "授權",
+      "mint": "鑄造",
+      "burn": "銷毀",
+      "sale": "出售"
+    },
+    "status": {
+      "success": "成功",
+      "failed": "失敗",
+      "pending": "待確認"
+    }
   },
   "footer": {
     "description": "專業的區塊鏈管理平台，提供錢包管理、代幣交易、NFT 收藏等一站式服務。",

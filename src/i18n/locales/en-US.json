@@ -37,7 +37,8 @@
     "staking": "Staking",
     "governance": "Governance",
     "analytics": "Analytics",
-    "settings": "Settings"
+    "settings": "Settings",
+    "profile": "Profile"
   },
   "pageTitle": {
     "home": "Web3 Project",
@@ -52,7 +53,9 @@
     "governance": "Governance",
     "analytics": "Analytics",
     "settings": "Settings",
-    "notFound": "Page Not Found"
+    "notFound": "Page Not Found",
+    "profile": "Profile",
+    "nftDetail": "NFT Detail"
   },
   "home": {
     "title": "Welcome to Web3",
@@ -376,6 +379,52 @@
   "notFound": {
     "description": "Sorry, the page you visited does not exist.",
     "backHome": "Back to Home"
+  },
+  "profile": {
+    "title": "Profile",
+    "connectWalletFirst": "Please connect wallet first",
+    "transactionHistory": "Transaction History",
+    "myNFTs": "My NFTs",
+    "transactionHash": "Transaction Hash",
+    "type": "Type",
+    "network": "Network",
+    "amount": "Amount",
+    "statusLabel": "Status",
+    "time": "Time",
+    "from": "From",
+    "to": "To",
+    "blockNumber": "Block Number",
+    "nftImage": "NFT Image",
+    "nftName": "NFT Name",
+    "collectionName": "Collection Name",
+    "tokenId": "Token ID",
+    "actions": "Actions",
+    "viewDetail": "View Detail",
+    "noTransactions": "No transactions",
+    "noNFTs": "No NFTs",
+    "backToProfile": "Back to Profile",
+    "nftNotFound": "NFT not found",
+    "contractAddress": "Contract Address",
+    "owner": "Owner",
+    "viewOnExplorer": "View on Explorer",
+    "openInExplorer": "Open in Block Explorer",
+    "attributes": "Attributes",
+    "transactionType": {
+      "transfer": "Transfer",
+      "swap": "Swap",
+      "stake": "Stake",
+      "unstake": "Unstake",
+      "contract": "Contract",
+      "approve": "Approve",
+      "mint": "Mint",
+      "burn": "Burn",
+      "sale": "Sale"
+    },
+    "status": {
+      "success": "Success",
+      "failed": "Failed",
+      "pending": "Pending"
+    }
   },
   "footer": {
     "description": "Professional blockchain management platform providing wallet management, token trading, NFT collection and other one-stop services.",

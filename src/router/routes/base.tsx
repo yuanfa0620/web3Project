@@ -16,6 +16,9 @@ import SwapPage from '@/pages/Swap'
 import StakingLayout from '@/pages/Staking/StakingLayout'
 import StakingPage from '@/pages/Staking'
 import StakingPoolDetailPage from '@/pages/StakingPoolDetail'
+import ProfileLayout from '@/pages/Profile/ProfileLayout'
+import ProfilePage from '@/pages/Profile'
+import NFTDetailPage from '@/pages/NFTDetail'
 import GovernancePage from '@/pages/Governance'
 import AnalyticsPage from '@/pages/Analytics'
 import SettingsPage from '@/pages/Settings'
@@ -89,6 +92,27 @@ export const baseRoutes: RouteConfig[] = [
         path: ':poolId',
         element: <StakingPoolDetailPage />,
         title: '质押池详情',
+        showInMenu: false,
+      },
+    ],
+  },
+  {
+    path: 'profile',
+    element: <ProfileLayout />,
+    title: '个人中心',
+    icon: <SettingOutlined />,
+    menuLabel: 'navigation.profile',
+    children: [
+      {
+        path: '',
+        element: <ProfilePage />,
+        title: '个人中心',
+        showInMenu: false,
+      },
+      {
+        path: 'nft/:nftId',
+        element: <NFTDetailPage />,
+        title: 'NFT详情',
         showInMenu: false,
       },
     ],
