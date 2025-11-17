@@ -28,7 +28,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
           dataSource={transactions}
           rowKey="hash"
           pagination={{ pageSize: 10 }}
-          scroll={{ x: isMobile ? true : 1000 }}
+          scroll={{ x: !isMobile ? true : 1000 }}
         />
       ) : (
         <Empty description={t('profile.noTransactions')} />

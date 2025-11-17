@@ -19,17 +19,20 @@ export const useNFTColumns = (): ColumnsType<UserNFT> => {
         title: t('profile.nftImage'),
         dataIndex: 'image',
         key: 'image',
+        width: 100,
         render: (image: string) => <Avatar src={image} shape="square" size={64} />,
       },
       {
         title: t('profile.nftName'),
         dataIndex: 'name',
         key: 'name',
+        width: 100,
       },
       {
         title: t('profile.collectionName'),
         dataIndex: 'collectionName',
         key: 'collectionName',
+        width: 100,
       },
       {
         title: t('profile.network'),
@@ -38,11 +41,13 @@ export const useNFTColumns = (): ColumnsType<UserNFT> => {
         render: (chainId: number) => (
           <Tag>{CHAIN_INFO[chainId as keyof typeof CHAIN_INFO]?.name || chainId}</Tag>
         ),
+        width: 100,
       },
       {
         title: t('profile.tokenId'),
         dataIndex: 'tokenId',
         key: 'tokenId',
+        width: 100,
       },
       {
         title: t('profile.actions'),
@@ -52,6 +57,7 @@ export const useNFTColumns = (): ColumnsType<UserNFT> => {
             {t('profile.viewDetail')}
           </Button>
         ),
+        width: 100,
       },
     ],
     [t, navigate]

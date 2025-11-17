@@ -28,6 +28,38 @@
 
     .nftInfo {
       flex: 1;
+
+      :global(.ant-descriptions) {
+        width: 100%;
+      }
+
+      :global(.ant-descriptions-row) {
+        display: flex;
+      }
+
+      :global(.ant-descriptions-item) {
+        flex: 1;
+      }
+
+      :global(.ant-descriptions-item-container) {
+        display: flex;
+        width: 100%;
+        align-items: center;
+      }
+
+      :global(.ant-descriptions-item-label) {
+        width: 160px;
+        min-width: 160px;
+        display: inline-flex;
+        justify-content: flex-start;
+        color: #8c8c8c;
+      }
+
+      :global(.ant-descriptions-item-content) {
+        flex: 1;
+        display: inline-flex;
+        align-items: center;
+      }
     }
   }
 
@@ -61,6 +93,13 @@
           width: 100%;
           max-width: 300px;
           aspect-ratio: 1;
+        }
+      }
+
+      .nftInfo {
+        :global(.ant-descriptions-item-label) {
+          width: 120px;
+          min-width: 120px;
         }
       }
     }
