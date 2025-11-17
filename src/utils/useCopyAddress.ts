@@ -11,7 +11,7 @@ export const useCopyAddress = () => {
 
   const handleCopyAddress = useCallback(async (address: string) => {
     if (!address) {
-      return
+      return false
     }
 
     const success = await copyToClipboard(address)
@@ -20,6 +20,7 @@ export const useCopyAddress = () => {
     } else {
       message.error(t('common.copyFailed'))
     }
+    return success
   }, [t])
 
   return {

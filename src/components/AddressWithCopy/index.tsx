@@ -2,10 +2,9 @@
  * 带复制功能的地址组件
  */
 import React, { useState, useCallback } from 'react'
-import { Button, Space, message } from 'antd'
+import { Button, Space } from 'antd'
 import { CopyOutlined, CheckOutlined } from '@ant-design/icons'
-import { useTranslation } from 'react-i18next'
-import { copyToClipboard } from '@/utils/clipboard'
+import { useCopyAddress } from '@/utils/useCopyAddress'
 import { formatAddress } from '@/utils/address'
 
 export interface AddressWithCopyProps {
@@ -41,25 +40,22 @@ export const AddressWithCopy: React.FC<AddressWithCopyProps> = ({
   showCopyButton = true,
   resetIconDelay = 2000,
 }) => {
-  const { t } = useTranslation()
+  const { handleCopyAddress } = useCopyAddress()
   const [copied, setCopied] = useState(false)
 
   const handleCopy = useCallback(
     async (e: React.MouseEvent) => {
       e.stopPropagation() // 阻止事件冒泡，避免触发onClick
 
-      const success = await copyToClipboard(address)
+      const success = await handleCopyAddress(address)
       if (success) {
         setCopied(true)
-        message.success(t('common.copySuccess'))
         setTimeout(() => {
           setCopied(false)
         }, resetIconDelay)
-      } else {
-        message.error(t('common.copyFailed'))
       }
     },
-    [address, resetIconDelay, t]
+    [address, handleCopyAddress, resetIconDelay]
   )
 
   return (
