@@ -1,0 +1,219 @@
+[
+  {
+    "id": "nft-1",
+    "name": "Cool Ape #1234",
+    "collection": "Cool Apes",
+    "image": "https://via.placeholder.com/300x300?text=Cool+Ape+1234",
+    "price": "2.5",
+    "priceUnit": "ETH",
+    "owner": "0x1234...5678",
+    "rarity": "Legendary",
+    "attributes": [
+      {
+        "trait_type": "Background",
+        "value": "Blue"
+      },
+      {
+        "trait_type": "Eyes",
+        "value": "Laser"
+      },
+      {
+        "trait_type": "Mouth",
+        "value": "Smile"
+      }
+    ],
+    "lastSale": "1.8 ETH",
+    "volume": "45.2 ETH",
+    "listed": true
+  },
+  {
+    "id": "nft-2",
+    "name": "Bored Cat #5678",
+    "collection": "Bored Cats",
+    "image": "https://via.placeholder.com/300x300?text=Bored+Cat+5678",
+    "price": "0.8",
+    "priceUnit": "ETH",
+    "owner": "0xabcd...efgh",
+    "rarity": "Rare",
+    "attributes": [
+      {
+        "trait_type": "Background",
+        "value": "Purple"
+      },
+      {
+        "trait_type": "Eyes",
+        "value": "Sleepy"
+      },
+      {
+        "trait_type": "Hat",
+        "value": "Crown"
+      }
+    ],
+    "lastSale": "0.6 ETH",
+    "volume": "12.5 ETH",
+    "listed": true
+  },
+  {
+    "id": "nft-3",
+    "name": "Cyber Punk #9012",
+    "collection": "Cyber Punks",
+    "image": "https://via.placeholder.com/300x300?text=Cyber+Punk+9012",
+    "price": "5.2",
+    "priceUnit": "ETH",
+    "owner": "0x9876...5432",
+    "rarity": "Epic",
+    "attributes": [
+      {
+        "trait_type": "Background",
+        "value": "Neon"
+      },
+      {
+        "trait_type": "Eyes",
+        "value": "Cyborg"
+      },
+      {
+        "trait_type": "Accessory",
+        "value": "Sword"
+      }
+    ],
+    "lastSale": "4.5 ETH",
+    "volume": "89.3 ETH",
+    "listed": true
+  },
+  {
+    "id": "nft-4",
+    "name": "Space Alien #3456",
+    "collection": "Space Aliens",
+    "image": "https://via.placeholder.com/300x300?text=Space+Alien+3456",
+    "price": "1.2",
+    "priceUnit": "ETH",
+    "owner": "0x1111...2222",
+    "rarity": "Common",
+    "attributes": [
+      {
+        "trait_type": "Background",
+        "value": "Space"
+      },
+      {
+        "trait_type": "Eyes",
+        "value": "Big"
+      },
+      {
+        "trait_type": "Body",
+        "value": "Green"
+      }
+    ],
+    "lastSale": "1.0 ETH",
+    "volume": "8.7 ETH",
+    "listed": true
+  },
+  {
+    "id": "nft-5",
+    "name": "Magic Dragon #7890",
+    "collection": "Magic Dragons",
+    "image": "https://via.placeholder.com/300x300?text=Magic+Dragon+7890",
+    "price": "3.8",
+    "priceUnit": "ETH",
+    "owner": "0x3333...4444",
+    "rarity": "Epic",
+    "attributes": [
+      {
+        "trait_type": "Background",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "Eyes",
+        "value": "Fierce"
+      },
+      {
+        "trait_type": "Wings",
+        "value": "Golden"
+      }
+    ],
+    "lastSale": "3.2 ETH",
+    "volume": "67.4 ETH",
+    "listed": true
+  },
+  {
+    "id": "nft-6",
+    "name": "Robot Warrior #2468",
+    "collection": "Robot Warriors",
+    "image": "https://via.placeholder.com/300x300?text=Robot+Warrior+2468",
+    "price": "0.5",
+    "priceUnit": "ETH",
+    "owner": "0x5555...6666",
+    "rarity": "Common",
+    "attributes": [
+      {
+        "trait_type": "Background",
+        "value": "Metal"
+      },
+      {
+        "trait_type": "Eyes",
+        "value": "Red"
+      },
+      {
+        "trait_type": "Armor",
+        "value": "Silver"
+      }
+    ],
+    "lastSale": "0.4 ETH",
+    "volume": "5.2 ETH",
+    "listed": true
+  },
+  {
+    "id": "nft-7",
+    "name": "Zen Master #1357",
+    "collection": "Zen Masters",
+    "image": "https://via.placeholder.com/300x300?text=Zen+Master+1357",
+    "price": "4.5",
+    "priceUnit": "ETH",
+    "owner": "0x7777...8888",
+    "rarity": "Legendary",
+    "attributes": [
+      {
+        "trait_type": "Background",
+        "value": "Mountain"
+      },
+      {
+        "trait_type": "Eyes",
+        "value": "Calm"
+      },
+      {
+        "trait_type": "Robe",
+        "value": "White"
+      }
+    ],
+    "lastSale": "4.0 ETH",
+    "volume": "112.8 ETH",
+    "listed": true
+  },
+  {
+    "id": "nft-8",
+    "name": "Neon Ninja #9753",
+    "collection": "Neon Ninjas",
+    "image": "https://via.placeholder.com/300x300?text=Neon+Ninja+9753",
+    "price": "1.8",
+    "priceUnit": "ETH",
+    "owner": "0x9999...0000",
+    "rarity": "Rare",
+    "attributes": [
+      {
+        "trait_type": "Background",
+        "value": "City"
+      },
+      {
+        "trait_type": "Eyes",
+        "value": "Hidden"
+      },
+      {
+        "trait_type": "Weapon",
+        "value": "Katana"
+      }
+    ],
+    "lastSale": "1.5 ETH",
+    "volume": "23.6 ETH",
+    "listed": true
+  }
+]
+

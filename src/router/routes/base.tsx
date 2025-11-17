@@ -10,6 +10,7 @@ import HomePage from '@/pages/Home'
 import WalletPage from '@/pages/Wallet'
 import TokensPage from '@/pages/Tokens'
 import NFTsPage from '@/pages/NFTs'
+import NFTMarketplacePage from '@/pages/NFTMarketplace'
 import SwapPage from '@/pages/Swap'
 import StakingLayout from '@/pages/Staking/StakingLayout'
 import StakingPage from '@/pages/Staking'
@@ -48,6 +49,13 @@ export const baseRoutes: RouteConfig[] = [
     title: 'NFT',
     icon: <TrophyOutlined />,
     menuLabel: 'navigation.nfts',
+  },
+  {
+    path: 'nft-marketplace',
+    element: <NFTMarketplacePage />,
+    title: 'NFT 市场',
+    icon: <TrophyOutlined />,
+    menuLabel: 'navigation.nftMarketplace',
   },
   {
     path: 'swap',
