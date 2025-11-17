@@ -6,14 +6,7 @@ import stakingRecordsData from '../../../../mock/stakingRecords.json'
 import { loadStakingPools } from '@/pages/Staking/utils/dataLoader'
 import type { StakingPool } from '@/pages/Staking/types'
 import type { UserStakingRecord } from '../types'
-
-// 格式化数字，添加千位分隔符
-const formatNumber = (num: number | string): string => {
-  const numStr = typeof num === 'string' ? num : num.toString()
-  const parts = numStr.split('.')
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-  return parts.join('.')
-}
+import { formatNumber } from '@/utils/number'
 
 // 根据ID加载单个质押池
 export const loadStakingPoolById = (poolId: string): StakingPool | null => {

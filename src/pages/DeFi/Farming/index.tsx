@@ -10,11 +10,11 @@ const FarmingPage: React.FC = () => {
   const { t } = useTranslation()
 
   return (
-    <PageTitle title="挖矿">
+    <PageTitle title={t('pageTitle.defiFarming')}>
       <div className={styles.farmingPage}>
         <Card>
-          <Title level={2}>流动性挖矿</Title>
-          <Paragraph>这是 DeFi 的挖矿页面</Paragraph>
+          <Title level={2}>{t('defi.farmingPage.title')}</Title>
+          <Paragraph>{t('defi.farmingPage.description')}</Paragraph>
         </Card>
       </div>
     </PageTitle>

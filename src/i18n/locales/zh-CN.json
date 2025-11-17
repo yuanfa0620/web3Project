@@ -55,7 +55,9 @@
     "settings": "设置",
     "notFound": "页面未找到",
     "profile": "个人中心",
-    "nftDetail": "NFT详情"
+    "nftDetail": "NFT详情",
+    "defiFarming": "流动性挖矿",
+    "defiLiquidity": "流动性池"
   },
   "home": {
     "title": "欢迎使用 Web3",
@@ -253,7 +255,15 @@
     "apy": "年化收益率",
     "tvl": "总锁定价值",
     "noProtocols": "暂无 DeFi 协议",
-    "addProtocol": "添加协议"
+    "addProtocol": "添加协议",
+    "farmingPage": {
+      "title": "流动性挖矿",
+      "description": "这是 DeFi 的挖矿页面"
+    },
+    "liquidityPage": {
+      "title": "流动性池",
+      "description": "这是 DeFi 的流动性页面"
+    }
   },
   "swap": {
     "title": "代币兑换",

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { useAccount } from 'wagmi'
 import { PageTitle } from '@/components/PageTitle'
 import { useProfileData } from './hooks/useProfileData'
-import { useMobile } from './hooks/useMobile'
+import { useMobile } from '@/utils/useMobile'
 import { ConnectWalletCard, TransactionTable, NFTTable } from './components'
 import styles from './index.module.less'
 

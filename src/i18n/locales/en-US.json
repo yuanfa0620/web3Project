@@ -55,7 +55,9 @@
     "settings": "Settings",
     "notFound": "Page Not Found",
     "profile": "Profile",
-    "nftDetail": "NFT Detail"
+    "nftDetail": "NFT Detail",
+    "defiFarming": "DeFi Farming",
+    "defiLiquidity": "DeFi Liquidity"
   },
   "home": {
     "title": "Welcome to Web3",
@@ -261,7 +263,15 @@
     "apy": "APY",
     "tvl": "TVL",
     "noProtocols": "No DeFi Protocols",
-    "addProtocol": "Add Protocol"
+    "addProtocol": "Add Protocol",
+    "farmingPage": {
+      "title": "Liquidity Farming",
+      "description": "This is the DeFi farming page."
+    },
+    "liquidityPage": {
+      "title": "Liquidity Pools",
+      "description": "This is the DeFi liquidity page."
+    }
   },
   "swap": {
     "title": "Token Swap",

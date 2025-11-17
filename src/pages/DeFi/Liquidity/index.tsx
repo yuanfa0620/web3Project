@@ -10,11 +10,11 @@ const LiquidityPage: React.FC = () => {
   const { t } = useTranslation()
 
   return (
-    <PageTitle title="流动性">
+    <PageTitle title={t('pageTitle.defiLiquidity')}>
       <div className={styles.liquidityPage}>
         <Card>
-          <Title level={2}>流动性池</Title>
-          <Paragraph>这是 DeFi 的流动性页面</Paragraph>
+          <Title level={2}>{t('defi.liquidityPage.title')}</Title>
+          <Paragraph>{t('defi.liquidityPage.description')}</Paragraph>
         </Card>
       </div>
     </PageTitle>

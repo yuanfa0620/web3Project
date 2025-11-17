@@ -55,7 +55,9 @@
     "settings": "設定",
     "notFound": "頁面未找到",
     "profile": "個人中心",
-    "nftDetail": "NFT詳情"
+    "nftDetail": "NFT詳情",
+    "defiFarming": "DeFi 挖礦",
+    "defiLiquidity": "DeFi 流動性"
   },
   "home": {
     "title": "歡迎使用 Web3",
@@ -261,7 +263,15 @@
     "apy": "年化收益率",
     "tvl": "總鎖定價值",
     "noProtocols": "暫無 DeFi 協議",
-    "addProtocol": "新增協議"
+    "addProtocol": "新增協議",
+    "farmingPage": {
+      "title": "流動性挖礦",
+      "description": "這裡是 DeFi 的挖礦頁面"
+    },
+    "liquidityPage": {
+      "title": "流動性池",
+      "description": "這裡是 DeFi 的流動性頁面"
+    }
   },
   "swap": {
     "title": "代幣兌換",

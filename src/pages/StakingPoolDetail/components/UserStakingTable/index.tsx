@@ -1,13 +1,14 @@
 /**
  * 用户质押记录表格组件
  */
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Table, Typography, Tag, Avatar, Space } from 'antd'
 import { CopyOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { AnimatedNumber } from '@/components/AnimatedNumber'
 import { formatTime } from '@/utils/date'
 import { formatAddress } from '@/utils/address'
+import { useMobile } from '@/utils/useMobile'
 import type { UserStakingRecord } from '../../types'
 import styles from './index.module.less'
 
@@ -23,19 +24,7 @@ export const UserStakingTable: React.FC<UserStakingTableProps> = ({
   loading = false,
 }) => {
   const { t } = useTranslation()
-
-
-  // 判断是否为移动端（仅用于分页器配置）
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+  const isMobile = useMobile()
 
   const columns = [
     {
