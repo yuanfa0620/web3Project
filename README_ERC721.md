@@ -9,11 +9,13 @@
 ### 方法1：使用OpenZeppelin合约
 
 1. 安装OpenZeppelin合约库：
+
 ```bash
 npm install @openzeppelin/contracts
 ```
 
-2. 创建Solidity合约文件（例如 `contracts/MyERC721.sol`）：
+2.创建Solidity合约文件（例如 `contracts/MyERC721.sol`）：
+
 ```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
@@ -62,9 +64,9 @@ contract MyERC721 is ERC721, ERC721Burnable, Ownable, ERC2981 {
 }
 ```
 
-3. 使用Hardhat或Foundry编译合约
+3.使用Hardhat或Foundry编译合约
 
-4. 将编译后的字节码复制到 `src/contracts/erc721/bytecode.ts` 文件中
+4.将编译后的字节码复制到 `src/contracts/erc721/bytecode.ts` 文件中
 
 ### 方法2：使用合约工厂模式
 
@@ -93,4 +95,3 @@ VITE_INFURA_IPFS_SECRET=your_infura_ipfs_secret
 2. 将字节码添加到 `src/contracts/erc721/bytecode.ts`
 3. 配置Infura IPFS凭证
 4. 测试完整的创建流程
-
