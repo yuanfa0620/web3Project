@@ -11,6 +11,7 @@ import WalletPage from '@/pages/Wallet'
 import TokensPage from '@/pages/Tokens'
 import NFTsPage from '@/pages/NFTs'
 import NFTMarketplacePage from '@/pages/NFTMarketplace'
+import CreateNFTPage from '@/pages/CreateNFT'
 import SwapPage from '@/pages/Swap'
 import StakingLayout from '@/pages/Staking/StakingLayout'
 import StakingPage from '@/pages/Staking'
@@ -36,13 +37,13 @@ export const baseRoutes: RouteConfig[] = [
     icon: <WalletOutlined />,
     menuLabel: 'navigation.wallet',
   },
-  {
-    path: 'tokens',
-    element: <TokensPage />,
-    title: '代币',
-    icon: <SwapOutlined />,
-    menuLabel: 'navigation.tokens',
-  },
+  // {
+  //   path: 'tokens',
+  //   element: <TokensPage />,
+  //   title: '代币',
+  //   icon: <SwapOutlined />,
+  //   menuLabel: 'navigation.tokens',
+  // },
   {
     path: 'nfts',
     element: <NFTsPage />,
@@ -56,6 +57,13 @@ export const baseRoutes: RouteConfig[] = [
     title: 'NFT 市场',
     icon: <TrophyOutlined />,
     menuLabel: 'navigation.nftMarketplace',
+  },
+  {
+    path: 'create-nft',
+    element: <CreateNFTPage />,
+    title: '创建NFT',
+    icon: <TrophyOutlined />,
+    menuLabel: 'navigation.createNFT',
   },
   {
     path: 'swap',

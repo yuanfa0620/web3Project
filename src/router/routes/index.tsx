@@ -26,6 +26,6 @@ export const notFoundRoute: RouteConfig = {
 // 导出所有路由配置
 export const allRoutes: RouteConfig[] = [
   ...baseRoutes,
-  defiRoutes,
+  // defiRoutes,
   notFoundRoute,
 ]
