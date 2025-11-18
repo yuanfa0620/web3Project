@@ -2,12 +2,13 @@
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: fixed;
-  top: 0;
+  top: var(--banner-height, 0px);
   left: 0;
   right: 0;
   z-index: 1000;
   height: 64px;
   line-height: 64px;
+  transition: top 0.3s ease;
   
   // 覆盖 Ant Design 默认的 padding
   padding: 0 !important;

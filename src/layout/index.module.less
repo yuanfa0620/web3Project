@@ -5,9 +5,10 @@
 
   .content {
     flex: 1;
-    margin-top: 64px; // Header 高度
+    margin-top: calc(64px + var(--banner-height, 0px)); // Header 高度 + Banner 高度
     background: #f5f5f5;
     display: flex;
+    transition: margin-top 0.3s ease;
 
     .contentWrapper {
       max-width: 1440px;
@@ -37,7 +38,7 @@
   // 移动端特殊处理
   @media (max-width: 768px) {
     .content {
-      margin-top: 64px; // Adjust for fixed header on mobile
+      margin-top: calc(80px + var(--banner-height, 0px)); // Adjust for fixed header on mobile
     }
   }
 }
