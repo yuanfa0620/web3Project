@@ -185,6 +185,9 @@
     "reset": "重置",
     "price": "價格",
     "buy": "購買",
+    "favorite": "收藏",
+    "confirmPurchase": "確認購買",
+    "cancel": "取消",
     "lastSale": "最近成交",
     "noResults": "沒有找到匹配的 NFT"
   },

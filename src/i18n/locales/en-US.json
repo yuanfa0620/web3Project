@@ -185,6 +185,9 @@
     "reset": "Reset",
     "price": "Price",
     "buy": "Buy",
+    "favorite": "Favorite",
+    "confirmPurchase": "Confirm Purchase",
+    "cancel": "Cancel",
     "lastSale": "Last Sale",
     "noResults": "No matching NFTs found"
   },

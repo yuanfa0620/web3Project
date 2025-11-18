@@ -48,10 +48,24 @@
   }
 
   .nftGrid {
+    .responsiveRow {
+      width: 100%;
+    }
+
     .nftMarketCard {
       border-radius: 12px;
       overflow: hidden;
       transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      :global(.ant-card-body) {
+        display: flex;
+        flex-direction: column;
+        padding: 0 16px 16px;
+        height: 100%;
+      }
 
       &:hover {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -85,36 +99,67 @@
 
       .nftInfo {
         padding: 12px 0;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        // gap: 8px;
 
         .nftName {
-          margin: 0 0 8px 0 !important;
+          margin: 0 0 0 0 !important;
           font-size: 16px;
           font-weight: 600;
           color: #262626;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .collectionName {
           font-size: 12px;
           color: rgba(0, 0, 0, 0.45);
-          margin-bottom: 8px;
+          // margin-bottom: 8px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .nftStats {
           width: 100%;
           font-size: 12px;
           color: rgba(0, 0, 0, 0.65);
+          display: flex;
+          gap: 12px;
+          flex-wrap: nowrap;
 
           .statItem {
             display: flex;
             align-items: center;
             gap: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
       }
 
-      .priceAction {
-        padding: 8px 0;
-        text-align: center;
+      .cardFooter {
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        // gap: 12px;
+        // padding: 8px 0 0;
+        margin: 0 -16px -16px;
+        border-top: 1px solid #f0f0f0;
+
+        .priceRow {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          white-space: nowrap;
+          gap: 12px;
+          padding: 0 16px;
+        }
 
         .priceLabel {
           font-size: 12px;
@@ -126,22 +171,34 @@
           font-size: 18px;
           font-weight: 600;
           color: #1890ff;
+          white-space: nowrap;
+          display: flex;
+          align-items: center;
+          gap: 4px;
 
           .priceUnit {
             font-size: 14px;
             color: rgba(0, 0, 0, 0.65);
           }
         }
-      }
 
-      .buyButton {
-        width: 100%;
-        border-radius: 6px;
-      }
+        .actionButtons {
+          display: flex;
+          gap: 0;
+          box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
 
-      :global(.ant-card-actions) {
-        background: #fafafa;
-        border-top: 1px solid #f0f0f0;
+          .favoriteButton,
+          .buyButton {
+            flex: 1;
+            height: 44px;
+            border-radius: 0;
+            border: none;
+
+            &:first-child {
+              border-right: 1px solid #fff;
+            }
+          }
+        }
       }
     }
 
@@ -156,6 +213,144 @@
           color: rgba(0, 0, 0, 0.45);
         }
       }
+    }
+  }
+
+  .modalContent {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .modalTop {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .modalImageWrapper {
+      flex: 0 0 220px;
+      max-width: 220px;
+      height: 220px;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f5f5f5;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .modalRarity {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        margin: 0;
+        font-weight: 600;
+      }
+    }
+
+    .modalInfo {
+      flex: 1 1 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 12px 0;
+
+      .modalCollection {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.65);
+      }
+
+      .modalPriceRow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+        padding: 12px 16px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(24, 144, 255, 0.08), rgba(89, 124, 247, 0.15));
+        color: #262626;
+
+        strong {
+          color: #1890ff;
+          font-size: 20px;
+        }
+      }
+
+      .modalStats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+
+        .modalStatItem {
+          padding: 12px;
+          border-radius: 10px;
+          background: #f5f5f5;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+
+          span {
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.45);
+          }
+
+          strong {
+            font-size: 14px;
+            color: #262626;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+    .attributesSection {
+      h4 {
+        margin: 0 0 12px 0;
+        font-size: 16px;
+      }
+
+      .attributeList {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+
+        .attributeItem {
+          padding: 10px 12px;
+          border-radius: 10px;
+          background: #fafafa;
+          border: 1px solid #f0f0f0;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+
+          .attributeLabel {
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.65);
+            text-transform: uppercase;
+          }
+
+          .attributeValue {
+            font-size: 14px;
+            font-weight: 600;
+            color: #262626;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+
+  .buyModal {
+    :global(.ant-modal-body) {
+      padding: 24px;
     }
   }
 }
