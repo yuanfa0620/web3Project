@@ -171,6 +171,8 @@
     "searchPlaceholder": "Search NFT or Collection",
     "collection": "Collection",
     "allCollections": "All Collections",
+    "owner": "Owner",
+    "volume": "Volume",
     "rarity": "Rarity",
     "allRarities": "All Rarities",
     "legendary": "Legendary",
@@ -189,6 +191,7 @@
     "confirmPurchase": "Confirm Purchase",
     "cancel": "Cancel",
     "lastSale": "Last Sale",
+    "attributes": "Attributes",
     "noResults": "No matching NFTs found"
   },
   "createNFT": {

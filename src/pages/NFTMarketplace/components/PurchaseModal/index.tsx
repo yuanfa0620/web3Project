@@ -44,7 +44,10 @@ export const PurchaseModal: React.FC<PurchaseModalProps> = ({
               </Tag>
             </div>
             <div className={styles.modalInfo}>
-              <div className={styles.modalCollection}>{nft.collection}</div>
+              <div className={styles.modalCollection}>
+                <span>{t('nftMarketplace.collection')}</span>
+                <strong>{nft.collection}</strong>
+              </div>
               <div className={styles.modalPriceRow}>
                 <span>{t('nftMarketplace.price')}</span>
                 <strong>

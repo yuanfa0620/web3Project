@@ -171,6 +171,8 @@
     "searchPlaceholder": "搜索 NFT 或收藏",
     "collection": "收藏",
     "allCollections": "所有收藏",
+    "owner": "擁有者",
+    "volume": "成交量",
     "rarity": "稀有度",
     "allRarities": "所有稀有度",
     "legendary": "傳說",
@@ -189,6 +191,7 @@
     "confirmPurchase": "確認購買",
     "cancel": "取消",
     "lastSale": "最近成交",
+    "attributes": "屬性",
     "noResults": "沒有找到匹配的 NFT"
   },
   "createNFT": {
