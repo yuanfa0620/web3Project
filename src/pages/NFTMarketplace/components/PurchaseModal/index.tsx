@@ -3,7 +3,7 @@ import { Modal, Tag, Divider, Button } from 'antd'
 import { ShoppingCartOutlined } from '@ant-design/icons'
 import type { TFunction } from 'i18next'
 import type { NFTMarketplaceItem } from '../../index'
-import styles from '../../index.module.less'
+import styles from './index.module.less'
 
 interface PurchaseModalProps {
   nft: NFTMarketplaceItem | null

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Row, Col, Select, Button } from 'antd'
 import type { TFunction } from 'i18next'
-import styles from '../../index.module.less'
+import styles from './index.module.less'
 
 const { Option } = Select
 

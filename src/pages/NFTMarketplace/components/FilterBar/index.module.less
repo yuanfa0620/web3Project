@@ -1,0 +1,27 @@
+.filterCard {
+  margin-bottom: 24px;
+  border-radius: 12px;
+
+  .filterItem {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .filterLabel {
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.65);
+      font-weight: 500;
+    }
+
+    .filterSelect {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    :global(.ant-col) {
+      margin-bottom: 8px;
+    }
+  }
+}
+

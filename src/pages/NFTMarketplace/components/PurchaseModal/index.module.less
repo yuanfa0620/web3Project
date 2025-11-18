@@ -1,0 +1,146 @@
+.buyModal {
+  :global(.ant-modal-body) {
+    padding: 0;
+  }
+
+  .modalContent {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .modalTop {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+
+      .modalImageWrapper {
+        flex: 0 0 220px;
+        max-width: 220px;
+        height: 220px;
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #f5f5f5;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        .modalRarity {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          margin: 0;
+          font-weight: 600;
+        }
+      }
+
+      .modalInfo {
+        flex: 1 1 320px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 12px 0;
+
+        .modalCollection {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 12px;
+          font-size: 14px;
+          color: rgba(0, 0, 0, 0.65);
+
+          strong {
+            color: #262626;
+          }
+        }
+
+        .modalPriceRow {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 18px;
+          padding: 12px 16px;
+          border-radius: 12px;
+          background: linear-gradient(135deg, rgba(24, 144, 255, 0.08), rgba(89, 124, 247, 0.15));
+          color: #262626;
+
+          strong {
+            color: #1890ff;
+            font-size: 20px;
+          }
+        }
+
+        .modalStats {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+          gap: 12px;
+
+          .modalStatItem {
+            padding: 12px;
+            border-radius: 10px;
+            background: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+
+            span {
+              font-size: 12px;
+              color: rgba(0, 0, 0, 0.45);
+            }
+
+            strong {
+              font-size: 14px;
+              color: #262626;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+
+    .attributesSection {
+      h4 {
+        margin: 0 0 12px 0;
+        font-size: 16px;
+      }
+
+      .attributeList {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+
+        .attributeItem {
+          padding: 10px 12px;
+          border-radius: 10px;
+          background: #fafafa;
+          border: 1px solid #f0f0f0;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+
+          .attributeLabel {
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.65);
+            text-transform: uppercase;
+          }
+
+          .attributeValue {
+            font-size: 14px;
+            font-weight: 600;
+            color: #262626;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+}
+

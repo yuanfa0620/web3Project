@@ -4,7 +4,7 @@ import { FireOutlined, ShoppingCartOutlined, HeartOutlined, HeartFilled } from '
 import type { TFunction } from 'i18next'
 import { AnimatedNumber } from '@/components/AnimatedNumber'
 import type { NFTMarketplaceItem } from '../../index'
-import styles from '../../index.module.less'
+import styles from './index.module.less'
 
 const { Title } = Typography
 
