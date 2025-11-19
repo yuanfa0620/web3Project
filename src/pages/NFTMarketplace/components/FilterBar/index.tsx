@@ -26,47 +26,47 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 }) => {
   return (
     <Card className={styles.filterCard}>
-      <Row gutter={[16, 16]} align="middle">
-        <Col xs={24} sm={12} md={6}>
-          <div className={styles.filterItem}>
-            <span className={styles.filterLabel}>{t('nftMarketplace.collection')}:</span>
-            <Select
-              value={selectedCollection}
-              onChange={onCollectionChange}
-              className={styles.filterSelect}
-              style={{ width: '100%' }}
-            >
-              <Option value="all">{t('nftMarketplace.allCollections')}</Option>
-              {collections.map((collection) => (
-                <Option key={collection} value={collection}>
-                  {collection}
-                </Option>
-              ))}
-            </Select>
-          </div>
-        </Col>
-        <Col xs={24} sm={12} md={6}>
-          <div className={styles.filterItem}>
-            <span className={styles.filterLabel}>{t('nftMarketplace.sortBy')}:</span>
-            <Select
-              value={sortBy}
-              onChange={onSortChange}
-              className={styles.filterSelect}
-              style={{ width: '100%' }}
-            >
-              <Option value="price-low">{t('nftMarketplace.priceLowToHigh')}</Option>
-              <Option value="price-high">{t('nftMarketplace.priceHighToLow')}</Option>
-              <Option value="volume-high">{t('nftMarketplace.volumeHighToLow')}</Option>
-              <Option value="name">{t('nftMarketplace.name')}</Option>
-            </Select>
-          </div>
-        </Col>
-        <Col xs={24} sm={12} md={6}>
-          <Button type="default" onClick={onReset}>
-            {t('nftMarketplace.reset')}
-          </Button>
-        </Col>
-      </Row>
+      <div className={styles.filterContainer}>
+        <Row gutter={[16, 16]} align="middle" className={styles.filterRow}>
+          <Col xs={24} sm={12} md={6}>
+            <div className={styles.filterItem}>
+              <span className={styles.filterLabel}>{t('nftMarketplace.collection')}:</span>
+              <Select
+                value={selectedCollection}
+                onChange={onCollectionChange}
+                className={styles.filterSelect}
+                style={{ width: '100%' }}
+              >
+                <Option value="all">{t('nftMarketplace.allCollections')}</Option>
+                {collections.map((collection) => (
+                  <Option key={collection} value={collection}>
+                    {collection}
+                  </Option>
+                ))}
+              </Select>
+            </div>
+          </Col>
+          <Col xs={24} sm={12} md={6}>
+            <div className={styles.filterItem}>
+              <span className={styles.filterLabel}>{t('nftMarketplace.sortBy')}:</span>
+              <Select
+                value={sortBy}
+                onChange={onSortChange}
+                className={styles.filterSelect}
+                style={{ width: '100%' }}
+              >
+                <Option value="price-low">{t('nftMarketplace.priceLowToHigh')}</Option>
+                <Option value="price-high">{t('nftMarketplace.priceHighToLow')}</Option>
+                <Option value="volume-high">{t('nftMarketplace.volumeHighToLow')}</Option>
+                <Option value="name">{t('nftMarketplace.name')}</Option>
+              </Select>
+            </div>
+          </Col>
+        </Row>
+        <Button type="default" onClick={onReset} className={styles.resetButton}>
+          {t('nftMarketplace.reset')}
+        </Button>
+      </div>
     </Card>
   )
 }

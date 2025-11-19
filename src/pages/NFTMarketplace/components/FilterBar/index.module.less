@@ -2,23 +2,79 @@
   margin-bottom: 24px;
   border-radius: 12px;
 
+  .filterContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .filterRow {
+    flex: 1;
+  }
+
   .filterItem {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
     gap: 8px;
 
     .filterLabel {
       font-size: 14px;
       color: rgba(0, 0, 0, 0.65);
       font-weight: 500;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .filterSelect {
-      width: 100%;
+      flex: 1;
+      min-width: 0;
     }
   }
 
+  .resetButton {
+    flex-shrink: 0;
+  }
+
   @media (max-width: 768px) {
+    .filterContainer {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    .filterRow {
+      width: 100%;
+    }
+
+    .filterItem {
+      gap: 6px;
+
+      .filterLabel {
+        font-size: 13px;
+      }
+
+      .filterSelect {
+        :global(.ant-select-selector) {
+          height: 32px !important;
+          min-height: 32px !important;
+        }
+
+        :global(.ant-select-selection-item),
+        :global(.ant-select-selection-placeholder) {
+          line-height: 30px !important;
+        }
+      }
+    }
+
+    .resetButton {
+      align-self: flex-end;
+      height: 32px;
+      padding: 0 16px;
+      font-size: 13px;
+    }
+
     :global(.ant-col) {
       margin-bottom: 8px;
     }
