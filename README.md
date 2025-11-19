@@ -52,7 +52,7 @@ cp .env.example .env.production
 ```bash
 # .env.development 和 .env.production
 VITE_WC_PROJECT_ID=your_walletconnect_project_id
-VITE_INFURA_KEY=your_infura_api_key
+VITE_ALCHEMY_KEY=your_infura_api_key
 ```
 
 ### 3. 启动开发服务器
@@ -115,7 +115,7 @@ src/
 - `VITE_APP_TITLE`: 应用标题
 - `VITE_API_BASE_URL`: API 基础地址
 - `VITE_WC_PROJECT_ID`: WalletConnect 项目 ID
-- `VITE_INFURA_KEY`: Infura API Key
+- `VITE_ALCHEMY_KEY`: Alchemy API Key
 
 ### 链配置
 

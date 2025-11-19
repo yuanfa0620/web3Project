@@ -33,7 +33,9 @@
     "react-router-dom": "^7.9.3",
     "redux-persist": "^6.0.0",
     "viem": "^2.37.9",
-    "wagmi": "^2.17.5"
+    "vite-plugin-node-polyfills": "^0.24.0",
+    "wagmi": "^2.17.5",
+    "nft.storage": "^7.1.0"
   },
   "devDependencies": {
     "@types/node": "^24.6.1",

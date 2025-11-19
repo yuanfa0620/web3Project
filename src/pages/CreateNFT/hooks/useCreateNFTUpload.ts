@@ -40,6 +40,7 @@ export const useCreateNFTUpload = ({
 
     try {
       setUploadProgress(50)
+      console.log(collectionImage.originFileObj,'====')
       const collectionHash = await uploadFileToIPFS(collectionImage.originFileObj as File)
       setCollectionImageHash(collectionHash)
       setUploadProgress(100)

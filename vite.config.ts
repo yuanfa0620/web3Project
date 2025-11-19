@@ -3,11 +3,20 @@ import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
 import viteImagemin from 'vite-plugin-imagemin'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }): UserConfig => {
   const plugins = [
     react(),
+    nodePolyfills({
+      // 启用 Buffer polyfill
+      globals: {
+        Buffer: true,
+        global: true,
+        process: true,
+      },
+    }),
   ]
 
   // 只在生产环境添加优化插件
@@ -55,7 +64,12 @@ export default defineConfig(({ mode }): UserConfig => {
       alias: {
         '@': resolve(__dirname, 'src'),
         'mock': resolve(__dirname, 'mock'),
+        buffer: 'buffer',
       },
+    },
+    define: {
+      'process.env': {},
+      global: 'globalThis',
     },
     server: {
       port: 3000,

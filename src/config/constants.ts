@@ -52,5 +52,5 @@ export const getWalletConnectProjectId = () => {
 
 // 获取 Infura Key
 export const getInfuraKey = () => {
-  return import.meta.env.VITE_INFURA_KEY || ''
+  return import.meta.env.VITE_ALCHEMY_KEY || ''
 }
