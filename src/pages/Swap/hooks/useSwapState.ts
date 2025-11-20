@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useAccount, useSwitchChain } from 'wagmi'
-import { CHAIN_IDS } from '@/constants/chains'
+import { CHAIN_IDS } from '@/config/network'
 import type { TokenConfig } from '@/types/swap'
 
 /**

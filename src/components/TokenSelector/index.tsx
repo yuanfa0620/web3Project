@@ -2,7 +2,13 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { Button, Avatar, Input, Typography, Modal, Divider, Switch, Tooltip, Spin, message } from 'antd'
 import { SearchOutlined, DownOutlined, CloseOutlined, PlusOutlined, CheckCircleOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
-import { CHAIN_INFO, CHAIN_IDS, supportedChains } from '@/constants/chains'
+import {
+  CHAIN_INFO,
+  CHAIN_IDS,
+  MAINNET_CHAIN_IDS,
+  TESTNET_CHAIN_IDS,
+  supportedChains,
+} from '@/config/network'
 import { getChainIconUrl } from '@/utils/chainIcons'
 import { loadTokenConfig } from '@/config/tokenConfig'
 import { createERC20Service } from '@/contracts/erc20'
@@ -17,28 +23,6 @@ const { Text } = Typography
 
 // 创建链ID到链对象的映射
 const chainMap = new Map(supportedChains.map(chain => [chain.id, chain]))
-
-// 主网链ID列表
-const MAINNET_CHAIN_IDS = [
-  CHAIN_IDS.ETHEREUM,
-  CHAIN_IDS.POLYGON,
-  CHAIN_IDS.BSC,
-  CHAIN_IDS.ARBITRUM,
-  CHAIN_IDS.OPTIMISM,
-  CHAIN_IDS.AVALANCHE,
-  CHAIN_IDS.BASE,
-]
-
-// 测试网链ID列表
-const TESTNET_CHAIN_IDS = [
-  CHAIN_IDS.SEPOLIA,
-  CHAIN_IDS.POLYGON_MUMBAI,
-  CHAIN_IDS.BSC_TESTNET,
-  CHAIN_IDS.ARBITRUM_SEPOLIA,
-  CHAIN_IDS.OPTIMISM_SEPOLIA,
-  CHAIN_IDS.AVALANCHE_FUJI,
-  CHAIN_IDS.BASE_SEPOLIA,
-] as const
 
 // 判断是否为测试网
 const isTestnetChain = (chainId: number): boolean => {

@@ -1,7 +1,7 @@
 /**
  * 区块链浏览器工具函数
  */
-import { CHAIN_IDS } from '@/constants/chains'
+import { CHAIN_IDS } from '@/config/network'
 
 /**
  * 根据链ID获取区块链浏览器的基础URL
@@ -14,17 +14,17 @@ export const getBlockExplorerUrl = (chainId: number): string => {
     [CHAIN_IDS.ETHEREUM]: 'https://etherscan.io',
     [CHAIN_IDS.POLYGON]: 'https://polygonscan.com',
     [CHAIN_IDS.BSC]: 'https://bscscan.com',
-    [CHAIN_IDS.ARBITRUM]: 'https://arbiscan.io',
-    [CHAIN_IDS.OPTIMISM]: 'https://optimistic.etherscan.io',
-    [CHAIN_IDS.AVALANCHE]: 'https://snowtrace.io',
+    // [CHAIN_IDS.ARBITRUM]: 'https://arbiscan.io',
+    // [CHAIN_IDS.OPTIMISM]: 'https://optimistic.etherscan.io',
+    // [CHAIN_IDS.AVALANCHE]: 'https://snowtrace.io',
     [CHAIN_IDS.BASE]: 'https://basescan.org',
     // 测试网
     [CHAIN_IDS.SEPOLIA]: 'https://sepolia.etherscan.io',
     [CHAIN_IDS.POLYGON_MUMBAI]: 'https://mumbai.polygonscan.com',
     [CHAIN_IDS.BSC_TESTNET]: 'https://testnet.bscscan.com',
-    [CHAIN_IDS.ARBITRUM_SEPOLIA]: 'https://sepolia.arbiscan.io',
-    [CHAIN_IDS.OPTIMISM_SEPOLIA]: 'https://sepolia-optimism.etherscan.io',
-    [CHAIN_IDS.AVALANCHE_FUJI]: 'https://testnet.snowtrace.io',
+    // [CHAIN_IDS.ARBITRUM_SEPOLIA]: 'https://sepolia.arbiscan.io',
+    // [CHAIN_IDS.OPTIMISM_SEPOLIA]: 'https://sepolia-optimism.etherscan.io',
+    // [CHAIN_IDS.AVALANCHE_FUJI]: 'https://testnet.snowtrace.io',
     [CHAIN_IDS.BASE_SEPOLIA]: 'https://sepolia.basescan.org',
   }
 

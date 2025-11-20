@@ -440,6 +440,19 @@
       "success": "成功",
       "failed": "失敗",
       "pending": "待確認"
+    },
+    "mint": {
+      "title": "領取代幣",
+      "button": "領取代幣",
+      "minting": "正在領取...",
+      "currentBalance": "當前餘額",
+      "balanceExceeded": "您的賬戶餘額已超過{{maxBalance}}枚代幣，無法繼續領取",
+      "costInfo": "每次領取需要支付 {{cost}} 主網幣",
+      "mintSuccess": "代幣領取成功！",
+      "mintFailed": "代幣領取失敗",
+      "walletNotConnected": "請先連接錢包",
+      "tokenContractNotConfigured": "當前網絡未配置代幣合約地址",
+      "checkBalanceFailed": "檢查餘額失敗"
     }
   },
   "footer": {

@@ -8,7 +8,7 @@ import { useAccount } from 'wagmi'
 import { PageTitle } from '@/components/PageTitle'
 import { useProfileData } from './hooks/useProfileData'
 import { useMobile } from '@/utils/useMobile'
-import { ConnectWalletCard, TransactionTable, NFTTable } from './components'
+import { ConnectWalletCard, TransactionTable, NFTTable, MintTokenButton } from './components'
 import styles from './index.module.less'
 
 const { Title } = Typography
@@ -35,6 +35,8 @@ const ProfilePage: React.FC = () => {
         <Title level={2} className={styles.pageTitle}>
           {t('profile.title')}
         </Title>
+
+        <MintTokenButton />
 
         <TransactionTable transactions={transactions} isMobile={isMobile} />
         <NFTTable nfts={nfts} isMobile={isMobile} />

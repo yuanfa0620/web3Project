@@ -2,7 +2,7 @@
  * ERC721合约部署服务
  */
 import { deployContract, waitForTransactionReceipt } from 'wagmi/actions'
-import { wagmiConfig } from '@/providers/WalletProvider'
+import { wagmiConfig } from '@/config/network'
 import { ERC721_ABI } from './abi'
 import { ERC721_BYTECODE } from './bytecode'
 import type { Address } from 'viem'

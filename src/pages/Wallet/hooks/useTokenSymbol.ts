@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { CHAIN_INFO } from '@/constants/chains'
+import { CHAIN_INFO } from '@/config/network'
 
 /**
  * 根据链 ID 获取代币符号 Hook

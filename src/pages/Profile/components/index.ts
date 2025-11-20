@@ -4,4 +4,5 @@
 export { ConnectWalletCard } from './ConnectWalletCard'
 export { TransactionTable } from './TransactionTable'
 export { NFTTable } from './NFTTable'
+export { MintTokenButton } from './MintTokenButton'
 

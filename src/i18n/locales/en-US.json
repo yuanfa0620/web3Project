@@ -440,6 +440,19 @@
       "success": "Success",
       "failed": "Failed",
       "pending": "Pending"
+    },
+    "mint": {
+      "title": "Mint Tokens",
+      "button": "Mint Tokens",
+      "minting": "Minting...",
+      "currentBalance": "Current Balance",
+      "balanceExceeded": "Your account balance exceeds {{maxBalance}} tokens, cannot mint more",
+      "costInfo": "Each mint requires {{cost}} native tokens",
+      "mintSuccess": "Tokens minted successfully!",
+      "mintFailed": "Token minting failed",
+      "walletNotConnected": "Please connect wallet first",
+      "tokenContractNotConfigured": "Token contract address not configured for current network",
+      "checkBalanceFailed": "Failed to check balance"
     }
   },
   "footer": {

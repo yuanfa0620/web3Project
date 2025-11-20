@@ -1,6 +1,6 @@
 import { readContract, writeContract, waitForTransactionReceipt } from 'wagmi/actions'
 import { parseUnits, formatUnits } from 'viem'
-import { wagmiConfig } from '@/providers/WalletProvider'
+import { wagmiConfig } from '@/config/network'
 import type { ContractCallResult, ERC20TokenInfo, ERC20TransferParams, ERC20ApprovalParams } from './data/types'
 import ERC20_ABI from './abi/ERC20.json'
 import { getErrorMessage } from '@/utils/error'

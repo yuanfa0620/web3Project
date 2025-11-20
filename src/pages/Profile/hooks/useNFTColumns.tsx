@@ -6,7 +6,7 @@ import type { ColumnsType } from 'antd/es/table'
 import { Tag, Avatar, Button } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { CHAIN_INFO } from '@/constants/chains'
+import { CHAIN_INFO } from '@/config/network'
 import type { UserNFT } from '../types'
 
 export const useNFTColumns = (): ColumnsType<UserNFT> => {

@@ -432,6 +432,19 @@
       "success": "成功",
       "failed": "失败",
       "pending": "待确认"
+    },
+    "mint": {
+      "title": "领取代币",
+      "button": "领取代币",
+      "minting": "正在领取...",
+      "currentBalance": "当前余额",
+      "balanceExceeded": "您的账户余额已超过{{maxBalance}}枚代币，无法继续领取",
+      "costInfo": "每次领取需要支付 {{cost}} 主网币",
+      "mintSuccess": "代币领取成功！",
+      "mintFailed": "代币领取失败",
+      "walletNotConnected": "请先连接钱包",
+      "tokenContractNotConfigured": "当前网络未配置代币合约地址",
+      "checkBalanceFailed": "检查余额失败"
     }
   },
   "footer": {

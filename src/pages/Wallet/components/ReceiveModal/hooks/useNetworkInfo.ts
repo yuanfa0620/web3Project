@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { CHAIN_INFO } from '@/constants/chains'
+import { CHAIN_INFO } from '@/config/network'
 
 /**
  * 网络信息 Hook

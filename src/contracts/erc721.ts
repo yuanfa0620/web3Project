@@ -1,6 +1,6 @@
 import { readContract, writeContract, waitForTransactionReceipt } from 'wagmi/actions'
 import type { ContractCallResult, ERC721TokenInfo, ERC721TransferParams, ERC721ApprovalParams, ERC721TokenMetadata } from './data/types'
-import { wagmiConfig } from '@/providers/WalletProvider'
+import { wagmiConfig } from '@/config/network'
 import ERC721_ABI from './abi/ERC721.json'
 import { getErrorMessage } from '@/utils/error'
 import { getSettledString, getSettledBigInt } from '@/utils/promise'

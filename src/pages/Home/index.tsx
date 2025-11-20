@@ -4,7 +4,7 @@ import { WalletOutlined, SwapOutlined, TrophyOutlined, RiseOutlined } from '@ant
 import { useTranslation } from 'react-i18next'
 import homeStats from 'mock/homeStats.json'
 import { useWallet } from '@/hooks/useWallet'
-import { CHAIN_INFO } from '@/constants/chains'
+import { CHAIN_INFO } from '@/config/network'
 import { PageTitle } from '@/components/PageTitle'
 import { AnimatedNumber } from '@/components/AnimatedNumber'
 import styles from './index.module.less'

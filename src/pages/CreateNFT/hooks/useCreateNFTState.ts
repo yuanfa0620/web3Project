@@ -3,7 +3,7 @@
  */
 import { useState, useMemo } from 'react'
 import { useAccount } from 'wagmi'
-import { supportedChains, CHAIN_INFO } from '@/constants/chains'
+import { supportedChains, CHAIN_INFO } from '@/config/network'
 import type { UploadFile } from 'antd'
 import type { DeployedContract } from '../types'
 
