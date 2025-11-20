@@ -1,46 +1,66 @@
 /**
- * IPFS上传工具（使用NFT.Storage）
+ * IPFS上传工具（使用NFT.Storage HTTP API）
  */
-import { NFTStorage } from 'nft.storage'
 
 // NFT.Storage API Token
 const NFT_STORAGE_TOKEN = '2408e71a.b9178e142496491eb921d49c7f334b22'//(import.meta.env.VITE_NFT_STORAGE_TOKEN || '').trim()
+const NFT_STORAGE_ENDPOINT = 'https://api.nft.storage'
 
-// 创建 NFT.Storage 客户端实例
-const getNFTStorageClient = () => {
+const getAuthToken = () => {
   if (!NFT_STORAGE_TOKEN) {
-    throw new Error(
-      'NFT.Storage配置不完整：请设置 VITE_NFT_STORAGE_TOKEN 环境变量'
-    )
+    throw new Error('NFT.Storage配置不完整：请设置 VITE_NFT_STORAGE_TOKEN 环境变量')
   }
-  
-  // 移除可能的引号或空格
+
   const cleanToken = NFT_STORAGE_TOKEN.replace(/^["']|["']$/g, '').trim()
-  
+
   if (!cleanToken) {
-    throw new Error(
-      'NFT.Storage API Key 为空，请检查 VITE_NFT_STORAGE_TOKEN 环境变量'
-    )
+    throw new Error('NFT.Storage API Key 为空，请检查 VITE_NFT_STORAGE_TOKEN 环境变量')
   }
-  
-  // 调试信息：显示 token 的前几个字符和后几个字符（不显示完整 token）
-  const tokenPreview = cleanToken.length > 10 
-    ? `${cleanToken.substring(0, 8)}...${cleanToken.substring(cleanToken.length - 8)}`
-    : '***'
+
+  const tokenPreview =
+    cleanToken.length > 10
+      ? `${cleanToken.substring(0, 8)}...${cleanToken.substring(cleanToken.length - 8)}`
+      : '***'
   console.log('NFT.Storage Token 预览:', tokenPreview, '长度:', cleanToken.length)
-  
-  try {
-    const client = new NFTStorage({ token: cleanToken })
-    return client
-  } catch (error: any) {
-    console.error('创建 NFT.Storage 客户端时出错:', error)
-    throw error
-  }
+
+  return cleanToken
 }
 
 // 检查配置是否完整
 const isNFTStorageConfigured = () => {
   return !!NFT_STORAGE_TOKEN
+}
+
+const uploadDataToNFTStorage = async (data: Blob, fileName: string) => {
+  const token = getAuthToken()
+
+  const formData = new FormData()
+  formData.append('file', data, fileName)
+
+  const response = await fetch(`${NFT_STORAGE_ENDPOINT}/upload`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  })
+
+  const result = await response.json()
+
+  if (!response.ok || !result?.ok) {
+    const errorMessage =
+      result?.error?.message ||
+      result?.message ||
+      `上传失败，HTTP状态码: ${response.status}`
+    throw new Error(errorMessage)
+  }
+
+  const cid = result?.value?.cid
+  if (!cid) {
+    throw new Error('上传失败：响应中未包含 CID')
+  }
+
+  return cid as string
 }
 
 /**
@@ -57,12 +77,8 @@ export const uploadFileToIPFS = async (file: File): Promise<string> => {
       )
     }
 
-    const client = getNFTStorageClient()
-    
-    // 上传文件到 NFT.Storage
-    // storeBlob 方法直接上传文件并返回 CID
     console.log('开始上传文件到 NFT.Storage，文件名:', file.name, '大小:', file.size)
-    const cid = await client.storeBlob(file)
+    const cid = await uploadDataToNFTStorage(file, file.name)
     console.log('文件上传成功，CID:', cid)
 
     if (!cid) {
