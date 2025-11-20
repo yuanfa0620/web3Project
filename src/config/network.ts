@@ -4,6 +4,14 @@ import { createConfig, http } from 'wagmi'
 import { mainnet, polygon, bsc, base, sepolia, polygonMumbai, bscTestnet, baseSepolia } from 'wagmi/chains'
 import { getWalletConnectProjectId, getRpcUrls } from '@/config/constants'
 import { getChainIconUrl } from '@/utils/chainIcons'
+import tokens1 from './tokens/1.json'
+import tokens137 from './tokens/137.json'
+import tokens56 from './tokens/56.json'
+import tokens8453 from './tokens/8453.json'
+import tokens11155111 from './tokens/11155111.json'
+import tokens80001 from './tokens/80001.json'
+import tokens97 from './tokens/97.json'
+import tokens84532 from './tokens/84532.json'
 
 export const supportedChains = [
   mainnet,
@@ -107,6 +115,17 @@ export const CHAIN_INFO = {
     logoURI: getChainIconUrl(CHAIN_IDS.BASE_SEPOLIA) || 'https://cryptologos.cc/logos/base-base-logo.png',
   },
 } as const
+
+export const BASE_TOKEN_CONFIGS: Record<number, any> = {
+  [CHAIN_IDS.ETHEREUM]: tokens1,
+  [CHAIN_IDS.POLYGON]: tokens137,
+  [CHAIN_IDS.BSC]: tokens56,
+  [CHAIN_IDS.BASE]: tokens8453,
+  [CHAIN_IDS.SEPOLIA]: tokens11155111,
+  [CHAIN_IDS.POLYGON_MUMBAI]: tokens80001,
+  [CHAIN_IDS.BSC_TESTNET]: tokens97,
+  [CHAIN_IDS.BASE_SEPOLIA]: tokens84532,
+}
 
 // RainbowKit 连接器
 const connectors = connectorsForWallets(
