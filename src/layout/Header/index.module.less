@@ -25,6 +25,20 @@
       // flex: 0 0 370px; // 固定宽度，与右侧按钮组保持一致
       display: flex;
       align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      .logoImage {
+        height: 40px;
+        width: auto;
+        object-fit: contain;
+        border-radius: 8px;
+      }
 
       .logoText {
         margin: 0 !important;
@@ -133,9 +147,29 @@
       align-items: center;
       width: 100%;
       
+      .drawerLogoContainer {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+      
+      .drawerLogoImage {
+        height: 32px;
+        width: auto;
+        object-fit: contain;
+        border-radius: 6px;
+      }
+      
       .drawerTitle {
         margin: 0 !important;
         color: #1890ff;
+        font-weight: bold;
       }
       
       .closeButton {
@@ -285,6 +319,10 @@
         flex: 0 0 auto; // 移动端恢复自动宽度
         margin-right: 0; // 移除右边距
 
+        .logoImage {
+          height: 32px;
+        }
+
         .logoText {
           font-size: 18px !important;
         }
@@ -322,6 +360,10 @@
       .logo {
         flex: 0 0 auto; // 小屏幕恢复自动宽度
         margin-right: 0; // 移除右边距
+
+        .logoImage {
+          height: 28px;
+        }
 
         .logoText {
           font-size: 16px !important;

@@ -7,6 +7,7 @@ import { MenuOutlined, CloseOutlined } from '@ant-design/icons'
 import { LanguageSelector } from '@/components/LanguageSelector'
 import { allRoutes } from '@/router/routes'
 import { getMenuItemsFromRoutes } from '@/router/routes/utils'
+import logoImg from '@/assets/logo.png'
 import styles from './index.module.less'
 
 const { Header: AntHeader } = Layout
@@ -53,7 +54,8 @@ export const Header: React.FC = () => {
     <AntHeader className={styles.header}>
       <div className={styles.headerContent}>
         {/* Logo */}
-        <div className={styles.logo}>
+        <div className={styles.logo} onClick={() => navigate('/')}>
+          <img src={logoImg} alt="Logo" className={styles.logoImage} />
           <Title level={3} className={styles.logoText}>
             Web3
           </Title>
@@ -106,9 +108,22 @@ export const Header: React.FC = () => {
       <Drawer
         title={
           <div className={styles.drawerHeader}>
-            <Title level={4} className={styles.drawerTitle}>
-              Web3
-            </Title>
+            <div 
+              className={styles.drawerLogoContainer}
+              onClick={() => {
+                navigate('/')
+                setMobileMenuOpen(false)
+              }}
+            >
+              <img 
+                src={logoImg} 
+                alt="Logo" 
+                className={styles.drawerLogoImage}
+              />
+              <Title level={4} className={styles.drawerTitle}>
+                Web3
+              </Title>
+            </div>
             <Button
               type="text"
               icon={<CloseOutlined />}
