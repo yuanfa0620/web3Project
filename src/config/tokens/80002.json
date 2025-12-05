@@ -1,10 +1,10 @@
 {
-  "chainId": 80001,
-  "chainName": "Polygon Mumbai",
+  "chainId": 80002,
+  "chainName": "Polygon Amoy",
   "tokens": [
     {
-      "name": "Polygon",
-      "symbol": "MATIC",
+      "name": "Polygon Amoy",
+      "symbol": "POL",
       "address": "0x0000000000000000000000000000000000000000",
       "decimals": 18,
       "icon": "",

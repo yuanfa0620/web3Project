@@ -29,7 +29,7 @@ export const CONFIG = {
     [8453]: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS_8453 || '', // Base
     // 测试网
     [11155111]: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS_11155111 || '', // Sepolia
-    [80001]: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS_80001 || '', // Polygon Mumbai
+    [80002]: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS_80002 || '', // Polygon Amoy
     [97]: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS_97 || '', // BSC Testnet
     [84532]: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS_84532 || '', // Base Sepolia
   },
@@ -52,7 +52,7 @@ export const getRpcUrls = () => {
     BASE: `https://base-mainnet.g.alchemy.com/v2/${infuraKey}`,
     // 测试网
     SEPOLIA: `https://eth-sepolia.g.alchemy.com/v2/${infuraKey}`,
-    POLYGON_MUMBAI: `https://polygon-mumbai.g.alchemy.com/v2/${infuraKey}`,
+    POLYGON_AMOY: `https://polygon-amoy.g.alchemy.com/v2/${infuraKey}`,
     BSC_TESTNET: `https://bnb-testnet.g.alchemy.com/v2/${infuraKey}`,
     BASE_SEPOLIA: `https://base-sepolia.g.alchemy.com/v2/${infuraKey}`,
   }

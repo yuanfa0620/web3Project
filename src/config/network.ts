@@ -1,7 +1,7 @@
 import { connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { metaMaskWallet, coinbaseWallet, walletConnectWallet, injectedWallet, safeWallet, trustWallet, ledgerWallet } from '@rainbow-me/rainbowkit/wallets'
 import { createConfig, http } from 'wagmi'
-import { mainnet, polygon, bsc, base, sepolia, polygonMumbai, bscTestnet, baseSepolia } from 'wagmi/chains'
+import { mainnet, polygon, bsc, base, sepolia, bscTestnet, baseSepolia, polygonAmoy } from 'wagmi/chains'
 import { getWalletConnectProjectId, getRpcUrls } from '@/config/constants'
 import { getChainIconUrl } from '@/utils/chainIcons'
 import tokens1 from './tokens/1.json'
@@ -9,7 +9,7 @@ import tokens137 from './tokens/137.json'
 import tokens56 from './tokens/56.json'
 import tokens8453 from './tokens/8453.json'
 import tokens11155111 from './tokens/11155111.json'
-import tokens80001 from './tokens/80001.json'
+import tokens80002 from './tokens/80002.json'
 import tokens97 from './tokens/97.json'
 import tokens84532 from './tokens/84532.json'
 
@@ -19,7 +19,7 @@ export const supportedChains = [
   bsc,
   base,
   sepolia,
-  polygonMumbai,
+  polygonAmoy,
   bscTestnet,
   baseSepolia,
 ] as const
@@ -32,7 +32,7 @@ export const CHAIN_IDS = {
   BASE: 8453,
   // 测试网
   SEPOLIA: 11155111,
-  POLYGON_MUMBAI: 80001,
+  POLYGON_AMOY: 80002,
   BSC_TESTNET: 97,
   BASE_SEPOLIA: 84532,
 } as const
@@ -46,7 +46,7 @@ export const MAINNET_CHAIN_IDS = [
 
 export const TESTNET_CHAIN_IDS = [
   CHAIN_IDS.SEPOLIA,
-  CHAIN_IDS.POLYGON_MUMBAI,
+  CHAIN_IDS.POLYGON_AMOY,
   CHAIN_IDS.BSC_TESTNET,
   CHAIN_IDS.BASE_SEPOLIA,
 ] as const
@@ -59,7 +59,7 @@ export const RPC_URLS = {
   [CHAIN_IDS.BSC]: rpcUrls.BSC,
   [CHAIN_IDS.BASE]: rpcUrls.BASE,
   [CHAIN_IDS.SEPOLIA]: rpcUrls.SEPOLIA,
-  [CHAIN_IDS.POLYGON_MUMBAI]: rpcUrls.POLYGON_MUMBAI,
+  [CHAIN_IDS.POLYGON_AMOY]: rpcUrls.POLYGON_AMOY,
   [CHAIN_IDS.BSC_TESTNET]: rpcUrls.BSC_TESTNET,
   [CHAIN_IDS.BASE_SEPOLIA]: rpcUrls.BASE_SEPOLIA,
 } as const
@@ -96,11 +96,11 @@ export const CHAIN_INFO = {
     decimals: 18,
     logoURI: getChainIconUrl(CHAIN_IDS.SEPOLIA) || 'https://cryptologos.cc/logos/ethereum-eth-logo.png',
   },
-  [CHAIN_IDS.POLYGON_MUMBAI]: {
+  [CHAIN_IDS.POLYGON_AMOY]: {
     name: 'Polygon Mumbai',
     symbol: 'MATIC',
     decimals: 18,
-    logoURI: getChainIconUrl(CHAIN_IDS.POLYGON_MUMBAI) || 'https://cryptologos.cc/logos/polygon-matic-logo.png',
+    logoURI: getChainIconUrl(CHAIN_IDS.POLYGON_AMOY) || 'https://cryptologos.cc/logos/polygon-matic-logo.png',
   },
   [CHAIN_IDS.BSC_TESTNET]: {
     name: 'BSC Testnet',
@@ -122,7 +122,7 @@ export const BASE_TOKEN_CONFIGS: Record<number, any> = {
   [CHAIN_IDS.BSC]: tokens56,
   [CHAIN_IDS.BASE]: tokens8453,
   [CHAIN_IDS.SEPOLIA]: tokens11155111,
-  [CHAIN_IDS.POLYGON_MUMBAI]: tokens80001,
+  [CHAIN_IDS.POLYGON_AMOY]: tokens80002,
   [CHAIN_IDS.BSC_TESTNET]: tokens97,
   [CHAIN_IDS.BASE_SEPOLIA]: tokens84532,
 }
