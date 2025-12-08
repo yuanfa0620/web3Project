@@ -47,13 +47,13 @@ export const baseRoutes: RouteConfig[] = [
   //   icon: <SwapOutlined />,
   //   menuLabel: 'navigation.tokens',
   // },
-  {
-    path: 'nfts',
-    element: <NFTsPage />,
-    title: 'NFT',
-    icon: <TrophyOutlined />,
-    menuLabel: 'navigation.nfts',
-  },
+  // {
+  //   path: 'nfts',
+  //   element: <NFTsPage />,
+  //   title: 'NFT',
+  //   icon: <TrophyOutlined />,
+  //   menuLabel: 'navigation.nfts',
+  // },
   {
     path: 'nft-marketplace',
     element: <NFTMarketplacePage />,
@@ -61,13 +61,13 @@ export const baseRoutes: RouteConfig[] = [
     icon: <TrophyOutlined />,
     menuLabel: 'navigation.nftMarketplace',
   },
-  {
-    path: 'create-nft',
-    element: <CreateNFTPage />,
-    title: '创建NFT',
-    icon: <TrophyOutlined />,
-    menuLabel: 'navigation.createNFT',
-  },
+  // {
+  //   path: 'create-nft',
+  //   element: <CreateNFTPage />,
+  //   title: '创建NFT',
+  //   icon: <TrophyOutlined />,
+  //   menuLabel: 'navigation.createNFT',
+  // },
   {
     path: 'swap',
     element: <SwapPage />,
