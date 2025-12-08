@@ -19,7 +19,7 @@ export const getChainIconUrl = (chainId: number): string | undefined => {
     
     // 测试网 (使用对应主网的图标)
     11155111: 'https://icons.llamao.fi/icons/chains/rsz_ethereum.jpg', // Sepolia
-    80001: 'https://icons.llamao.fi/icons/chains/rsz_polygon.jpg', // Polygon Mumbai
+    80002: 'https://icons.llamao.fi/icons/chains/rsz_polygon.jpg', // Polygon Amoy
     97: 'https://icons.llamao.fi/icons/chains/rsz_binance.jpg', // BSC Testnet (使用 binance)
     421613: 'https://icons.llamao.fi/icons/chains/rsz_arbitrum.jpg', // Arbitrum Sepolia
     420: 'https://icons.llamao.fi/icons/chains/rsz_optimism.jpg', // Optimism Sepolia
