@@ -107,20 +107,23 @@ export const Header: React.FC = () => {
       {/* 移动端抽屉菜单 */}
       <Drawer
         title={
-          <div className={styles.drawerHeader}>
+          <div className={styles.drawerHeader} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             <div 
               className={styles.drawerLogoContainer}
               onClick={() => {
                 navigate('/')
                 setMobileMenuOpen(false)
               }}
+              style={{display: 'flex', alignItems: 'center', gap: 10}}
             >
               <img 
                 src={logoImg} 
                 alt="Logo" 
                 className={styles.drawerLogoImage}
+                width={32}
+                height={32}
               />
-              <Title level={4} className={styles.drawerTitle}>
+              <Title level={4} className={styles.drawerTitle} style={{margin: 0}}>
                 Web3
               </Title>
             </div>

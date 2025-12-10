@@ -1,6 +1,8 @@
 // 合约服务统一导出
 export { ERC20Service, createERC20Service } from './erc20'
 export { ERC721Service, createERC721Service } from './erc721'
+export { NFTMarketplaceService, createNFTMarketplaceService } from './nftMarketplace/index'
+export { WhitelistManagerService, createWhitelistManagerService } from './whitelistManager/index'
 export * from './data/types'
 
 // 常用合约地址（示例）
