@@ -25,4 +25,12 @@ export const COMMON_CONTRACTS = {
   MAYC: {
     [1]: '0x60E4d786628Fea6478F785A6d7e704777c86a7c6', // Ethereum
   },
+  // NFT 市场合约
+  NFTMarketplace: {
+    [11155111]: '0x1Ed2E25EaF1D87653A42B8e89A120877d3Fc757b', // Sepolia
+  },
+  // 白名单管理器合约
+  WhitelistManager: {
+    [11155111]: '0x7A0c8c02a4936AeBC408bAbAd3d9f222C2FAA056', // Sepolia
+  },
 } as const
