@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
+import { getErrorMessage } from '@/utils/error'
 import NFTMarketPlace_ABI from '../../abi/NFTMarketPlace.json'
 
 interface UseUnpauseParams {
@@ -34,15 +35,15 @@ export const useUnpause = ({ marketplaceAddress, chainId, onSuccess, onError }: 
 
   useEffect(() => {
     if (isConfirmed && hash) {
-      message.success('恢复合约成功')
+      getMessage().success('恢复合约成功')
       onSuccess?.(hash)
     }
   }, [isConfirmed, hash, onSuccess])
 
   useEffect(() => {
     if (writeError) {
-      const errorMsg = writeError.message || '恢复合约失败'
-      message.error(errorMsg)
+      const errorMsg = getErrorMessage(writeError) || '恢复合约失败'
+      getMessage().error(errorMsg)
       onError?.(errorMsg)
     }
   }, [writeError, onError])

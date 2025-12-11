@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
+import { getErrorMessage } from '@/utils/error'
 import type { EmergencyWithdrawParams } from '../index'
 import NFTMarketPlace_ABI from '../../abi/NFTMarketPlace.json'
 
@@ -40,15 +41,15 @@ export const useEmergencyWithdraw = ({ marketplaceAddress, chainId, onSuccess, o
 
   useEffect(() => {
     if (isConfirmed && hash) {
-      message.success('紧急提取 NFT 成功')
+      getMessage().success('紧急提取 NFT 成功')
       onSuccess?.(hash)
     }
   }, [isConfirmed, hash, onSuccess])
 
   useEffect(() => {
     if (writeError) {
-      const errorMsg = writeError.message || '紧急提取 NFT 失败'
-      message.error(errorMsg)
+      const errorMsg = getErrorMessage(writeError) || '紧急提取 NFT 失败'
+      getMessage().error(errorMsg)
       onError?.(errorMsg)
     }
   }, [writeError, onError])

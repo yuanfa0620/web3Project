@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
+import { getErrorMessage } from '@/utils/error'
 import type { SetWhitelistManagerParams } from '../index'
 import NFTMarketPlace_ABI from '../../abi/NFTMarketPlace.json'
 
@@ -38,15 +39,15 @@ export const useSetWhitelistManager = ({ marketplaceAddress, chainId, onSuccess,
 
   useEffect(() => {
     if (isConfirmed && hash) {
-      message.success('设置白名单管理器成功')
+      getMessage().success('设置白名单管理器成功')
       onSuccess?.(hash)
     }
   }, [isConfirmed, hash, onSuccess])
 
   useEffect(() => {
     if (writeError) {
-      const errorMsg = writeError.message || '设置白名单管理器失败'
-      message.error(errorMsg)
+      const errorMsg = getErrorMessage(writeError) || '设置白名单管理器失败'
+      getMessage().error(errorMsg)
       onError?.(errorMsg)
     }
   }, [writeError, onError])

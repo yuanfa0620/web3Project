@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
+import { getErrorMessage } from '@/utils/error'
 import WhitelistManager_ABI from '../../abi/WhitelistManager.json'
 
 interface UseRenounceOwnershipParams {
@@ -34,15 +35,15 @@ export const useRenounceOwnership = ({ whitelistManagerAddress, chainId, onSucce
 
   useEffect(() => {
     if (isConfirmed && hash) {
-      message.success('放弃所有权成功')
+      getMessage().success('放弃所有权成功')
       onSuccess?.(hash)
     }
   }, [isConfirmed, hash, onSuccess])
 
   useEffect(() => {
     if (writeError) {
-      const errorMsg = writeError.message || '放弃所有权失败'
-      message.error(errorMsg)
+      const errorMsg = getErrorMessage(writeError) || '放弃所有权失败'
+      getMessage().error(errorMsg)
       onError?.(errorMsg)
     }
   }, [writeError, onError])

@@ -1,5 +1,5 @@
 import { useRef, useCallback } from 'react'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
 import { useTranslation } from 'react-i18next'
 
 /**
@@ -34,7 +34,7 @@ export const useQRCodeDownload = (address?: string) => {
       link.click()
       document.body.removeChild(link)
       URL.revokeObjectURL(downloadUrl)
-      message.success(t('wallet.receiveModal.downloadSuccess'))
+      getMessage().success(t('wallet.receiveModal.downloadSuccess'))
     })
   }, [address, t])
 

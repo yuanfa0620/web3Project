@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
+import { getErrorMessage } from '@/utils/error'
 import type { UpdateWhitelistParams } from '../index'
 import NFTMarketPlace_ABI from '../../abi/NFTMarketPlace.json'
 
@@ -42,15 +43,15 @@ export const useUpdateWhitelist = ({ marketplaceAddress, chainId, onSuccess, onE
 
   useEffect(() => {
     if (isConfirmed && hash) {
-      message.success('更新白名单成功')
+      getMessage().success('更新白名单成功')
       onSuccess?.(hash)
     }
   }, [isConfirmed, hash, onSuccess])
 
   useEffect(() => {
     if (writeError) {
-      const errorMsg = writeError.message || '更新白名单失败'
-      message.error(errorMsg)
+      const errorMsg = getErrorMessage(writeError) || '更新白名单失败'
+      getMessage().error(errorMsg)
       onError?.(errorMsg)
     }
   }, [writeError, onError])

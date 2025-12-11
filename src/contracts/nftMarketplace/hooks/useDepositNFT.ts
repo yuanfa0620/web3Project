@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
+import { getErrorMessage } from '@/utils/error'
 import { createERC721Service } from '@/contracts/erc721'
 import type { DepositNFTParams } from '../index'
 import NFTMarketPlace_ABI from '../../abi/NFTMarketPlace.json'
@@ -67,7 +68,7 @@ export const useDepositNFT = ({ marketplaceAddress, chainId, onSuccess, onError 
     async (params: DepositNFTParams) => {
       if (!address) {
         const errorMsg = '请先连接钱包'
-        message.error(errorMsg)
+        getMessage().error(errorMsg)
         onError?.(errorMsg)
         return
       }
@@ -89,7 +90,7 @@ export const useDepositNFT = ({ marketplaceAddress, chainId, onSuccess, onError 
           // 需要授权，先保存 params，然后进行单个 NFT 授权
           setPendingParams(params)
           setApproving(true)
-          message.info('需要授权 NFT，请确认交易')
+          getMessage().info('需要授权 NFT，请确认交易')
           
           const tokenIdBigInt = typeof params.tokenId === 'string' ? BigInt(params.tokenId) : params.tokenId
           
@@ -102,8 +103,8 @@ export const useDepositNFT = ({ marketplaceAddress, chainId, onSuccess, onError 
           })
         }
       } catch (error) {
-        const errorMsg = error instanceof Error ? error.message : '检查授权状态失败'
-        message.error(errorMsg)
+        const errorMsg = getErrorMessage(error) || '检查授权状态失败'
+        getMessage().error(errorMsg)
         onError?.(errorMsg)
         setLoading(false)
         setApproving(false)
@@ -117,7 +118,7 @@ export const useDepositNFT = ({ marketplaceAddress, chainId, onSuccess, onError 
   useEffect(() => {
     if (isApproveConfirmed && approveHash && pendingParams) {
       setApproving(false)
-      message.success('授权成功，正在存入 NFT...')
+      getMessage().success('授权成功，正在存入 NFT...')
       executeDeposit(pendingParams)
       setPendingParams(null)
     }
@@ -127,7 +128,7 @@ export const useDepositNFT = ({ marketplaceAddress, chainId, onSuccess, onError 
   useEffect(() => {
     if (isDepositConfirmed && depositHash) {
       setLoading(false)
-      message.success('NFT 存入成功')
+      getMessage().success('NFT 存入成功')
       onSuccess?.(depositHash)
     }
   }, [isDepositConfirmed, depositHash, onSuccess])
@@ -135,16 +136,16 @@ export const useDepositNFT = ({ marketplaceAddress, chainId, onSuccess, onError 
   // 错误处理
   useEffect(() => {
     if (approveError) {
-      const errorMsg = approveError.message || '授权失败'
-      message.error(errorMsg)
+      const errorMsg = getErrorMessage(approveError) || '授权失败'
+      getMessage().error(errorMsg)
       onError?.(errorMsg)
       setLoading(false)
       setApproving(false)
       setPendingParams(null)
     }
     if (depositError) {
-      const errorMsg = depositError.message || '存入 NFT 失败'
-      message.error(errorMsg)
+      const errorMsg = getErrorMessage(depositError) || '存入 NFT 失败'
+      getMessage().error(errorMsg)
       onError?.(errorMsg)
       setLoading(false)
     }

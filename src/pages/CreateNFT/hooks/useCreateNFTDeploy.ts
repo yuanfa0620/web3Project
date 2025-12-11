@@ -2,7 +2,8 @@
  * CreateNFT 页面合约部署逻辑 Hook
  */
 import { useCallback } from 'react'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
+import { getErrorMessage } from '@/utils/error'
 import { useTranslation } from 'react-i18next'
 import { useAccount, useSwitchChain } from 'wagmi'
 import { uploadJSONToIPFS, createOpenSeaMetadata } from '@/utils/ipfs'
@@ -34,7 +35,7 @@ export const useCreateNFTDeploy = ({
   // 部署合约
   const handleDeploy = useCallback(async () => {
     if (!isConnected || !address) {
-      message.error(t('createNFT.connectWalletFirst'))
+      getMessage().error(t('createNFT.connectWalletFirst'))
       return
     }
 
@@ -94,11 +95,11 @@ export const useCreateNFTDeploy = ({
         txHash: result.transactionHash,
       })
 
-      message.success(t('createNFT.deploySuccess'))
+      getMessage().success(t('createNFT.deploySuccess'))
       setCurrentStep(2)
     } catch (error: any) {
       console.error('部署失败:', error)
-      message.error(error.message || t('createNFT.deployFailed'))
+      getMessage().error(getErrorMessage(error) || t('createNFT.deployFailed'))
       setDeployProgress(0)
     } finally {
       setDeploying(false)

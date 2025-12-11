@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
+import { getErrorMessage } from '@/utils/error'
 import WhitelistManager_ABI from '../../abi/WhitelistManager.json'
 
 interface UseWithdrawAllFeesParams {
@@ -37,15 +38,15 @@ export const useWithdrawAllFees = ({ whitelistManagerAddress, chainId, onSuccess
 
   useEffect(() => {
     if (isConfirmed && hash) {
-      message.success('提取所有费用成功')
+      getMessage().success('提取所有费用成功')
       onSuccess?.(hash)
     }
   }, [isConfirmed, hash, onSuccess])
 
   useEffect(() => {
     if (writeError) {
-      const errorMsg = writeError.message || '提取所有费用失败'
-      message.error(errorMsg)
+      const errorMsg = getErrorMessage(writeError) || '提取所有费用失败'
+      getMessage().error(errorMsg)
       onError?.(errorMsg)
     }
   }, [writeError, onError])

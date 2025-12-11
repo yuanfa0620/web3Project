@@ -2,7 +2,8 @@
  * CreateNFT 页面图片上传逻辑 Hook
  */
 import { useCallback } from 'react'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
+import { getErrorMessage } from '@/utils/error'
 import { useTranslation } from 'react-i18next'
 import { uploadFileToIPFS, uploadFilesToIPFS } from '@/utils/ipfs'
 import type { UploadFile } from 'antd'
@@ -31,7 +32,7 @@ export const useCreateNFTUpload = ({
   // 上传合集封面图到IPFS
   const handleUploadCollectionImage = useCallback(async () => {
     if (!collectionImage?.originFileObj) {
-      message.warning(t('createNFT.uploadCollectionImageFirst'))
+      getMessage().warning(t('createNFT.uploadCollectionImageFirst'))
       return
     }
 
@@ -44,11 +45,11 @@ export const useCreateNFTUpload = ({
       const collectionHash = await uploadFileToIPFS(collectionImage.originFileObj as File)
       setCollectionImageHash(collectionHash)
       setUploadProgress(100)
-      message.success(t('createNFT.collectionImageUploadSuccess'))
+      getMessage().success(t('createNFT.collectionImageUploadSuccess'))
       setCurrentStep(1)
     } catch (error: any) {
       console.error('上传失败:', error)
-      message.error(error.message || t('createNFT.uploadFailed'))
+      getMessage().error(getErrorMessage(error) || t('createNFT.uploadFailed'))
       setUploadProgress(0)
     } finally {
       setUploading(false)
@@ -58,7 +59,7 @@ export const useCreateNFTUpload = ({
   // 上传NFT图片到IPFS（在第二步）
   const handleUploadNftImages = useCallback(async () => {
     if (nftImageList.length === 0) {
-      message.warning(t('createNFT.uploadNftImagesFirst'))
+      getMessage().warning(t('createNFT.uploadNftImagesFirst'))
       return
     }
 
@@ -78,10 +79,10 @@ export const useCreateNFTUpload = ({
       const hashes = await uploadFilesToIPFS(nftFiles)
       setNftImageHashes(hashes)
       setUploadProgress(100)
-      message.success(t('createNFT.nftImagesUploadSuccess', { count: hashes.length }))
+      getMessage().success(t('createNFT.nftImagesUploadSuccess', { count: hashes.length }))
     } catch (error: any) {
       console.error('上传失败:', error)
-      message.error(error.message || t('createNFT.uploadFailed'))
+      getMessage().error(getErrorMessage(error) || t('createNFT.uploadFailed'))
       setUploadProgress(0)
     } finally {
       setUploading(false)

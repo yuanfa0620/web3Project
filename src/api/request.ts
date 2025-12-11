@@ -15,7 +15,7 @@
 
 import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
 import type { ApiResponse, RequestConfig, AxiosInstanceConfig } from './modules/data/types'
 
 // 扩展AxiosRequestConfig类型
@@ -141,7 +141,7 @@ class Request {
           // 跳转到登录页面
           window.location.href = '/login'
           // 提示用户登录已过期
-          message.error('登录已过期，请重新登录')
+          getMessage().error('登录已过期，请重新登录')
           // 拒绝请求，阻止后续处理
           return Promise.reject(new Error('登录已过期'))
         }
@@ -149,7 +149,7 @@ class Request {
         // 业务失败
         const showError = response.config.showError !== undefined ? response.config.showError : this.defaultShowError
         if (showError) {
-          message.error(msg || '请求失败')
+          getMessage().error(msg || '请求失败')
         }
 
         return Promise.reject(new Error(msg || '请求失败'))
@@ -186,24 +186,24 @@ class Request {
               // 跳转到登录页面
               window.location.href = '/login'
               // 提示用户登录已过期
-              message.error('登录已过期，请重新登录')
+              getMessage().error('登录已过期，请重新登录')
               break
             case 403:
-              message.error('没有权限访问')
+              getMessage().error('没有权限访问')
               break
             case 404:
-              message.error('请求的资源不存在')
+              getMessage().error('请求的资源不存在')
               break
             case 500:
-              message.error('服务器内部错误')
+              getMessage().error('服务器内部错误')
               break
             default:
-              message.error((data as any)?.message || '请求失败')
+              getMessage().error((data as any)?.message || '请求失败')
           }
         } else if (error.request) {
-          message.error('网络连接失败，请检查网络')
+          getMessage().error('网络连接失败，请检查网络')
         } else {
-          message.error('请求配置错误')
+          getMessage().error('请求配置错误')
         }
 
         return Promise.reject(error)

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { Card, Button, Typography, message } from 'antd'
+import { Card, Button, Typography } from 'antd'
 import { SwapOutlined, ArrowDownOutlined } from '@ant-design/icons'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useTranslation } from 'react-i18next'
@@ -14,12 +14,14 @@ import { useSwapState } from './hooks/useSwapState'
 import { useSwapActions } from './hooks/useSwapActions'
 import { useSwapButtonState } from './hooks/useSwapButtonState'
 import { useSwapDisplayAmount } from './hooks/useSwapDisplayAmount'
+import { useMessage } from '@/hooks/useMessage'
 import styles from './index.module.less'
 
 const { Title } = Typography
 
 const SwapPage: React.FC = () => {
   const { t } = useTranslation()
+  const message = useMessage()
   const { chainId, isConnected } = useAccount()
   const { isConnected: walletConnected } = useWallet()
 
@@ -161,6 +163,7 @@ const SwapPage: React.FC = () => {
     handleApprove,
     handleSwap,
     t,
+    message,
   ])
 
   // 交换from和to

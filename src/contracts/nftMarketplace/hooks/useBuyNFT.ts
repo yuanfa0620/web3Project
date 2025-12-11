@@ -1,7 +1,8 @@
 import { useCallback, useEffect } from 'react'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { parseEther } from 'viem'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
+import { getErrorMessage } from '@/utils/error'
 import type { BuyNFTParams } from '../index'
 import NFTMarketPlace_ABI from '../../abi/NFTMarketPlace.json'
 
@@ -43,15 +44,15 @@ export const useBuyNFT = ({ marketplaceAddress, chainId, onSuccess, onError }: U
 
   useEffect(() => {
     if (isConfirmed && hash) {
-      message.success('购买 NFT 成功')
+      getMessage().success('购买 NFT 成功')
       onSuccess?.(hash)
     }
   }, [isConfirmed, hash, onSuccess])
 
   useEffect(() => {
     if (writeError) {
-      const errorMsg = writeError.message || '购买 NFT 失败'
-      message.error(errorMsg)
+      const errorMsg = getErrorMessage(writeError) || '购买 NFT 失败'
+      getMessage().error(errorMsg)
       onError?.(errorMsg)
     }
   }, [writeError, onError])

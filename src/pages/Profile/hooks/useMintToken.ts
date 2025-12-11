@@ -4,7 +4,8 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { parseEther, formatUnits } from 'viem'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
+import { getErrorMessage } from '@/utils/error'
 import { useTranslation } from 'react-i18next'
 import { createERC20Service } from '@/contracts/erc20'
 import { CONFIG } from '@/config/constants'
@@ -53,7 +54,7 @@ export const useMintToken = () => {
       }
     } catch (error: any) {
       console.error('检查余额失败:', error)
-      return { success: false, balance: '0', error: error.message || t('profile.mint.checkBalanceFailed') }
+      return { success: false, balance: '0', error: getErrorMessage(error) || t('profile.mint.checkBalanceFailed') }
     } finally {
       setCheckingBalance(false)
     }
@@ -62,26 +63,26 @@ export const useMintToken = () => {
   // Mint代币
   const mint = useCallback(async () => {
     if (!address || !chainId) {
-      message.error(t('profile.mint.walletNotConnected'))
+      getMessage().error(t('profile.mint.walletNotConnected'))
       return
     }
 
     const tokenAddress = CONFIG.TOKEN_CONTRACTS[chainId as keyof typeof CONFIG.TOKEN_CONTRACTS]
     if (!tokenAddress) {
-      message.error(t('profile.mint.tokenContractNotConfigured'))
+      getMessage().error(t('profile.mint.tokenContractNotConfigured'))
       return
     }
 
     // 检查余额
     const balanceCheck = await checkBalance()
     if (!balanceCheck.success) {
-      message.error(balanceCheck.error || t('profile.mint.checkBalanceFailed'))
+      getMessage().error(balanceCheck.error || t('profile.mint.checkBalanceFailed'))
       return
     }
 
     // 检查余额是否超过限制
     if (balanceCheck.balanceValue && balanceCheck.balanceValue >= CONFIG.MINT.MAX_BALANCE) {
-      message.warning(t('profile.mint.balanceExceeded', { maxBalance: CONFIG.MINT.MAX_BALANCE }))
+      getMessage().warning(t('profile.mint.balanceExceeded', { maxBalance: CONFIG.MINT.MAX_BALANCE }))
       return
     }
 
@@ -101,7 +102,7 @@ export const useMintToken = () => {
       })
     } catch (error: any) {
       console.error('Mint失败:', error)
-      message.error(error.message || t('profile.mint.mintFailed'))
+      getMessage().error(getErrorMessage(error) || t('profile.mint.mintFailed'))
       setLoading(false)
     }
   }, [address, chainId, writeContract, checkBalance, t])
@@ -109,7 +110,7 @@ export const useMintToken = () => {
   // 监听交易状态
   useEffect(() => {
     if (isConfirmed && hash) {
-      message.success(t('profile.mint.mintSuccess'))
+      getMessage().success(t('profile.mint.mintSuccess'))
       setLoading(false)
       // 刷新余额
       checkBalance()
@@ -119,7 +120,7 @@ export const useMintToken = () => {
   // 监听错误
   useEffect(() => {
     if (writeError) {
-      message.error(writeError.message || t('profile.mint.mintFailed'))
+      getMessage().error(getErrorMessage(writeError) || t('profile.mint.mintFailed'))
       setLoading(false)
     }
   }, [writeError, t])

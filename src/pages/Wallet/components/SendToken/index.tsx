@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Modal, Form, Input, Button, Select, Typography, Tag, Alert, message, Space, Spin, Flex } from 'antd'
+import { Modal, Form, Input, Button, Select, Typography, Tag, Alert, Space, Spin, Flex } from 'antd'
 import { SendOutlined, WalletOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { useAccount } from 'wagmi'
@@ -11,6 +11,7 @@ import { useSendTokenBalance } from './hooks/useSendTokenBalance'
 import { useSendTokenTransaction } from './hooks/useSendTokenTransaction'
 import { useSendTokenValidation } from './hooks/useSendTokenValidation'
 import { useSendTokenActions } from './hooks/useSendTokenActions'
+import { useMessage } from '@/hooks/useMessage'
 import styles from './index.module.less'
 
 const { Text } = Typography
@@ -26,6 +27,7 @@ interface SendTokenProps {
 
 const SendToken: React.FC<SendTokenProps> = ({ open, onCancel, onSuccess, chainId, address: userAddress }) => {
   const { t } = useTranslation()
+  const message = useMessage()
   const { address } = useAccount()
   const [form] = Form.useForm()
 

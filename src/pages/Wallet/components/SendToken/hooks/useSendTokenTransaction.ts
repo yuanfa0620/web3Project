@@ -2,7 +2,8 @@ import { useEffect, useCallback } from 'react'
 import { useAccount, useSendTransaction, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { parseUnits, isAddress } from 'viem'
 import type { Address } from 'viem'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
+import { getErrorMessage } from '@/utils/error'
 import { useTranslation } from 'react-i18next'
 import type { FormInstance } from 'antd'
 import ERC20_ABI from '@/contracts/abi/ERC20.json'
@@ -56,7 +57,7 @@ export const useSendTokenTransaction = ({
   // 交易成功后的处理
   useEffect(() => {
     if (isConfirmed && transactionHash) {
-      message.success(t('wallet.sendToken.transactionSuccess'))
+      getMessage().success(t('wallet.sendToken.transactionSuccess'))
       // 调用成功回调，由父组件处理清空数据和关闭弹窗
       onSuccess?.(transactionHash)
     }
@@ -65,10 +66,10 @@ export const useSendTokenTransaction = ({
   // 错误处理
   useEffect(() => {
     if (sendError) {
-      message.error(sendError.message || t('wallet.sendToken.sendFailed'))
+      getMessage().error(getErrorMessage(sendError) || t('wallet.sendToken.sendFailed'))
     }
     if (erc20Error) {
-      message.error(erc20Error.message || t('wallet.sendToken.sendFailed'))
+      getMessage().error(getErrorMessage(erc20Error) || t('wallet.sendToken.sendFailed'))
     }
   }, [sendError, erc20Error, t])
 
@@ -79,12 +80,12 @@ export const useSendTokenTransaction = ({
       const { to, amount } = values
 
       if (!isAddress(to)) {
-        message.error(t('wallet.sendToken.toAddressInvalid'))
+        getMessage().error(t('wallet.sendToken.toAddressInvalid'))
         return
       }
 
       if (!address) {
-        message.error(t('wallet.sendToken.connectWalletFirst'))
+        getMessage().error(t('wallet.sendToken.connectWalletFirst'))
         return
       }
 
@@ -99,7 +100,7 @@ export const useSendTokenTransaction = ({
       } else {
         // 发送ERC20代币
         if (!selectedTokenAddress) {
-          message.error(t('wallet.sendToken.selectToken'))
+          getMessage().error(t('wallet.sendToken.selectToken'))
           return
         }
 

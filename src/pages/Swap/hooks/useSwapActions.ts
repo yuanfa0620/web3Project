@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useAccount } from 'wagmi'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
 import { useTranslation } from 'react-i18next'
 import { createERC20Service } from '@/contracts/erc20'
 import { MAX_TOKEN_APPROVAL_AMOUNT } from '@/constants/approval'
@@ -41,7 +41,7 @@ export const useSwapActions = ({
     if (isConnected && chainId && fromTokenChainId !== chainId) {
       const switched = await switchNetworkSilently(fromTokenChainId)
       if (!switched) {
-        message.error('切换网络失败，请手动切换网络')
+        getMessage().error('切换网络失败，请手动切换网络')
         return
       }
       // 等待网络切换完成（简单延迟，实际应该监听 chainId 变化）
@@ -65,7 +65,7 @@ export const useSwapActions = ({
       const chainIdStr = fromTokenChainId.toString()
       const chainRouters = routers[chainIdStr as keyof typeof routers]
       if (!chainRouters || !chainRouters.routers || chainRouters.routers.length === 0) {
-        message.error('未找到DEX Router配置')
+        getMessage().error('未找到DEX Router配置')
         return
       }
 
@@ -79,21 +79,21 @@ export const useSwapActions = ({
       })
 
       if (result.success && result.transactionHash) {
-        message.loading(t('swap.approving'), 0)
+        getMessage().loading(t('swap.approving'), 0)
         // 等待交易确认
         const waitResult = await erc20Service.waitForTransaction(result.transactionHash)
-        message.destroy()
+        getMessage().destroy()
         if (waitResult.success) {
-          message.success('授权成功')
+          getMessage().success('授权成功')
         } else {
-          message.error('授权确认失败')
+          getMessage().error('授权确认失败')
         }
       } else {
-        message.error(result.error || '授权失败')
+        getMessage().error(result.error || '授权失败')
       }
     } catch (error) {
       console.error('授权失败:', error)
-      message.error('授权失败')
+      getMessage().error('授权失败')
     }
   }, [fromToken, fromTokenChainId, address, isConnected, chainId, switchNetworkSilently, t])
 
@@ -103,7 +103,7 @@ export const useSwapActions = ({
     if (isConnected && chainId && fromTokenChainId && fromTokenChainId !== chainId) {
       const switched = await switchNetworkSilently(fromTokenChainId)
       if (!switched) {
-        message.error('切换网络失败，请手动切换网络')
+        getMessage().error('切换网络失败，请手动切换网络')
         return
       }
       // 等待网络切换完成（简单延迟，实际应该监听 chainId 变化）
@@ -111,7 +111,7 @@ export const useSwapActions = ({
     }
     
     // TODO: 实现实际的交换逻辑
-    message.info('交换功能开发中...')
+    getMessage().info('交换功能开发中...')
   }, [isConnected, chainId, fromTokenChainId, switchNetworkSilently])
 
   return {

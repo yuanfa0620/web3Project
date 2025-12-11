@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useAccount, useBalance } from 'wagmi'
 import type { Address } from 'viem'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
 import { useTranslation } from 'react-i18next'
 import { createERC20Service } from '@/contracts/erc20'
 import type { TokenType } from './useSendTokenState'
@@ -61,12 +61,12 @@ export const useSendTokenBalance = ({
             setTokenDecimals(decimals)
             setTokenSymbol(symbol)
           } else {
-            message.error(result.error || t('wallet.sendToken.getTokenInfoFailed'))
+            getMessage().error(result.error || t('wallet.sendToken.getTokenInfoFailed'))
             setTokenBalance('0')
           }
         } catch (error) {
           console.error('获取代币信息失败:', error)
-          message.error(t('wallet.sendToken.getTokenInfoFailed'))
+          getMessage().error(t('wallet.sendToken.getTokenInfoFailed'))
           setTokenBalance('0')
         } finally {
           setBalanceLoading(false)

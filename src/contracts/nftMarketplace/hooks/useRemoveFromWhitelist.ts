@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
+import { getErrorMessage } from '@/utils/error'
 import NFTMarketPlace_ABI from '../../abi/NFTMarketPlace.json'
 
 interface UseRemoveFromWhitelistParams {
@@ -37,15 +38,15 @@ export const useRemoveFromWhitelist = ({ marketplaceAddress, chainId, onSuccess,
 
   useEffect(() => {
     if (isConfirmed && hash) {
-      message.success('从白名单移除成功')
+      getMessage().success('从白名单移除成功')
       onSuccess?.(hash)
     }
   }, [isConfirmed, hash, onSuccess])
 
   useEffect(() => {
     if (writeError) {
-      const errorMsg = writeError.message || '从白名单移除失败'
-      message.error(errorMsg)
+      const errorMsg = getErrorMessage(writeError) || '从白名单移除失败'
+      getMessage().error(errorMsg)
       onError?.(errorMsg)
     }
   }, [writeError, onError])

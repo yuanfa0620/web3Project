@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { message } from 'antd'
+import { getMessage } from '@/utils/message'
+import { getErrorMessage } from '@/utils/error'
 import type { AddToWhitelistParams } from '../index'
 import NFTMarketPlace_ABI from '../../abi/NFTMarketPlace.json'
 
@@ -42,15 +43,15 @@ export const useAddToWhitelist = ({ marketplaceAddress, chainId, onSuccess, onEr
 
   useEffect(() => {
     if (isConfirmed && hash) {
-      message.success('添加到白名单成功')
+      getMessage().success('添加到白名单成功')
       onSuccess?.(hash)
     }
   }, [isConfirmed, hash, onSuccess])
 
   useEffect(() => {
     if (writeError) {
-      const errorMsg = writeError.message || '添加到白名单失败'
-      message.error(errorMsg)
+      const errorMsg = getErrorMessage(writeError) || '添加到白名单失败'
+      getMessage().error(errorMsg)
       onError?.(errorMsg)
     }
   }, [writeError, onError])

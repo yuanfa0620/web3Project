@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
-import { Button, Avatar, Input, Typography, Modal, Divider, Switch, Tooltip, Spin, message } from 'antd'
+import { Button, Avatar, Input, Typography, Modal, Divider, Switch, Tooltip, Spin } from 'antd'
 import { SearchOutlined, DownOutlined, CloseOutlined, PlusOutlined, CheckCircleOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import {
@@ -17,6 +17,7 @@ import { addCustomToken } from '@/store/reducers/customTokensSlice'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { isAddress } from 'viem'
 import type { TokenConfig } from '@/types/swap'
+import { getMessage } from '@/utils/message'
 import styles from './index.module.less'
 
 const { Text } = Typography
@@ -194,12 +195,12 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
         // 同时添加到过滤列表中显示
         setFilteredTokens([newToken])
       } else {
-        message.error(result.error || '未找到代币信息')
+        getMessage().error(result.error || '未找到代币信息')
         setFilteredTokens([])
       }
     } catch (error) {
       console.error('查询代币失败:', error)
-      message.error('查询代币失败，请检查地址是否正确')
+      getMessage().error('查询代币失败，请检查地址是否正确')
       setFilteredTokens([])
     } finally {
       setLoadingContract(false)
@@ -356,7 +357,7 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
     try {
       // 使用 Redux action 添加代币
       dispatch(addCustomToken({ chainId: currentChainId, token }))
-      message.success(t('swap.tokenAdded'))
+      getMessage().success(t('swap.tokenAdded'))
       
       // 重新加载代币列表
       loadTokens()
@@ -365,7 +366,7 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
       setContractToken({ ...token, isCustom: true })
     } catch (error) {
       console.error('添加代币失败:', error)
-      message.error('添加代币失败')
+      getMessage().error('添加代币失败')
     }
   }, [currentChainId, t, loadTokens, dispatch])
 
