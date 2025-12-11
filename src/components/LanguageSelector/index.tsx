@@ -43,6 +43,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   const menu = {
     items: menuItems,
     onClick: handleMenuClick,
+    className: styles.dropdownMenu,
   }
 
   if (type === 'mobile') {
@@ -54,7 +55,6 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           open={visible}
           onOpenChange={setVisible}
           placement="bottomLeft"
-          overlayClassName={styles.dropdownMenu}
           className={styles.mobileDropdown}
         >
           <Button
@@ -80,7 +80,6 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       open={visible}
       onOpenChange={setVisible}
       placement="bottomRight"
-      overlayClassName={styles.dropdownMenu}
       className={styles.dropdown}
     >
       <Button

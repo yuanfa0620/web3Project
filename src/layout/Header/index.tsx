@@ -37,7 +37,7 @@ export const Header: React.FC = () => {
   const getSelectedKey = (pathname: string): string => {
     // 查找所有带子路由的父路由
     const parentRoutes = allRoutes.filter(route => route.children && route.children.length > 0)
-    
+
     // 检查当前路径是否匹配某个父路由的子路由
     for (const parentRoute of parentRoutes) {
       const parentPath = `/${parentRoute.path}`
@@ -45,7 +45,7 @@ export const Header: React.FC = () => {
         return parentPath
       }
     }
-    
+
     // 其他情况返回完整路径
     return pathname
   }
@@ -107,23 +107,23 @@ export const Header: React.FC = () => {
       {/* 移动端抽屉菜单 */}
       <Drawer
         title={
-          <div className={styles.drawerHeader} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-            <div 
+          <div className={styles.drawerHeader} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div
               className={styles.drawerLogoContainer}
               onClick={() => {
                 navigate('/')
                 setMobileMenuOpen(false)
               }}
-              style={{display: 'flex', alignItems: 'center', gap: 10}}
+              style={{ display: 'flex', alignItems: 'center', gap: 10 }}
             >
-              <img 
-                src={logoImg} 
-                alt="Logo" 
+              <img
+                src={logoImg}
+                alt="Logo"
                 className={styles.drawerLogoImage}
                 width={32}
                 height={32}
               />
-              <Title level={4} className={styles.drawerTitle} style={{margin: 0}}>
+              <Title level={4} className={styles.drawerTitle} style={{ margin: 0 }}>
                 Web3
               </Title>
             </div>
@@ -139,12 +139,12 @@ export const Header: React.FC = () => {
         onClose={() => setMobileMenuOpen(false)}
         open={mobileMenuOpen}
         className={styles.mobileDrawer}
-        width={280}
+        size={280}
         closable={false}
       >
         {/* 移动端语言切换器 */}
         <LanguageSelector type="mobile" />
-        
+
         <Menu
           mode="vertical"
           selectedKeys={[getSelectedKey(location.pathname)]}

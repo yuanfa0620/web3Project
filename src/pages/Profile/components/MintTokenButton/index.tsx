@@ -2,7 +2,7 @@
  * Mint代币按钮组件
  */
 import React, { useEffect } from 'react'
-import { Button, Card, Space, Typography, Alert } from 'antd'
+import { Button, Card, Space, Typography, Alert, Flex } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { useAccount } from 'wagmi'
 import { useMintToken } from '../../hooks/useMintToken'
@@ -34,7 +34,7 @@ export const MintTokenButton: React.FC = () => {
 
   return (
     <Card className={styles.mintCard}>
-      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+      <Flex vertical gap="middle" style={{ width: '100%' }}>
         <div>
           <Text strong>{t('profile.mint.title')}</Text>
         </div>
@@ -48,14 +48,14 @@ export const MintTokenButton: React.FC = () => {
 
             {isBalanceExceeded && (
               <Alert
-                message={t('profile.mint.balanceExceeded', { maxBalance: CONFIG.MINT.MAX_BALANCE })}
+                description={t('profile.mint.balanceExceeded', { maxBalance: CONFIG.MINT.MAX_BALANCE })}
                 type="warning"
                 showIcon
               />
             )}
 
             <Alert
-              message={t('profile.mint.costInfo', { cost: CONFIG.MINT.COST })}
+              description={t('profile.mint.costInfo', { cost: CONFIG.MINT.COST })}
               type="info"
               showIcon
             />
@@ -73,12 +73,12 @@ export const MintTokenButton: React.FC = () => {
           </>
         ) : (
           <Alert
-            message={t('profile.mint.tokenContractNotConfigured')}
+            description={t('profile.mint.tokenContractNotConfigured')}
             type="warning"
             showIcon
           />
         )}
-      </Space>
+      </Flex>
     </Card>
   )
 }

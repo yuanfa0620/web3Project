@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Row, Col, Typography, Button, Space, Tag, Divider, Spin } from 'antd'
+import { Card, Row, Col, Typography, Button, Space, Tag, Divider, Spin, Flex } from 'antd'
 import { CopyOutlined, QrcodeOutlined, SendOutlined, SwapOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { PageTitle } from '@/components/PageTitle'
@@ -116,7 +116,7 @@ const WalletPage: React.FC = () => {
 
           <Col xs={24} lg={8}>
             <Card title={t('wallet.quickActions')} className={styles.actionCard}>
-              <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+              <Flex vertical gap="middle" style={{ width: '100%' }}>
                 <Button
                   type="primary"
                   block
@@ -142,7 +142,7 @@ const WalletPage: React.FC = () => {
                 >
                   {t('wallet.receive')}
                 </Button>
-              </Space>
+              </Flex>
             </Card>
 
             <Card title={t('wallet.networkInfo')} className={styles.networkCard}>

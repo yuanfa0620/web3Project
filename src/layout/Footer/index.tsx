@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Typography, Space, Divider } from 'antd'
+import { Layout, Typography, Space, Divider, Flex } from 'antd'
 import { GithubOutlined, TwitterOutlined, DiscordOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import styles from './index.module.less'
@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
             <Text strong className={styles.footerTitle}>
               {t('footer.products')}
             </Text>
-            <Space direction="vertical" size="small">
+            <Flex vertical gap="small">
               <Link href="#" className={styles.footerLink}>
                 {t('footer.walletManagement')}
               </Link>
@@ -40,14 +40,14 @@ export const Footer: React.FC = () => {
               <Link href="#" className={styles.footerLink}>
                 {t('footer.defiProtocols')}
               </Link>
-            </Space>
+            </Flex>
           </div>
 
           <div className={styles.footerSection}>
             <Text strong className={styles.footerTitle}>
               {t('footer.support')}
             </Text>
-            <Space direction="vertical" size="small">
+            <Flex vertical gap="small">
               <Link href="#" className={styles.footerLink}>
                 {t('footer.helpCenter')}
               </Link>
@@ -60,7 +60,7 @@ export const Footer: React.FC = () => {
               <Link href="#" className={styles.footerLink}>
                 {t('footer.statusPage')}
               </Link>
-            </Space>
+            </Flex>
           </div>
 
           <div className={styles.footerSection}>

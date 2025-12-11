@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Modal, Form, Input, Button, Select, Typography, Tag, Alert, message, Space, Spin } from 'antd'
+import { Modal, Form, Input, Button, Select, Typography, Tag, Alert, message, Space, Spin, Flex } from 'antd'
 import { SendOutlined, WalletOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { useAccount } from 'wagmi'
@@ -149,7 +149,7 @@ const SendToken: React.FC<SendTokenProps> = ({ open, onCancel, onSuccess, chainI
       <div className={styles.sendTokenContent}>
         {networkInfo && (
           <Alert
-            message={
+            description={
               <Space>
                 <Text strong>{t('wallet.sendToken.currentNetwork')}:</Text>
                 <Tag color="blue">{networkInfo.name}</Tag>
@@ -277,15 +277,15 @@ const SendToken: React.FC<SendTokenProps> = ({ open, onCancel, onSuccess, chainI
 
         {transactionHash && (
           <Alert
-            message={
-              <Space direction="vertical" size="small" style={{ width: '100%' }}>
+            description={
+              <Flex vertical gap="small" style={{ width: '100%' }}>
                 <Text strong>{t('wallet.sendToken.transactionHash')}:</Text>
                 <Text code copyable style={{ fontSize: 12 }}>
                   {transactionHash}
                 </Text>
                 {isConfirming && <Text type="secondary">{t('wallet.sendToken.waitingConfirm')}</Text>}
                 {isConfirmed && <Text type="success">{t('wallet.sendToken.transactionConfirmed')}</Text>}
-              </Space>
+              </Flex>
             }
             type={isConfirmed ? 'success' : 'info'}
             style={{ marginTop: 16 }}

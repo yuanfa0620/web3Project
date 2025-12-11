@@ -2,7 +2,7 @@
  * 部署进度组件
  */
 import React from 'react'
-import { Button, Space, Progress, Typography } from 'antd'
+import { Button, Space, Progress, Typography, Flex } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 const { Text } = Typography
@@ -23,7 +23,7 @@ export const DeployProgress: React.FC<DeployProgressProps> = ({
   const { t } = useTranslation()
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+    <Flex vertical style={{ width: '100%' }}>
       <Space>
         <Button onClick={onBack}>{t('common.back')}</Button>
         <Button type="primary" onClick={onDeploy} loading={deploying} size="large">
@@ -38,7 +38,7 @@ export const DeployProgress: React.FC<DeployProgressProps> = ({
           </Text>
         </div>
       )}
-    </Space>
+    </Flex>
   )
 }
 

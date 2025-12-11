@@ -41,7 +41,7 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ open, onCancel, address, ch
     >
       <div className={styles.receiveModalContent}>
         <Alert
-          message={t('wallet.receiveModal.networkWarning')}
+          description={t('wallet.receiveModal.networkWarning')}
           type="warning"
           showIcon
         />
