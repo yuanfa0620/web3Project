@@ -90,6 +90,9 @@ export const useAlchemyNFTs = ({
   const [error, setError] = useState<string | null>(null)
   // 使用ref存储最新状态，避免在useCallback中依赖state
   const chainNFTStatesRef = useRef<Map<number, ChainNFTState>>(new Map())
+  // 使用ref存储上一次的依赖值，避免重复请求
+  const prevDepsRef = useRef<{ address?: string; chainIds: string; enabled: boolean } | null>(null)
+  const isLoadingRef = useRef(false)
 
   // 合并所有网络的NFT
   const nfts = useMemo(() => {
@@ -117,9 +120,16 @@ export const useAlchemyNFTs = ({
     if (!address || !enabled || chainIds.length === 0) {
       setChainNFTStates(new Map())
       setLoading(false)
+      isLoadingRef.current = false
       return
     }
 
+    // 防止重复请求
+    if (isLoadingRef.current && !reset) {
+      return
+    }
+
+    isLoadingRef.current = true
     setLoading(true)
     setError(null)
 
@@ -178,6 +188,7 @@ export const useAlchemyNFTs = ({
       setError(err.message || '获取NFT数据失败')
     } finally {
       setLoading(false)
+      isLoadingRef.current = false
     }
   }, [address, chainIds, enabled, pageSize])
 
@@ -259,11 +270,40 @@ export const useAlchemyNFTs = ({
     chainNFTStatesRef.current = chainNFTStates
   }, [chainNFTStates])
 
-  // 初始加载
+  // 使用useMemo生成稳定的chainIds标识
+  const chainIdsKey = useMemo(() => {
+    return [...chainIds].sort().join(',')
+  }, [chainIds])
+
+  // 初始加载（使用深度比较避免重复请求）
   useEffect(() => {
+    const currentDeps = {
+      address,
+      chainIds: chainIdsKey,
+      enabled,
+    }
+
+    // 比较是否真的发生了变化
+    const prevDeps = prevDepsRef.current
+    if (prevDeps) {
+      const isSame = 
+        prevDeps.address === currentDeps.address &&
+        prevDeps.chainIds === currentDeps.chainIds &&
+        prevDeps.enabled === currentDeps.enabled
+      
+      if (isSame) {
+        // 依赖没有变化，不重新请求
+        return
+      }
+    }
+
+    // 更新依赖记录
+    prevDepsRef.current = currentDeps
+
+    // 执行请求
     fetchNFTs(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address, enabled, JSON.stringify(chainIds)]) // 使用JSON.stringify来深度比较chainIds数组
+  }, [address, enabled, chainIdsKey]) // 使用稳定的chainIdsKey作为依赖
 
   return {
     nfts,
