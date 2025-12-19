@@ -7,6 +7,7 @@ import { MenuOutlined, CloseOutlined } from '@ant-design/icons'
 import { LanguageSelector } from '@/components/LanguageSelector'
 import { allRoutes } from '@/router/routes'
 import { getMenuItemsFromRoutes } from '@/router/routes/utils'
+import { getAssetsTab } from '@/utils/assetsStorage'
 import logoImg from '@/assets/logo.png'
 import styles from './index.module.less'
 
@@ -21,32 +22,132 @@ export const Header: React.FC = () => {
 
   // 从路由配置中生成菜单项
   const menuItems = useMemo(() => {
-    return getMenuItemsFromRoutes(allRoutes, t)
-  }, [t])
+    const items = getMenuItemsFromRoutes(allRoutes, t)
+    
+    // 处理菜单项，让父菜单的label可以点击跳转
+    const processMenuItems = (itemsList: typeof items): typeof items => {
+      if (!itemsList) return itemsList
+      
+      return itemsList.map(item => {
+        if (!item) return item
+        
+        // 检查是否是profile菜单项
+        if (item.key === '/profile' && 'children' in item && item.children) {
+          // 为profile菜单项添加可点击的label
+          return {
+            ...item,
+            label: (
+              <span
+                onClick={(e) => {
+                  e.stopPropagation()
+                  navigate('/profile')
+                  setMobileMenuOpen(false)
+                }}
+                style={{ cursor: 'pointer' }}
+              >
+                {item.label}
+              </span>
+            ),
+          } as typeof item
+        }
+        
+        // 递归处理嵌套的菜单项（先递归，这样可以在子菜单中找到个人资产）
+        if ('children' in item && item.children) {
+          const processedChildren = processMenuItems(item.children)
+          
+          // 检查是否是个人资产菜单项（/profile/assets/xxx格式的key，位于profile的子菜单中）
+          if (item.key && typeof item.key === 'string' && item.key.startsWith('/profile/assets/')) {
+            // 为个人资产菜单项添加可点击的label，点击时从sessionStorage读取最新的缓存tab并跳转
+            return {
+              ...item,
+              label: (
+                <span
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    // 从sessionStorage读取最新的缓存tab，确保跳转到最近访问的页面
+                    const cachedTab = getAssetsTab()
+                    navigate(`/profile/assets/${cachedTab}`)
+                    setMobileMenuOpen(false)
+                  }}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {item.label}
+                </span>
+              ),
+              children: processedChildren,
+            } as typeof item
+          }
+          
+          return {
+            ...item,
+            children: processedChildren,
+          } as typeof item
+        }
+        
+        return item
+      })
+    }
+    
+    return processMenuItems(items)
+  }, [t, navigate])
 
   const handleMenuClick = ({ key }: { key: string }) => {
     navigate(key)
     setMobileMenuOpen(false) // 移动端点击菜单后关闭抽屉
   }
 
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
   }
 
-  // 获取菜单高亮的key，如果是二级页面，返回父路由路径
-  const getSelectedKey = (pathname: string): string => {
-    // 查找所有带子路由的父路由
-    const parentRoutes = allRoutes.filter(route => route.children && route.children.length > 0)
+  // 递归查找匹配的路由路径（支持嵌套子路由）
+  const findMatchingRoutePath = (pathname: string, routes: typeof allRoutes, basePath: string = ''): string | null => {
+    for (const route of routes) {
+      const routePath = basePath === '' ? `/${route.path}` : `${basePath}/${route.path}`
+      
+      // 精确匹配
+      if (pathname === routePath || (route.path === '' && pathname === basePath)) {
+        // 如果这个路由显示在菜单中，返回它
+        if (route.showInMenu !== false) {
+          return routePath
+        }
+        // 如果不显示在菜单中，但它是默认路由（path为空），继续查找其父路由
+        if (route.path === '' && route.children) {
+          const childResult = findMatchingRoutePath(pathname, route.children, basePath)
+          if (childResult) return childResult
+        }
+      }
+      
+      // 前缀匹配（子路由）
+      if (pathname.startsWith(`${routePath}/`)) {
+        if (route.children && route.children.length > 0) {
+          const childResult = findMatchingRoutePath(pathname, route.children, routePath)
+          if (childResult) return childResult
+        }
+        // 如果没有子路由或没找到匹配的子路由，返回当前路由路径（如果显示在菜单中）
+        if (route.showInMenu !== false) {
+          return routePath
+        }
+      }
+    }
+    return null
+  }
 
-    // 检查当前路径是否匹配某个父路由的子路由
-    for (const parentRoute of parentRoutes) {
+  // 获取菜单高亮的key
+  const getSelectedKey = (pathname: string): string => {
+    // 先尝试精确匹配
+    const matched = findMatchingRoutePath(pathname, allRoutes)
+    if (matched) return matched
+
+    // 如果没有找到，使用原来的逻辑作为后备
+    for (const parentRoute of allRoutes) {
       const parentPath = `/${parentRoute.path}`
       if (pathname.startsWith(`${parentPath}/`) || pathname === parentPath) {
         return parentPath
       }
     }
 
-    // 其他情况返回完整路径
     return pathname
   }
 
@@ -69,6 +170,7 @@ export const Header: React.FC = () => {
             onClick={handleMenuClick}
             items={menuItems}
             className={styles.menu}
+            triggerSubMenuAction="hover"
           />
         </div>
 

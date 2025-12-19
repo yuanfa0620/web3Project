@@ -8,7 +8,7 @@ import { useAccount } from 'wagmi'
 import { PageTitle } from '@/components/PageTitle'
 import { useProfileData } from './hooks/useProfileData'
 import { useMobile } from '@/utils/useMobile'
-import { ConnectWalletCard, TransactionTable, NFTTable, MintTokenButton } from './components'
+import { ConnectWalletCard, TransactionTable, MintTokenButton } from './components'
 import styles from './index.module.less'
 
 const { Title } = Typography
@@ -16,7 +16,7 @@ const { Title } = Typography
 const ProfilePage: React.FC = () => {
   const { t } = useTranslation()
   const { address, isConnected } = useAccount()
-  const { transactions, nfts } = useProfileData(address)
+  const { transactions } = useProfileData(address)
   const isMobile = useMobile()
 
   if (!isConnected) {
@@ -39,7 +39,6 @@ const ProfilePage: React.FC = () => {
         <MintTokenButton />
 
         <TransactionTable transactions={transactions} isMobile={isMobile} />
-        <NFTTable nfts={nfts} isMobile={isMobile} />
       </div>
     </PageTitle>
   )

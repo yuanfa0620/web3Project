@@ -1,0 +1,254 @@
+.assetsPage {
+  padding: 24px;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  .pageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    .pageTitle {
+      margin: 0;
+    }
+
+    .filterContainer {
+      flex: 1;
+      justify-content: flex-end;
+      min-width: 280px;
+    }
+  }
+
+  .tabs {
+    :global(.ant-tabs-content-holder) {
+      padding-top: 16px;
+    }
+  }
+
+  .tabContent {
+    background: #fff;
+    border-radius: 8px;
+    
+    :global(.ant-card-body) {
+      padding: 16px;
+    }
+
+    :global(.ant-table) {
+      font-size: 14px;
+    }
+
+    :global(.ant-table-thead > tr > th) {
+      padding: 12px 8px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    :global(.ant-table-tbody > tr > td) {
+      padding: 12px 8px;
+      word-break: break-word;
+    }
+
+    // 表格滚动容器样式
+    :global(.ant-table-container) {
+      border-radius: 4px;
+    }
+
+    // 分页器样式
+    :global(.ant-pagination) {
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    :global(.ant-pagination-item),
+    :global(.ant-pagination-prev),
+    :global(.ant-pagination-next) {
+      min-width: 32px;
+      height: 32px;
+      line-height: 30px;
+    }
+  }
+
+  // NFT卡片网格容器
+  .nftGridContainer {
+    width: 100%;
+
+    .nftGrid {
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .paginationContainer {
+      display: flex;
+      justify-content: center;
+      padding: 24px 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px;
+
+    .pageHeader {
+      flex-direction: column;
+      align-items: stretch;
+      margin-bottom: 16px;
+      gap: 12px;
+
+      .pageTitle {
+        font-size: 20px;
+        margin-bottom: 0;
+        padding: 0 4px;
+      }
+
+      .filterContainer {
+        width: 100%;
+        min-width: unset;
+        padding: 0 4px;
+      }
+    }
+
+    .tabContent {
+      border-radius: 8px;
+      margin: 0 -16px;
+      border-radius: 0;
+      
+      :global(.ant-card-body) {
+        padding: 12px 8px;
+      }
+
+      :global(.ant-table) {
+        font-size: 13px;
+      }
+
+      :global(.ant-table-thead > tr > th) {
+        padding: 10px 6px;
+        font-size: 12px;
+      }
+
+      :global(.ant-table-tbody > tr > td) {
+        padding: 10px 6px;
+        font-size: 12px;
+      }
+
+      :global(.ant-empty) {
+        margin: 24px 0;
+        padding: 20px 0;
+      }
+
+      // 移动端分页器优化
+      :global(.ant-pagination) {
+        margin-top: 12px;
+        padding: 0 8px;
+      }
+
+      :global(.ant-pagination-item),
+      :global(.ant-pagination-prev),
+      :global(.ant-pagination-next) {
+        min-width: 28px;
+        height: 28px;
+        line-height: 26px;
+        font-size: 12px;
+        margin: 0 2px;
+      }
+
+      :global(.ant-pagination-options) {
+        display: none; // 移动端隐藏每页显示数量选择器
+      }
+    }
+
+    .nftGridContainer {
+      .paginationContainer {
+        padding: 16px 0;
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    padding: 12px;
+
+    .pageHeader {
+      margin-bottom: 12px;
+      gap: 10px;
+
+      .pageTitle {
+        font-size: 18px;
+        padding: 0 2px;
+      }
+
+      .filterContainer {
+        padding: 0 2px;
+      }
+    }
+
+    .tabContent {
+      margin: 0 -12px;
+      
+      :global(.ant-card-body) {
+        padding: 10px 6px;
+      }
+
+      :global(.ant-table-thead > tr > th),
+      :global(.ant-table-tbody > tr > td) {
+        padding: 8px 4px;
+        font-size: 12px;
+      }
+
+      // 小屏幕分页器进一步优化
+      :global(.ant-pagination) {
+        margin-top: 10px;
+        padding: 0 4px;
+      }
+
+      :global(.ant-pagination-item),
+      :global(.ant-pagination-prev),
+      :global(.ant-pagination-next) {
+        min-width: 26px;
+        height: 26px;
+        line-height: 24px;
+        font-size: 11px;
+        margin: 0 1px;
+      }
+
+      :global(.ant-pagination-jump-prev),
+      :global(.ant-pagination-jump-next) {
+        display: none; // 小屏幕隐藏省略号
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px;
+
+    .pageHeader {
+      .pageTitle {
+        font-size: 16px;
+      }
+    }
+
+    .tabContent {
+      margin: 0 -8px;
+      
+      :global(.ant-card-body) {
+        padding: 8px 4px;
+      }
+
+      :global(.ant-table-thead > tr > th),
+      :global(.ant-table-tbody > tr > td) {
+        padding: 6px 3px;
+        font-size: 11px;
+      }
+
+      :global(.ant-pagination-item),
+      :global(.ant-pagination-prev),
+      :global(.ant-pagination-next) {
+        min-width: 24px;
+        height: 24px;
+        line-height: 22px;
+        font-size: 10px;
+      }
+    }
+  }
+}
+

@@ -1,0 +1,139 @@
+.networkFilter {
+  min-width: 280px;
+  width: 100%;
+  max-width: 400px;
+
+  :global(.ant-select-selector) {
+    border-radius: 8px;
+    min-height: 40px;
+  }
+
+  :global(.ant-select-selection-item) {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  :global(.ant-select-selection-placeholder) {
+    line-height: 38px;
+  }
+}
+
+.networkTag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  
+  .tagAvatar {
+    flex-shrink: 0;
+  }
+}
+
+.optionItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .chainAvatar {
+    flex-shrink: 0;
+  }
+
+  .chainName {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .testnetTag {
+    flex-shrink: 0;
+    margin: 0;
+    font-size: 11px;
+    padding: 0 6px;
+    line-height: 18px;
+  }
+}
+
+// 移动端适配
+@media (max-width: 768px) {
+  .networkFilter {
+    min-width: unset;
+    max-width: 100%;
+    width: 100%;
+
+    :global(.ant-select-selector) {
+      min-height: 40px;
+      font-size: 14px;
+    }
+
+    :global(.ant-select-selection-item) {
+      font-size: 13px;
+      gap: 4px;
+    }
+
+    :global(.ant-select-selection-placeholder) {
+      line-height: 38px;
+      font-size: 14px;
+    }
+  }
+
+  .networkTag {
+    padding: 3px 6px;
+    font-size: 12px;
+    gap: 4px;
+
+    .tagAvatar {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  .optionItem {
+    gap: 8px;
+
+    .chainAvatar {
+      width: 18px;
+      height: 18px;
+    }
+
+    .chainName {
+      font-size: 14px;
+    }
+
+    .testnetTag {
+      font-size: 10px;
+      padding: 0 4px;
+      line-height: 16px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .networkFilter {
+    :global(.ant-select-selector) {
+      min-height: 36px;
+      font-size: 13px;
+    }
+
+    :global(.ant-select-selection-item) {
+      font-size: 12px;
+    }
+
+    :global(.ant-select-selection-placeholder) {
+      line-height: 34px;
+      font-size: 13px;
+    }
+  }
+
+  .networkTag {
+    padding: 2px 5px;
+    font-size: 11px;
+
+    .tagAvatar {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}
+

@@ -1,0 +1,213 @@
+.nftCard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-color: #d9d9d9;
+  }
+
+  :global(.ant-card-body) {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(.ant-card-cover) {
+    margin: 0;
+  }
+}
+
+.nftImageContainer {
+  width: 100%;
+  height: 280px;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.nftImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+
+  .nftCard:hover & {
+    transform: scale(1.05);
+  }
+}
+
+.nftInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.nftHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.nftName {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+  flex: 1;
+  min-width: 0;
+}
+
+.chainTag {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.collectionName {
+  font-size: 13px;
+  color: #8c8c8c;
+  font-weight: 500;
+}
+
+.nftDescription {
+  margin: 0 !important;
+  font-size: 12px;
+  color: #8c8c8c;
+  line-height: 1.5;
+}
+
+.nftFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.tokenId {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  .tokenIdLabel {
+    font-size: 12px;
+  }
+
+  .tokenIdValue {
+    font-size: 12px;
+    font-weight: 500;
+    color: #262626;
+  }
+}
+
+.viewButton {
+  flex-shrink: 0;
+}
+
+.nftAttributes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid #f0f0f0;
+
+  .attribute {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    line-height: 1.3;
+
+    .attributeLabel {
+      font-size: 12px;
+      color: #8c8c8c;
+    }
+
+    .attributeValue {
+      font-size: 12px;
+      color: #262626;
+      font-weight: 500;
+    }
+  }
+
+  .moreAttributes {
+    font-size: 11px;
+    color: #8c8c8c;
+    margin-top: 2px;
+  }
+}
+
+// 移动端适配
+@media (max-width: 768px) {
+  .nftImageContainer {
+    height: 240px;
+  }
+
+  .nftInfo {
+    gap: 10px;
+  }
+
+  .nftName {
+    font-size: 14px;
+  }
+
+  .collectionName {
+    font-size: 12px;
+  }
+
+  .nftDescription {
+    font-size: 11px;
+  }
+
+  .nftFooter {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+
+    .tokenId {
+      justify-content: space-between;
+    }
+
+    .viewButton {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .nftImageContainer {
+    height: 200px;
+  }
+
+  .nftInfo {
+    gap: 8px;
+  }
+
+  :global(.ant-card-body) {
+    padding: 12px;
+  }
+
+  .nftName {
+    font-size: 13px;
+  }
+
+  .chainTag {
+    font-size: 11px;
+  }
+}
+

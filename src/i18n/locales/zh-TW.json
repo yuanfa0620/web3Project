@@ -38,7 +38,10 @@
     "governance": "治理",
     "analytics": "分析",
     "settings": "設定",
-    "profile": "個人中心"
+    "profile": "個人中心",
+    "assets": "個人資產",
+    "assetsNFT": "NFT",
+    "assetsToken": "代幣"
   },
   "pageTitle": {
     "home": "Web3 Project",
@@ -55,6 +58,7 @@
     "settings": "設定",
     "notFound": "頁面未找到",
     "profile": "個人中心",
+    "assets": "個人資產",
     "nftDetail": "NFT詳情",
     "defiFarming": "DeFi 挖礦",
     "defiLiquidity": "DeFi 流動性"
@@ -454,6 +458,17 @@
       "tokenContractNotConfigured": "當前網絡未配置代幣合約地址",
       "checkBalanceFailed": "檢查餘額失敗"
     }
+  },
+  "assets": {
+    "title": "個人資產",
+    "nft": "NFT",
+    "token": "代幣",
+    "connectWallet": "請先連接錢包",
+    "noNFTs": "暫無NFT",
+    "noTokens": "暫無代幣",
+    "selectNetwork": "選擇網絡",
+    "filterByNetwork": "按網絡篩選",
+    "testnet": "測試網"
   },
   "footer": {
     "description": "專業的區塊鏈管理平台，提供錢包管理、代幣交易、NFT 收藏等一站式服務。",

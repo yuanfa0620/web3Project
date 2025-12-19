@@ -18,6 +18,9 @@ import StakingPage from '@/pages/Staking'
 import StakingPoolDetailPage from '@/pages/StakingPoolDetail'
 import ProfileLayout from '@/pages/Profile/ProfileLayout'
 import ProfilePage from '@/pages/Profile'
+import AssetsLayout from '@/pages/Profile/Assets/AssetsLayout'
+import NFTAssetsPage from '@/pages/Profile/Assets/NFT'
+import TokenAssetsPage from '@/pages/Profile/Assets/Token'
 import NFTDetailPage from '@/pages/NFTDetail'
 import GovernancePage from '@/pages/Governance'
 import AnalyticsPage from '@/pages/Analytics'
@@ -108,6 +111,29 @@ export const baseRoutes: RouteConfig[] = [
         element: <ProfilePage />,
         title: '个人中心',
         showInMenu: false,
+      },
+      {
+        path: 'assets',
+        element: <AssetsLayout />,
+        title: '个人资产',
+        menuLabel: 'navigation.assets',
+        showInMenu: true,
+        children: [
+          {
+            path: 'nft',
+            element: <NFTAssetsPage />,
+            title: 'NFT',
+            menuLabel: 'navigation.assetsNFT',
+            showInMenu: true,
+          },
+          {
+            path: 'token',
+            element: <TokenAssetsPage />,
+            title: '代币',
+            menuLabel: 'navigation.assetsToken',
+            showInMenu: true,
+          },
+        ],
       },
       {
         path: 'nft/:nftId',

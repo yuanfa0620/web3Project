@@ -38,7 +38,10 @@
     "governance": "治理",
     "analytics": "分析",
     "settings": "设置",
-    "profile": "个人中心"
+    "profile": "个人中心",
+    "assets": "个人资产",
+    "assetsNFT": "NFT",
+    "assetsToken": "代币"
   },
   "pageTitle": {
     "home": "Web3 Project",
@@ -55,6 +58,7 @@
     "settings": "设置",
     "notFound": "页面未找到",
     "profile": "个人中心",
+    "assets": "个人资产",
     "nftDetail": "NFT详情",
     "defiFarming": "流动性挖矿",
     "defiLiquidity": "流动性池"
@@ -446,6 +450,17 @@
       "tokenContractNotConfigured": "当前网络未配置代币合约地址",
       "checkBalanceFailed": "检查余额失败"
     }
+  },
+  "assets": {
+    "title": "个人资产",
+    "nft": "NFT",
+    "token": "代币",
+    "connectWallet": "请先连接钱包",
+    "noNFTs": "暂无NFT",
+    "noTokens": "暂无代币",
+    "selectNetwork": "选择网络",
+    "filterByNetwork": "按网络筛选",
+    "testnet": "测试网"
   },
   "footer": {
     "description": "专业的区块链管理平台，提供钱包管理、代币交易、NFT 收藏等一站式服务。",
