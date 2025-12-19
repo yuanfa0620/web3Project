@@ -8,6 +8,7 @@ export type { ApiResponse, ApiError, RequestConfig, AxiosInstanceConfig } from '
 export { userApi } from './modules/user'
 export { tokenApi } from './modules/token'
 export { transactionApi } from './modules/transaction'
+export { alchemyNFTApi } from './modules/alchemy'
 
 // 导出所有类型定义（使用别名避免冲突）
 export type { 
@@ -36,3 +37,13 @@ export type {
   GetTransactionListParams,
   SubmitTransactionParams
 } from './modules/transaction/types'
+
+export type {
+  AlchemyOwnedNFT,
+  AlchemyNFTList,
+  AlchemyGetNFTsResponse,
+  GetNFTsForOwnerParams,
+  NFTContract,
+  NFTImage,
+  NFTMint
+} from './modules/alchemy/types'

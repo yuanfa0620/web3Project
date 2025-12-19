@@ -85,6 +85,38 @@
       justify-content: center;
       padding: 24px 0;
     }
+
+    // 滚动加载相关样式
+    .loadMoreTrigger {
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 0;
+    }
+
+    .loadingMore {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      color: #8c8c8c;
+
+      span {
+        font-size: 14px;
+      }
+    }
+
+    .noMore {
+      text-align: center;
+      color: #8c8c8c;
+      padding: 24px 0;
+
+      p {
+        margin: 0;
+        font-size: 14px;
+      }
+    }
   }
 
   @media (max-width: 768px) {
@@ -161,6 +193,11 @@
     .nftGridContainer {
       .paginationContainer {
         padding: 16px 0;
+      }
+
+      .loadMoreTrigger {
+        padding: 16px 0;
+        min-height: 80px;
       }
     }
   }
