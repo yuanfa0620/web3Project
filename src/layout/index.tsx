@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Layout as AntLayout, ConfigProvider, App } from 'antd'
 import { Outlet } from 'react-router-dom'
+import { AliveScope } from 'react-activation'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { Banner } from '@/components/Banner'
@@ -24,7 +25,9 @@ const LayoutContent: React.FC = () => {
       <Header />
       <Content className={styles.content}>
         <div className={styles.contentWrapper}>
-          <Outlet />
+          <AliveScope>
+            <Outlet />
+          </AliveScope>
         </div>
       </Content>
       <Footer />

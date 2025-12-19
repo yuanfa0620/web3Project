@@ -8,7 +8,13 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills'
 // https://vite.dev/config/
 export default defineConfig(({ mode }): UserConfig => {
   const plugins = [
-    react(),
+    react({
+      babel: {
+        plugins: [
+          ['react-activation/babel', {}],
+        ],
+      },
+    }),
     nodePolyfills({
       // 启用 Buffer polyfill
       globals: {

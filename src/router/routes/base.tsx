@@ -25,6 +25,7 @@ import NFTDetailPage from '@/pages/NFTDetail'
 import GovernancePage from '@/pages/Governance'
 import AnalyticsPage from '@/pages/Analytics'
 import SettingsPage from '@/pages/Settings'
+import { KeepAliveWrapper } from '@/components/KeepAlive/KeepAliveWrapper'
 import type { RouteConfig } from './index'
 
 // 基础路由配置
@@ -121,7 +122,11 @@ export const baseRoutes: RouteConfig[] = [
         children: [
           {
             path: 'nft',
-            element: <NFTAssetsPage />,
+            element: (
+              <KeepAliveWrapper name="nft-assets-page">
+                <NFTAssetsPage />
+              </KeepAliveWrapper>
+            ),
             title: 'NFT',
             menuLabel: 'navigation.assetsNFT',
             showInMenu: true,

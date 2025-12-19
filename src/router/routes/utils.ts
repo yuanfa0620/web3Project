@@ -26,21 +26,10 @@ const processChildren = (
       
       if (visibleGrandChildren.length > 0) {
         // 处理嵌套子菜单（如个人资产下的NFT和代币）
-        // 对于assets路由，点击时跳转到缓存的tab
-        let defaultPath = childPath
-        if (child.path === 'assets') {
-          const cachedTab = getAssetsTab()
-          defaultPath = `${childPath}/${cachedTab}`
-        } else {
-          // 其他嵌套情况，跳转到第一个子路由
-          const firstGrandChild = visibleGrandChildren[0]
-          defaultPath = firstGrandChild.path === '' 
-            ? childPath 
-            : `${childPath}/${firstGrandChild.path}`
-        }
-        
+        // 父菜单项的key使用父路径，避免与子菜单项的key重复
+        // 对于assets路由，点击时会通过Header组件中的onClick事件跳转到缓存的tab
         items.push({
-          key: defaultPath,
+          key: childPath, // 使用父路径作为key，避免与子菜单项key重复
           label: child.menuLabel ? t(child.menuLabel) : child.title || child.path,
           children: grandChildren,
         })
@@ -91,15 +80,11 @@ export const getMenuItemsFromRoutes = (
         const subMenuItems = processChildren(route.children, fullPath, t)
         
         // 对于profile路由，点击时跳转到/profile（而不是第一个子路由）
-        // 对于其他路由，点击时跳转到第一个子路由（如果有嵌套，由processChildren处理）
+        // 对于其他路由，如果有子菜单项，使用第一个子菜单项的key作为默认路径
+        // 否则使用父路径
         let defaultPath = fullPath
-        if (route.path !== 'profile') {
-          const firstChild = visibleChildren[0]
-          // processChildren已经处理了嵌套情况（包括assets的缓存tab），
-          // 这里只需要获取第一个子菜单项的key作为默认路径
-          if (subMenuItems.length > 0 && subMenuItems[0].key) {
-            defaultPath = subMenuItems[0].key as string
-          }
+        if (route.path !== 'profile' && subMenuItems && subMenuItems.length > 0 && subMenuItems[0]?.key) {
+          defaultPath = subMenuItems[0].key as string
         }
         
         menuItems.push({

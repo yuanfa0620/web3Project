@@ -55,8 +55,8 @@ export const Header: React.FC = () => {
         if ('children' in item && item.children) {
           const processedChildren = processMenuItems(item.children)
           
-          // 检查是否是个人资产菜单项（/profile/assets/xxx格式的key，位于profile的子菜单中）
-          if (item.key && typeof item.key === 'string' && item.key.startsWith('/profile/assets/')) {
+          // 检查是否是个人资产菜单项（key为/profile/assets，位于profile的子菜单中）
+          if (item.key && typeof item.key === 'string' && item.key === '/profile/assets') {
             // 为个人资产菜单项添加可点击的label，点击时从sessionStorage读取最新的缓存tab并跳转
             return {
               ...item,

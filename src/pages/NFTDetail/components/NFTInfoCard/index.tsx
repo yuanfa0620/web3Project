@@ -50,12 +50,14 @@ export const NFTInfoCard: React.FC<NFTInfoCardProps> = ({ nft, imageUrl, onImage
                 onClick={() => openAddressInExplorer(nft.contractAddress, nft.chainId)}
               />
             </Descriptions.Item>
+            {nft.owner && (
             <Descriptions.Item label={t('profile.owner')}>
               <AddressWithCopy
                 address={nft.owner}
                 onClick={() => openAddressInExplorer(nft.owner, nft.chainId)}
               />
             </Descriptions.Item>
+            )}
             <Descriptions.Item label={t('profile.viewOnExplorer')}>
               <Button
                 type="link"

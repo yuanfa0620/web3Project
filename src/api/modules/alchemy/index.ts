@@ -3,7 +3,14 @@
  */
 import axios from 'axios'
 import type { AxiosInstance } from 'axios'
-import { ALCHEMY_NETWORK_MAP, AlchemyNFTList, type GetNFTsForOwnerParams, type AlchemyGetNFTsResponse } from './types'
+import {
+  ALCHEMY_NETWORK_MAP,
+  AlchemyNFTList,
+  type GetNFTsForOwnerParams,
+  type AlchemyGetNFTsResponse,
+  type GetNFTMetadataParams,
+  type AlchemyNFTMetadata
+} from './types'
 
 // Alchemy API Key（从环境变量获取，如果没有则使用默认值）
 const ALCHEMY_API_KEY = import.meta.env.VITE_ALCHEMY_API_KEY || '4k84D40IoMfmLVP2KOaAq3TG2FnQBSoN'
@@ -25,7 +32,7 @@ const getAlchemyNetwork = (chainId: number): string => {
 const createAlchemyRequest = (chainId: number): AxiosInstance => {
   const network = getAlchemyNetwork(chainId)
   const baseURL = `https://${network}.g.alchemy.com/nft/v3/${ALCHEMY_API_KEY}`
-  
+
   return axios.create({
     baseURL,
     timeout: 30000,
@@ -51,7 +58,7 @@ export const alchemyNFTApi = {
   ): Promise<AlchemyNFTList> => {
     try {
       const request = createAlchemyRequest(chainId)
-      
+
       const queryParams: Record<string, any> = {
         owner: params.owner,
         pageSize: params.pageSize,
@@ -81,12 +88,11 @@ export const alchemyNFTApi = {
       return new AlchemyNFTList(response.data)
     } catch (error: any) {
       console.error('Alchemy NFT API Error:', error)
-      
+
       // 处理错误响应
       if (error.response) {
         throw new Error(
-          `Alchemy API Error: ${error.response.status} - ${
-            error.response.data?.message || error.response.statusText
+          `Alchemy API Error: ${error.response.status} - ${error.response.data?.message || error.response.statusText
           }`
         )
       } else if (error.request) {
@@ -145,6 +151,55 @@ export const alchemyNFTApi = {
       validAt,
       pageKey: null,
     })
+  },
+
+  /**
+   * 获取NFT元数据
+   * @param chainId 链ID
+   * @param params 查询参数
+   * @returns NFT元数据
+   */
+  getNFTMetadata: async (
+    chainId: number,
+    params: GetNFTMetadataParams
+  ): Promise<AlchemyNFTMetadata> => {
+    try {
+      const request = createAlchemyRequest(chainId)
+
+      const queryParams: Record<string, any> = {
+        contractAddress: params.contractAddress,
+        tokenId: params.tokenId,
+      }
+
+      // 添加可选参数
+      if (params.tokenUriTimeoutInMs !== undefined) {
+        queryParams.tokenUriTimeoutInMs = params.tokenUriTimeoutInMs
+      }
+
+      if (params.refreshCache !== undefined) {
+        queryParams.refreshCache = params.refreshCache
+      }
+
+      const response = await request.get<AlchemyNFTMetadata>('/getNFTMetadata', {
+        params: queryParams,
+      })
+
+      return response.data
+    } catch (error: any) {
+      console.error('Alchemy NFT Metadata API Error:', error)
+
+      // 处理错误响应
+      if (error.response) {
+        throw new Error(
+          `Alchemy API Error: ${error.response.status} - ${error.response.data?.message || error.response.statusText
+          }`
+        )
+      } else if (error.request) {
+        throw new Error('Alchemy API Error: Network error, please check your connection')
+      } else {
+        throw new Error(`Alchemy API Error: ${error.message}`)
+      }
+    }
   },
 }
 

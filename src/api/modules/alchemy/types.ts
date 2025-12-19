@@ -127,6 +127,21 @@ export interface GetNFTsForOwnerParams {
   pageKey?: string
 }
 
+// 获取NFT元数据请求参数
+export interface GetNFTMetadataParams {
+  /** 合约地址 */
+  contractAddress: string
+  /** Token ID */
+  tokenId: string
+  /** Token URI超时时间（毫秒，可选） */
+  tokenUriTimeoutInMs?: number
+  /** 是否刷新缓存（可选） */
+  refreshCache?: boolean
+}
+
+// NFT元数据响应（和AlchemyOwnedNFT结构相同）
+export type AlchemyNFTMetadata = AlchemyOwnedNFT
+
 // NFT列表结果类
 export class AlchemyNFTList {
   nfts: AlchemyOwnedNFT[]

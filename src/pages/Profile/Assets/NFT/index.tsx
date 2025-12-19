@@ -131,15 +131,14 @@ const NFTAssetsPage: React.FC = () => {
             </div>
           ) : error ? (
             <Alert
-              message={t('common.error')}
-              description={error}
-              type="error"
-              showIcon
-              action={
-                <Space>
+              description={
+                <Space direction="vertical" style={{ width: '100%' }}>
+                  <span>{error}</span>
                   <a onClick={refetch}>{t('common.refresh')}</a>
                 </Space>
               }
+              type="error"
+              showIcon
             />
           ) : filteredNFTs.length > 0 ? (
             <>

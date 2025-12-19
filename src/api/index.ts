@@ -43,6 +43,8 @@ export type {
   AlchemyNFTList,
   AlchemyGetNFTsResponse,
   GetNFTsForOwnerParams,
+  GetNFTMetadataParams,
+  AlchemyNFTMetadata,
   NFTContract,
   NFTImage,
   NFTMint

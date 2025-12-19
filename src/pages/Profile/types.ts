@@ -29,6 +29,7 @@ export interface UserNFT {
   owner: string
   createdAt: number
   collectionName: string
+  tokenType?: string // ERC721 或 ERC1155
   attributes?: Array<{
     trait_type: string
     value: string | number

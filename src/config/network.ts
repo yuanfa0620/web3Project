@@ -97,7 +97,7 @@ export const CHAIN_INFO = {
     logoURI: getChainIconUrl(CHAIN_IDS.SEPOLIA) || 'https://cryptologos.cc/logos/ethereum-eth-logo.png',
   },
   [CHAIN_IDS.POLYGON_AMOY]: {
-    name: 'Polygon Mumbai',
+    name: 'Polygon Amoy',
     symbol: 'MATIC',
     decimals: 18,
     logoURI: getChainIconUrl(CHAIN_IDS.POLYGON_AMOY) || 'https://cryptologos.cc/logos/polygon-matic-logo.png',

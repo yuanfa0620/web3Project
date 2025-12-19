@@ -1,5 +1,5 @@
 /**
- * 使用Alchemy API获取NFT数据的Hook
+ * 使用Alchemy API获取NFT数据的Hook（使用react-activation缓存组件状态）
  */
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { useAccount } from 'wagmi'
@@ -36,6 +36,9 @@ const convertAlchemyNFTToUserNFT = (alchemyNFT: AlchemyOwnedNFT, chainId: number
   // 生成唯一ID：chainId-contractAddress-tokenId
   const id = `${chainId}-${alchemyNFT.contract.address}-${alchemyNFT.tokenId}`
 
+  // 获取 tokenType：优先使用 alchemyNFT.tokenType，如果没有则使用 contract.tokenType
+  const tokenType = alchemyNFT.tokenType || alchemyNFT.contract?.tokenType || ''
+
   return {
     id,
     contractAddress: alchemyNFT.contract.address,
@@ -49,6 +52,7 @@ const convertAlchemyNFTToUserNFT = (alchemyNFT: AlchemyOwnedNFT, chainId: number
       ? new Date(alchemyNFT.mint.timestamp).getTime() / 1000 
       : Date.now() / 1000,
     collectionName,
+    tokenType: tokenType || undefined, // 如果为空字符串则设为 undefined
     attributes,
   }
 }
@@ -115,7 +119,7 @@ export const useAlchemyNFTs = ({
     return hasMoreData
   }, [chainNFTStates])
 
-  // 初始加载或重置
+  // 初始加载或重置（使用react-activation缓存组件状态，不需要sessionStorage）
   const fetchNFTs = useCallback(async (reset = false) => {
     if (!address || !enabled || chainIds.length === 0) {
       setChainNFTStates(new Map())
@@ -129,18 +133,18 @@ export const useAlchemyNFTs = ({
       return
     }
 
+    const supportedChainIds = chainIds.filter(chainId => ALCHEMY_NETWORK_MAP[chainId])
+    
+    // 如果reset=true，清空状态
+    if (reset) {
+      setChainNFTStates(new Map())
+    }
+
     isLoadingRef.current = true
     setLoading(true)
     setError(null)
 
     try {
-      const supportedChainIds = chainIds.filter(chainId => ALCHEMY_NETWORK_MAP[chainId])
-      
-      if (reset) {
-        // 重置时，清空所有状态
-        setChainNFTStates(new Map())
-      }
-
       // 并发请求所有支持的网络（只请求第一页）
       const fetchPromises = supportedChainIds.map(async (chainId) => {
         try {
@@ -300,8 +304,8 @@ export const useAlchemyNFTs = ({
     // 更新依赖记录
     prevDepsRef.current = currentDeps
 
-    // 执行请求
-    fetchNFTs(true)
+    // 执行请求（react-activation会保留组件状态，所以只在依赖变化时请求）
+    fetchNFTs(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, enabled, chainIdsKey]) // 使用稳定的chainIdsKey作为依赖
 
@@ -311,7 +315,7 @@ export const useAlchemyNFTs = ({
     error,
     hasMore,
     loadMore,
-    refetch: () => fetchNFTs(true),
+    refetch: () => fetchNFTs(true), // reset=true，重新请求
   }
 }
 

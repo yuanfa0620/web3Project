@@ -2,7 +2,7 @@
  * NFT卡片组件（用于个人资产页面）
  */
 import React from 'react'
-import { Card, Tag, Typography, Button, Avatar } from 'antd'
+import { Card, Tag, Typography, Avatar } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { CHAIN_INFO } from '@/config/network'
@@ -27,10 +27,24 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft }) => {
     navigate(`/profile/nft/${nft.id}`)
   }
 
+  // 格式化 tokenType 显示
+  const formatTokenType = (tokenType?: string): string => {
+    if (!tokenType) return ''
+    const upper = tokenType.toUpperCase()
+    // 处理可能的格式：ERC721, ERC_721, ERC-721 等
+    if (upper.includes('721')) return 'ERC721'
+    if (upper.includes('1155')) return 'ERC1155'
+    return tokenType.toUpperCase()
+  }
+
+  // 获取 tokenType
+  const displayTokenType = nft.tokenType ? formatTokenType(nft.tokenType) : null
+
   return (
     <Card
       className={styles.nftCard}
       hoverable
+      onClick={handleViewDetail}
       cover={
         <div className={styles.nftImageContainer}>
           <img
@@ -42,6 +56,22 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft }) => {
               target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y1ZjVmNSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTk5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4='
             }}
           />
+          {/* Token ID 显示在左上角 */}
+          <div className={styles.tokenIdBadge}>
+            <Text className={styles.tokenIdText}>#{nft.tokenId}</Text>
+          </div>
+          {/* Token Type 显示在右上角 */}
+          {displayTokenType && (
+            <div className={styles.tokenTypeBadge}>
+              <Tag className={styles.tokenTypeTag}>{displayTokenType}</Tag>
+            </div>
+          )}
+          {/* Hover 时显示的查看详情提示 */}
+          <div className={styles.viewDetailOverlay}>
+            <div className={styles.viewDetailButton}>
+              {t('profile.viewDetail')}
+            </div>
+          </div>
         </div>
       }
     >
@@ -73,23 +103,6 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft }) => {
             {nft.description}
           </Paragraph>
         )}
-
-        <div className={styles.nftFooter}>
-          <div className={styles.tokenId}>
-            <Text type="secondary" className={styles.tokenIdLabel}>
-              {t('profile.tokenId')}:
-            </Text>
-            <Text className={styles.tokenIdValue}>{nft.tokenId}</Text>
-          </div>
-          <Button 
-            type="primary" 
-            size="small" 
-            onClick={handleViewDetail}
-            className={styles.viewButton}
-          >
-            {t('profile.viewDetail')}
-          </Button>
-        </div>
 
         {nft.attributes && nft.attributes.length > 0 && (
           <div className={styles.nftAttributes}>
