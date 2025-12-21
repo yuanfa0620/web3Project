@@ -7,6 +7,7 @@ export const ALCHEMY_NETWORK_MAP: Record<number, string> = {
   11155111: 'eth-sepolia',      // Sepolia
   80002: 'polygon-amoy',        // Polygon Amoy
   84532: 'base-sepolia',        // Base Sepolia
+  96: 'bnb-testnet',           // BSC Testnet
 }
 
 // OpenSea元数据
