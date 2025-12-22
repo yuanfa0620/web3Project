@@ -3,7 +3,7 @@ import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { parseEther } from 'viem'
 import { getMessage } from '@/utils/message'
 import { getErrorMessage } from '@/utils/error'
-import type { AddToWhitelistParams } from '../index'
+import type { AddToWhitelistParams } from '../types'
 import WhitelistManager_ABI from '../../abi/WhitelistManager.json'
 
 interface UseAddToWhitelistParams {

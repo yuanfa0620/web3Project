@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { getMessage } from '@/utils/message'
 import { getErrorMessage } from '@/utils/error'
-import type { SetWhitelistFeeParams } from '../index'
+import type { SetWhitelistFeeParams } from '../types'
 import WhitelistManager_ABI from '../../abi/WhitelistManager.json'
 
 interface UseSetWhitelistFeeParams {

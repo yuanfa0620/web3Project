@@ -3,7 +3,7 @@ import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagm
 import { getMessage } from '@/utils/message'
 import { getErrorMessage } from '@/utils/error'
 import { createERC721Service } from '@/contracts/erc721'
-import type { DepositNFTParams } from '../index'
+import type { DepositNFTParams } from '../types'
 import NFTMarketPlace_ABI from '../../abi/NFTMarketPlace.json'
 import ERC721_ABI from '../../abi/ERC721.json'
 

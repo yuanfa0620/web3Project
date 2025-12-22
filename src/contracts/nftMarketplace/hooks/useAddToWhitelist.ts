@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { getMessage } from '@/utils/message'
 import { getErrorMessage } from '@/utils/error'
-import type { AddToWhitelistParams } from '../index'
+import type { AddToWhitelistParams } from '../types'
 import NFTMarketPlace_ABI from '../../abi/NFTMarketPlace.json'
 
 interface UseAddToWhitelistParams {

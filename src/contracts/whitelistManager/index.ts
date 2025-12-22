@@ -4,24 +4,12 @@ import { wagmiConfig } from '@/config/network'
 import type { ContractCallResult } from '../data/types'
 import WhitelistManager_ABI from '../abi/WhitelistManager.json'
 import { getErrorMessage } from '@/utils/error'
-
-export interface AddToWhitelistParams {
-  nftContract: string
-  platformFeeRate: string | bigint
-}
-
-export interface SetMarketplaceParams {
-  marketplace: string
-}
-
-export interface SetWhitelistFeeParams {
-  fee: string | bigint
-}
-
-export interface WithdrawFeesParams {
-  to: string
-  amount: string | bigint
-}
+import type {
+  AddToWhitelistParams,
+  SetMarketplaceParams,
+  SetWhitelistFeeParams,
+  WithdrawFeesParams,
+} from './types'
 
 export class WhitelistManagerService {
   private address: string
@@ -164,6 +152,120 @@ export class WhitelistManagerService {
       return {
         success: false,
         error: getErrorMessage(error) || '放弃所有权失败',
+      }
+    }
+  }
+
+  // 暂停合约
+  async pause(): Promise<ContractCallResult<string>> {
+    try {
+      const hash = await this.writeContract('pause', [])
+      return {
+        success: true,
+        data: hash,
+        transactionHash: hash,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error) || '暂停合约失败',
+      }
+    }
+  }
+
+  // 恢复合约
+  async unpause(): Promise<ContractCallResult<string>> {
+    try {
+      const hash = await this.writeContract('unpause', [])
+      return {
+        success: true,
+        data: hash,
+        transactionHash: hash,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error) || '恢复合约失败',
+      }
+    }
+  }
+
+  // 获取合约余额
+  async getBalance(): Promise<ContractCallResult<bigint>> {
+    try {
+      const result = await this.readContract('getBalance', []) as bigint
+      return {
+        success: true,
+        data: result,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error) || '获取合约余额失败',
+      }
+    }
+  }
+
+  // 获取市场地址
+  async getMarketplace(): Promise<ContractCallResult<string>> {
+    try {
+      const result = await this.readContract('marketplace', []) as string
+      return {
+        success: true,
+        data: result,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error) || '获取市场地址失败',
+      }
+    }
+  }
+
+  // 获取所有者地址
+  async getOwner(): Promise<ContractCallResult<string>> {
+    try {
+      const result = await this.readContract('owner', []) as string
+      return {
+        success: true,
+        data: result,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error) || '获取所有者地址失败',
+      }
+    }
+  }
+
+  // 获取暂停状态
+  async getPaused(): Promise<ContractCallResult<boolean>> {
+    try {
+      const result = await this.readContract('paused', []) as boolean
+      return {
+        success: true,
+        data: result,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error) || '获取暂停状态失败',
+      }
+    }
+  }
+
+  // 获取白名单费用
+  async getWhitelistFee(): Promise<ContractCallResult<bigint>> {
+    try {
+      const result = await this.readContract('whitelistFee', []) as bigint
+      return {
+        success: true,
+        data: result,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error) || '获取白名单费用失败',
       }
     }
   }

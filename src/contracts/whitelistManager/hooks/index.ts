@@ -6,4 +6,6 @@ export { useWithdrawFees } from './useWithdrawFees'
 export { useWithdrawAllFees } from './useWithdrawAllFees'
 export { useTransferOwnership } from './useTransferOwnership'
 export { useRenounceOwnership } from './useRenounceOwnership'
+export { usePause } from './usePause'
+export { useUnpause } from './useUnpause'
 

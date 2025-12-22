@@ -4,58 +4,18 @@ import { wagmiConfig } from '@/config/network'
 import type { ContractCallResult } from '../data/types'
 import NFTMarketPlace_ABI from '../abi/NFTMarketPlace.json'
 import { getErrorMessage } from '@/utils/error'
-
-export interface DepositNFTParams {
-  nftContract: string
-  tokenId: string | bigint
-  price: string | bigint
-}
-
-export interface BuyNFTParams {
-  nftContract: string
-  tokenId: string | bigint
-}
-
-export interface WithdrawNFTParams {
-  nftContract: string
-  tokenId: string | bigint
-}
-
-export interface SetPriceParams {
-  nftContract: string
-  tokenId: string | bigint
-  price: string | bigint
-}
-
-export interface AddToWhitelistParams {
-  nftContract: string
-  platformFeeRate: string | bigint
-}
-
-export interface UpdateWhitelistParams {
-  nftContract: string
-  platformFeeRate: string | bigint
-}
-
-export interface SetWhitelistManagerParams {
-  whitelistManager: string
-}
-
-export interface WithdrawPlatformFeesParams {
-  to: string
-  amount: string | bigint
-}
-
-export interface EmergencyWithdrawParams {
-  nftContract: string
-  tokenId: string | bigint
-  to: string
-}
-
-export interface EmergencyWithdrawBatchParams {
-  startIndex: string | bigint
-  endIndex: string | bigint
-}
+import type {
+  DepositNFTParams,
+  BuyNFTByOrderIdParams,
+  WithdrawNFTByOrderIdParams,
+  SetPriceByOrderIdParams,
+  AddToWhitelistParams,
+  UpdateWhitelistParams,
+  SetWhitelistManagerParams,
+  WithdrawPlatformFeesParams,
+  EmergencyWithdrawParams,
+  EmergencyWithdrawBatchParams,
+} from './types'
 
 export class NFTMarketplaceService {
   private address: string
@@ -92,16 +52,13 @@ export class NFTMarketplaceService {
     }
   }
 
-  // 购买 NFT
-  async buyNFT(params: BuyNFTParams, value: string | bigint): Promise<ContractCallResult<string>> {
+  // 通过 orderId 购买 NFT
+  async buyNFTByOrderId(params: BuyNFTByOrderIdParams, value: string | bigint): Promise<ContractCallResult<string>> {
     try {
-      const tokenId = typeof params.tokenId === 'string' ? BigInt(params.tokenId) : params.tokenId
+      const orderId = typeof params.orderId === 'string' ? BigInt(params.orderId) : params.orderId
       const ethValue = typeof value === 'string' ? parseEther(value) : value
       
-      const hash = await this.writeContract('buyNFT', [
-        params.nftContract,
-        tokenId,
-      ], ethValue)
+      const hash = await this.writeContract('buyNFTByOrderId', [orderId], ethValue)
       return {
         success: true,
         data: hash,
@@ -115,15 +72,12 @@ export class NFTMarketplaceService {
     }
   }
 
-  // 提取 NFT
-  async withdrawNFT(params: WithdrawNFTParams): Promise<ContractCallResult<string>> {
+  // 通过 orderId 提取 NFT
+  async withdrawNFTByOrderId(params: WithdrawNFTByOrderIdParams): Promise<ContractCallResult<string>> {
     try {
-      const tokenId = typeof params.tokenId === 'string' ? BigInt(params.tokenId) : params.tokenId
+      const orderId = typeof params.orderId === 'string' ? BigInt(params.orderId) : params.orderId
       
-      const hash = await this.writeContract('withdrawNFT', [
-        params.nftContract,
-        tokenId,
-      ])
+      const hash = await this.writeContract('withdrawNFTByOrderId', [orderId])
       return {
         success: true,
         data: hash,
@@ -137,17 +91,13 @@ export class NFTMarketplaceService {
     }
   }
 
-  // 设置价格
-  async setPrice(params: SetPriceParams): Promise<ContractCallResult<string>> {
+  // 通过 orderId 设置价格
+  async setPriceByOrderId(params: SetPriceByOrderIdParams): Promise<ContractCallResult<string>> {
     try {
-      const tokenId = typeof params.tokenId === 'string' ? BigInt(params.tokenId) : params.tokenId
+      const orderId = typeof params.orderId === 'string' ? BigInt(params.orderId) : params.orderId
       const price = typeof params.price === 'string' ? BigInt(params.price) : params.price
       
-      const hash = await this.writeContract('setPrice', [
-        params.nftContract,
-        tokenId,
-        price,
-      ])
+      const hash = await this.writeContract('setPriceByOrderId', [orderId, price])
       return {
         success: true,
         data: hash,
@@ -358,6 +308,109 @@ export class NFTMarketplaceService {
       return {
         success: false,
         error: getErrorMessage(error) || '批量紧急提取 NFT 失败',
+      }
+    }
+  }
+
+  // 通过 orderId 获取订单信息
+  async getOrderById(orderId: string | bigint): Promise<ContractCallResult<any>> {
+    try {
+      const orderIdBigInt = typeof orderId === 'string' ? BigInt(orderId) : orderId
+      const result = await this.readContract('getOrderById', [orderIdBigInt])
+      return {
+        success: true,
+        data: result,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error) || '获取订单信息失败',
+      }
+    }
+  }
+
+  // 通过 NFT 合约地址和 tokenId 获取 orderId
+  async getOrderIdByNFT(nftContract: string, tokenId: string | bigint): Promise<ContractCallResult<bigint>> {
+    try {
+      const tokenIdBigInt = typeof tokenId === 'string' ? BigInt(tokenId) : tokenId
+      const result = await this.readContract('getOrderIdByNFT', [nftContract, tokenIdBigInt]) as bigint
+      return {
+        success: true,
+        data: result,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error) || '获取订单 ID 失败',
+      }
+    }
+  }
+
+  // 获取 NFT 信息
+  async getNFTInfo(nftContract: string, tokenId: string | bigint): Promise<ContractCallResult<any>> {
+    try {
+      const tokenIdBigInt = typeof tokenId === 'string' ? BigInt(tokenId) : tokenId
+      const result = await this.readContract('getNFTInfo', [nftContract, tokenIdBigInt])
+      return {
+        success: true,
+        data: result,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error) || '获取 NFT 信息失败',
+      }
+    }
+  }
+
+  // 获取总订单数
+  async getTotalOrderCount(): Promise<ContractCallResult<bigint>> {
+    try {
+      const result = await this.readContract('getTotalOrderCount', []) as bigint
+      return {
+        success: true,
+        data: result,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error) || '获取总订单数失败',
+      }
+    }
+  }
+
+  // 获取用户订单列表
+  async getUserOrders(user: string, offset: string | bigint, limit: string | bigint): Promise<ContractCallResult<any[]>> {
+    try {
+      const offsetBigInt = typeof offset === 'string' ? BigInt(offset) : offset
+      const limitBigInt = typeof limit === 'string' ? BigInt(limit) : limit
+      const result = await this.readContract('getUserOrders', [user, offsetBigInt, limitBigInt]) as any[]
+      return {
+        success: true,
+        data: result,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error) || '获取用户订单列表失败',
+      }
+    }
+  }
+
+  // 获取所有订单列表
+  async getAllListings(offset: string | bigint, limit: string | bigint): Promise<ContractCallResult<any[]>> {
+    try {
+      const offsetBigInt = typeof offset === 'string' ? BigInt(offset) : offset
+      const limitBigInt = typeof limit === 'string' ? BigInt(limit) : limit
+      const result = await this.readContract('getAllListings', [offsetBigInt, limitBigInt]) as any[]
+      return {
+        success: true,
+        data: result,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error) || '获取所有订单列表失败',
       }
     }
   }

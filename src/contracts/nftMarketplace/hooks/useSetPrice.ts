@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { getMessage } from '@/utils/message'
 import { getErrorMessage } from '@/utils/error'
-import type { SetPriceParams } from '../index'
+import type { SetPriceByOrderIdParams } from '../types'
 import NFTMarketPlace_ABI from '../../abi/NFTMarketPlace.json'
 
 interface UseSetPriceParams {
@@ -25,15 +25,15 @@ export const useSetPrice = ({ marketplaceAddress, chainId, onSuccess, onError }:
   })
 
   const setPrice = useCallback(
-    (params: SetPriceParams) => {
-      const tokenId = typeof params.tokenId === 'string' ? BigInt(params.tokenId) : params.tokenId
+    (params: SetPriceByOrderIdParams) => {
+      const orderId = typeof params.orderId === 'string' ? BigInt(params.orderId) : params.orderId
       const price = typeof params.price === 'string' ? BigInt(params.price) : params.price
 
       writeContract({
         address: marketplaceAddress as `0x${string}`,
         abi: NFTMarketPlace_ABI,
-        functionName: 'setPrice',
-        args: [params.nftContract, tokenId, price],
+        functionName: 'setPriceByOrderId',
+        args: [orderId, price],
         chainId: chainId as any,
       })
     },

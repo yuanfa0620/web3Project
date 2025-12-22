@@ -3,7 +3,7 @@ import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { parseEther } from 'viem'
 import { getMessage } from '@/utils/message'
 import { getErrorMessage } from '@/utils/error'
-import type { BuyNFTParams } from '../index'
+import type { BuyNFTByOrderIdParams } from '../types'
 import NFTMarketPlace_ABI from '../../abi/NFTMarketPlace.json'
 
 interface UseBuyNFTParams {
@@ -26,15 +26,15 @@ export const useBuyNFT = ({ marketplaceAddress, chainId, onSuccess, onError }: U
   })
 
   const buyNFT = useCallback(
-    (params: BuyNFTParams, value: string | bigint) => {
-      const tokenId = typeof params.tokenId === 'string' ? BigInt(params.tokenId) : params.tokenId
+    (params: BuyNFTByOrderIdParams, value: string | bigint) => {
+      const orderId = typeof params.orderId === 'string' ? BigInt(params.orderId) : params.orderId
       const ethValue = typeof value === 'string' ? parseEther(value) : value
 
       writeContract({
         address: marketplaceAddress as `0x${string}`,
         abi: NFTMarketPlace_ABI,
-        functionName: 'buyNFT',
-        args: [params.nftContract, tokenId],
+        functionName: 'buyNFTByOrderId',
+        args: [orderId],
         value: ethValue,
         chainId: chainId as any,
       })

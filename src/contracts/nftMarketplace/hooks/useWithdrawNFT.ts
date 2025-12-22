@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { getMessage } from '@/utils/message'
 import { getErrorMessage } from '@/utils/error'
-import type { WithdrawNFTParams } from '../index'
+import type { WithdrawNFTByOrderIdParams } from '../types'
 import NFTMarketPlace_ABI from '../../abi/NFTMarketPlace.json'
 
 interface UseWithdrawNFTParams {
@@ -25,14 +25,14 @@ export const useWithdrawNFT = ({ marketplaceAddress, chainId, onSuccess, onError
   })
 
   const withdrawNFT = useCallback(
-    (params: WithdrawNFTParams) => {
-      const tokenId = typeof params.tokenId === 'string' ? BigInt(params.tokenId) : params.tokenId
+    (params: WithdrawNFTByOrderIdParams) => {
+      const orderId = typeof params.orderId === 'string' ? BigInt(params.orderId) : params.orderId
 
       writeContract({
         address: marketplaceAddress as `0x${string}`,
         abi: NFTMarketPlace_ABI,
-        functionName: 'withdrawNFT',
-        args: [params.nftContract, tokenId],
+        functionName: 'withdrawNFTByOrderId',
+        args: [orderId],
         chainId: chainId as any,
       })
     },
