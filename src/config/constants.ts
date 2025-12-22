@@ -34,6 +34,34 @@ export const CONFIG = {
     [84532]: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS_84532 || '', // Base Sepolia
   },
 
+  // NFT 市场合约地址配置（按链ID）
+  NFT_MARKETPLACE_CONTRACTS: {
+    // 主网
+    [1]: import.meta.env.VITE_NFT_MARKETPLACE_ADDRESS_1 || '', // Ethereum
+    [137]: import.meta.env.VITE_NFT_MARKETPLACE_ADDRESS_137 || '', // Polygon
+    [56]: import.meta.env.VITE_NFT_MARKETPLACE_ADDRESS_56 || '', // BSC
+    [8453]: import.meta.env.VITE_NFT_MARKETPLACE_ADDRESS_8453 || '', // Base
+    // 测试网
+    [11155111]: import.meta.env.VITE_NFT_MARKETPLACE_ADDRESS_11155111 || '', // Sepolia
+    [80002]: import.meta.env.VITE_NFT_MARKETPLACE_ADDRESS_80002 || '', // Polygon Amoy
+    [97]: import.meta.env.VITE_NFT_MARKETPLACE_ADDRESS_97 || '', // BSC Testnet
+    [84532]: import.meta.env.VITE_NFT_MARKETPLACE_ADDRESS_84532 || '', // Base Sepolia
+  },
+
+  // 白名单管理器合约地址配置（按链ID）
+  WHITELIST_MANAGER_CONTRACTS: {
+    // 主网
+    [1]: import.meta.env.VITE_WHITELIST_MANAGER_ADDRESS_1 || '', // Ethereum
+    [137]: import.meta.env.VITE_WHITELIST_MANAGER_ADDRESS_137 || '', // Polygon
+    [56]: import.meta.env.VITE_WHITELIST_MANAGER_ADDRESS_56 || '', // BSC
+    [8453]: import.meta.env.VITE_WHITELIST_MANAGER_ADDRESS_8453 || '', // Base
+    // 测试网
+    [11155111]: import.meta.env.VITE_WHITELIST_MANAGER_ADDRESS_11155111 || '', // Sepolia
+    [80002]: import.meta.env.VITE_WHITELIST_MANAGER_ADDRESS_80002 || '', // Polygon Amoy
+    [97]: import.meta.env.VITE_WHITELIST_MANAGER_ADDRESS_97 || '', // BSC Testnet
+    [84532]: import.meta.env.VITE_WHITELIST_MANAGER_ADDRESS_84532 || '', // Base Sepolia
+  },
+
   // Mint配置
   MINT: {
     MAX_BALANCE: 1000, // 最大余额限制（超过此值不允许mint）
@@ -66,4 +94,14 @@ export const getWalletConnectProjectId = () => {
 // 获取 Infura Key
 export const getInfuraKey = () => {
   return import.meta.env.VITE_ALCHEMY_KEY || ''
+}
+
+// 获取 NFT 市场合约地址
+export const getNFTMarketplaceAddress = (chainId: number): string => {
+  return CONFIG.NFT_MARKETPLACE_CONTRACTS[chainId as keyof typeof CONFIG.NFT_MARKETPLACE_CONTRACTS] || ''
+}
+
+// 获取白名单管理器合约地址
+export const getWhitelistManagerAddress = (chainId: number): string => {
+  return CONFIG.WHITELIST_MANAGER_CONTRACTS[chainId as keyof typeof CONFIG.WHITELIST_MANAGER_CONTRACTS] || ''
 }
