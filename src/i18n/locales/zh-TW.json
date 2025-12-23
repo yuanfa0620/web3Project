@@ -313,6 +313,23 @@
     "searchToken": "搜索代幣名稱、符號或地址",
     "noTokenFound": "未找到代幣",
     "testnet": "測試網",
+    "slippageSettings": {
+      "title": "滑點設置",
+      "preset": "預設",
+      "custom": "自定義",
+      "expertMode": "專家模式",
+      "expertModeDesc": "關閉滑點保護",
+      "expertModeWarning": "關閉滑點保護後，您的交易可能遭受重大損失。此操作無法撤銷，請謹慎操作。",
+      "expertModeConfirm": "確認關閉滑點保護",
+      "expertModeConfirmDesc": "您確定要關閉滑點保護嗎？這將使您的交易面臨更高的風險。",
+      "expertModeEnabled": "專家模式已啟用",
+      "expertModeTooltip": "專家模式已開啟：關閉滑點保護後，交易將不受滑點限制，可能導致更大的價格波動風險。請謹慎操作。",
+      "warning": {
+        "high": "滑點過高！您的交易可能會遭受重大損失。",
+        "medium": "滑點較高，可能導致較大的價格差異。",
+        "low": "滑點略高，建議降低滑點以獲得更好的價格。"
+      }
+    },
     "addToken": "添加",
     "tokenAdded": "代幣已添加",
     "customToken": "自定義",

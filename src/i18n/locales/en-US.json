@@ -313,6 +313,23 @@
     "searchToken": "Search token name, symbol or address",
     "noTokenFound": "No token found",
     "testnet": "Testnet",
+    "slippageSettings": {
+      "title": "Slippage Settings",
+      "preset": "Preset",
+      "custom": "Custom",
+      "expertMode": "Expert Mode",
+      "expertModeDesc": "Disable slippage protection",
+      "expertModeWarning": "Disabling slippage protection may cause significant losses. This action cannot be undone. Please proceed with caution.",
+      "expertModeConfirm": "Confirm Disable Slippage Protection",
+      "expertModeConfirmDesc": "Are you sure you want to disable slippage protection? This will expose your transactions to higher risks.",
+      "expertModeEnabled": "Expert Mode Enabled",
+      "expertModeTooltip": "Expert Mode Enabled: After disabling slippage protection, transactions will not be limited by slippage, which may lead to greater price volatility risks. Please proceed with caution.",
+      "warning": {
+        "high": "Slippage is too high! Your transaction may suffer significant losses.",
+        "medium": "High slippage may result in significant price differences.",
+        "low": "Slippage is slightly high. Consider lowering it for better prices."
+      }
+    },
     "addToken": "Add",
     "tokenAdded": "Token added",
     "customToken": "Custom",

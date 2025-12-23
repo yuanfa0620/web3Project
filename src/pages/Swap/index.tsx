@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
-import { Card, Button, Typography } from 'antd'
-import { SwapOutlined, ArrowDownOutlined } from '@ant-design/icons'
+import { Card, Button, Typography, Tooltip } from 'antd'
+import { SwapOutlined, ArrowDownOutlined, ExperimentOutlined } from '@ant-design/icons'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useTranslation } from 'react-i18next'
 import { useAccount } from 'wagmi'
@@ -14,7 +14,9 @@ import { useSwapState } from './hooks/useSwapState'
 import { useSwapActions } from './hooks/useSwapActions'
 import { useSwapButtonState } from './hooks/useSwapButtonState'
 import { useSwapDisplayAmount } from './hooks/useSwapDisplayAmount'
+import { useSlippage } from './hooks/useSlippage'
 import { useMessage } from '@/hooks/useMessage'
+import SlippageSettings from './components/SlippageSettings'
 import styles from './index.module.less'
 
 const { Title } = Typography
@@ -24,6 +26,15 @@ const SwapPage: React.FC = () => {
   const message = useMessage()
   const { chainId, isConnected } = useAccount()
   const { isConnected: walletConnected } = useWallet()
+  const {
+    slippage,
+    expertMode,
+    customSlippage,
+    setPresetSlippage,
+    setCustomSlippageValue,
+    toggleExpertMode,
+    getSlippageWarning,
+  } = useSlippage()
 
   // 状态管理
   const {
@@ -94,13 +105,15 @@ const SwapPage: React.FC = () => {
     switchNetworkSilently,
   })
 
-  // 显示数量格式化
+  // 显示数量格式化（应用滑点）
   const { displayFromAmount, displayToAmount } = useSwapDisplayAmount({
     activeInput,
     fromAmount,
     fromAmountFromTo,
     toAmount,
     toAmountInput,
+    slippage,
+    expertMode,
   })
 
   // 按钮状态
@@ -212,6 +225,22 @@ const SwapPage: React.FC = () => {
               <Title level={4} className={styles.swapTitle}>
                 {t('swap.title')}
               </Title>
+              <div className={styles.headerRight}>
+                <SlippageSettings
+                  slippage={slippage}
+                  expertMode={expertMode}
+                  customSlippage={customSlippage}
+                  onPresetSlippageChange={setPresetSlippage}
+                  onCustomSlippageChange={setCustomSlippageValue}
+                  onExpertModeChange={toggleExpertMode}
+                  getSlippageWarning={getSlippageWarning}
+                />
+                {!expertMode && (
+                  <span className={styles.slippageDisplay}>
+                    {t('swap.slippage')}: {slippage}%
+                  </span>
+                )}
+              </div>
             </div>
 
             <div className={styles.swapBody}>
@@ -276,18 +305,25 @@ const SwapPage: React.FC = () => {
                   />
                 </div>
               ) : (
-                <Button
-                  type={buttonState.type}
-                  size="large"
-                  block
-                  icon={<SwapOutlined />}
-                  disabled={buttonState.disabled}
-                  loading={allowanceLoading}
-                  onClick={handleSwapClick}
-                  className={styles.actionButton}
-                >
-                  {buttonState.text}
-                </Button>
+                <div className={styles.actionButtonWrapper}>
+                  <Button
+                    type={buttonState.type}
+                    size="large"
+                    block
+                    icon={<SwapOutlined />}
+                    disabled={buttonState.disabled}
+                    loading={allowanceLoading}
+                    onClick={handleSwapClick}
+                    className={styles.actionButton}
+                  >
+                    {buttonState.text}
+                  </Button>
+                  {expertMode && (
+                    <Tooltip title={t('swap.slippageSettings.expertModeTooltip')}>
+                      <ExperimentOutlined className={styles.expertIcon} />
+                    </Tooltip>
+                  )}
+                </div>
               )}
             </div>
           </Card>

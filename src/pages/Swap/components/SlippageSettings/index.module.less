@@ -1,0 +1,218 @@
+.slippageSettings {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+
+  .settingsButton {
+    padding: 0;
+    height: auto;
+    color: #1890ff;
+    font-size: 14px;
+
+    &:hover {
+      color: #40a9ff;
+    }
+  }
+}
+
+.slippageModal {
+  :global(.ant-modal-body) {
+    padding: 24px;
+  }
+}
+
+.slippageContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.presetSection {
+  .label {
+    font-size: 14px;
+    color: #262626;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .presetButtons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .presetButton {
+    flex: 1;
+    min-width: 80px;
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+}
+
+.customSection {
+  .label {
+    font-size: 14px;
+    color: #262626;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .customInputWrapper {
+    .customInput {
+      height: 40px;
+      border-radius: 8px;
+
+      :global(.ant-input-suffix) {
+        color: #8c8c8c;
+      }
+    }
+  }
+}
+
+.warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+
+  :global(.anticon) {
+    font-size: 16px;
+  }
+
+  &.warningLow {
+    background: #fff7e6;
+    border: 1px solid #ffd591;
+    color: #d46b08;
+
+    :global(.anticon) {
+      color: #fa8c16;
+    }
+  }
+
+  &.warningMedium {
+    background: #fff1f0;
+    border: 1px solid #ffccc7;
+    color: #cf1322;
+
+    :global(.anticon) {
+      color: #ff4d4f;
+    }
+  }
+
+  &.warningHigh {
+    background: #fff1f0;
+    border: 1px solid #ff7875;
+    color: #a8071a;
+    font-weight: 500;
+
+    :global(.anticon) {
+      color: #ff4d4f;
+      font-size: 18px;
+    }
+  }
+}
+
+.expertSection {
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+
+  .expertHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .expertTitle {
+    font-size: 14px;
+    color: #262626;
+    font-weight: 500;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    .expertIconInline {
+      color: #ff4d4f;
+      font-size: 16px;
+    }
+  }
+
+  .expertDesc {
+    font-size: 12px;
+    color: #8c8c8c;
+    line-height: 1.5;
+  }
+
+  .expertSwitch {
+    flex-shrink: 0;
+  }
+
+  .expertWarning {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 12px;
+    background: #fff1f0;
+    border: 1px solid #ffccc7;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #cf1322;
+    line-height: 1.5;
+
+    :global(.anticon) {
+      color: #ff4d4f;
+      font-size: 16px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.confirmContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+
+  .confirmIcon {
+    font-size: 48px;
+    color: #ff4d4f;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    color: #262626;
+    line-height: 1.6;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .slippageModal {
+    :global(.ant-modal-body) {
+      padding: 16px;
+    }
+  }
+
+  .slippageContent {
+    gap: 20px;
+  }
+
+  .presetSection {
+    .presetButtons {
+      .presetButton {
+        min-width: 70px;
+        font-size: 13px;
+      }
+    }
+  }
+}
+
