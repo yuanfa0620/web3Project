@@ -3,7 +3,18 @@ export { ERC20Service, createERC20Service } from './erc20'
 export { ERC721Service, createERC721Service } from './erc721'
 export { NFTMarketplaceService, createNFTMarketplaceService } from './nftMarketplace/index'
 export { WhitelistManagerService, createWhitelistManagerService } from './whitelistManager/index'
+export { MFTTokenService, createMFTTokenService } from './mftToken'
 export * from './data/types'
+export type {
+  MintParams,
+  SetFeeRecipientParams,
+  SetMintAmountParams,
+  SetMintCooldownParams,
+  SetMintEnabledParams,
+  SetMintFeeParams,
+  TransferOwnershipParams,
+  MFTTokenMintInfo,
+} from './mftToken/types'
 
 // 从配置中导入合约地址
 import { CONFIG, getNFTMarketplaceAddress, getWhitelistManagerAddress } from '@/config/constants'

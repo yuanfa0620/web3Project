@@ -2,14 +2,12 @@
  * Mint代币 Hook
  */
 import { useState, useCallback, useEffect } from 'react'
-import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { parseEther, formatUnits } from 'viem'
+import { useAccount, useWaitForTransactionReceipt } from 'wagmi'
 import { getMessage } from '@/utils/message'
 import { getErrorMessage } from '@/utils/error'
 import { useTranslation } from 'react-i18next'
-import { createERC20Service } from '@/contracts/erc20'
+import { createMFTTokenService } from '@/contracts/mftToken'
 import { CONFIG } from '@/config/constants'
-import ERC20_ABI from '@/contracts/abi/ERC20.json'
 
 export const useMintToken = () => {
   const { t } = useTranslation()
@@ -17,13 +15,7 @@ export const useMintToken = () => {
   const [loading, setLoading] = useState(false)
   const [balance, setBalance] = useState<string>('0')
   const [checkingBalance, setCheckingBalance] = useState(false)
-
-  const {
-    data: hash,
-    isPending: isWriting,
-    error: writeError,
-    writeContract,
-  } = useWriteContract()
+  const [hash, setHash] = useState<`0x${string}` | undefined>()
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash,
@@ -42,8 +34,8 @@ export const useMintToken = () => {
 
     try {
       setCheckingBalance(true)
-      const erc20Service = createERC20Service(tokenAddress, chainId)
-      const result = await erc20Service.getBalance(address)
+      const mftTokenService = createMFTTokenService(tokenAddress, chainId)
+      const result = await mftTokenService.getBalance(address)
 
       if (result.success && result.data) {
         const balanceValue = parseFloat(result.data)
@@ -88,46 +80,39 @@ export const useMintToken = () => {
 
     setLoading(true)
 
-    // 调用mint函数，需要支付0.001主网币
-    const mintAmount = parseEther('1') // mint 1个代币（可以根据需要调整）
-    const cost = parseEther(CONFIG.MINT.COST)
-
     try {
-      writeContract({
-        address: tokenAddress as `0x${string}`,
-        abi: ERC20_ABI,
-        functionName: 'mint',
-        args: [address, mintAmount],
-        value: cost,
+      const mftTokenService = createMFTTokenService(tokenAddress, chainId)
+      const result = await mftTokenService.mint({
+        value: CONFIG.MINT.COST,
       })
+
+      if (result.success && result.transactionHash) {
+        setHash(result.transactionHash as `0x${string}`)
+      } else {
+        getMessage().error(result.error || t('profile.mint.mintFailed'))
+        setLoading(false)
+      }
     } catch (error: any) {
       console.error('Mint失败:', error)
       getMessage().error(getErrorMessage(error) || t('profile.mint.mintFailed'))
       setLoading(false)
     }
-  }, [address, chainId, writeContract, checkBalance, t])
+  }, [address, chainId, checkBalance, t])
 
   // 监听交易状态
   useEffect(() => {
     if (isConfirmed && hash) {
       getMessage().success(t('profile.mint.mintSuccess'))
       setLoading(false)
+      setHash(undefined) // 重置 hash
       // 刷新余额
       checkBalance()
     }
   }, [isConfirmed, hash, checkBalance, t])
 
-  // 监听错误
-  useEffect(() => {
-    if (writeError) {
-      getMessage().error(getErrorMessage(writeError) || t('profile.mint.mintFailed'))
-      setLoading(false)
-    }
-  }, [writeError, t])
-
   return {
     mint,
-    loading: loading || isWriting || isConfirming,
+    loading: loading || isConfirming,
     checkingBalance,
     balance,
     checkBalance,
