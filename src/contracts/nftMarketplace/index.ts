@@ -363,6 +363,22 @@ export class NFTMarketplaceService {
     }
   }
 
+  // 检查 NFT 合约是否在白名单中
+  async isWhitelisted(nftContract: string): Promise<ContractCallResult<boolean>> {
+    try {
+      const result = await this.readContract('isWhitelisted', [nftContract]) as boolean
+      return {
+        success: true,
+        data: result,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error) || '检查白名单状态失败',
+      }
+    }
+  }
+
   // 获取总订单数
   async getTotalOrderCount(): Promise<ContractCallResult<bigint>> {
     try {

@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { waitForTransactionReceipt } from 'wagmi/actions'
+import { wagmiConfig } from '@/config/network'
 import { getMessage } from '@/utils/message'
 import { getErrorMessage } from '@/utils/error'
 import { createERC721Service } from '@/contracts/erc721'
@@ -68,7 +70,6 @@ export const useDepositNFT = ({ marketplaceAddress, chainId, onSuccess, onError 
     async (params: DepositNFTParams) => {
       if (!address) {
         const errorMsg = '请先连接钱包'
-        getMessage().error(errorMsg)
         onError?.(errorMsg)
         return
       }
@@ -76,11 +77,11 @@ export const useDepositNFT = ({ marketplaceAddress, chainId, onSuccess, onError 
       setLoading(true)
 
       try {
-        // 1. 检查单个 NFT 的授权状态
+        // 1. 先查询当前 NFT 是否已授权
         const erc721Service = createERC721Service(params.nftContract, chainId)
         const tokenId = typeof params.tokenId === 'string' ? params.tokenId : params.tokenId.toString()
 
-        // 检查单个 token 授权
+        // 检查单个 token 授权状态
         const approvedResult = await erc721Service.getApproved(tokenId)
         
         if (approvedResult.success && approvedResult.data === marketplaceAddress) {
@@ -90,10 +91,10 @@ export const useDepositNFT = ({ marketplaceAddress, chainId, onSuccess, onError 
           // 需要授权，先保存 params，然后进行单个 NFT 授权
           setPendingParams(params)
           setApproving(true)
-          getMessage().info('需要授权 NFT，请确认交易')
           
           const tokenIdBigInt = typeof params.tokenId === 'string' ? BigInt(params.tokenId) : params.tokenId
           
+          // 发起授权交易
           writeApproveContract({
             address: params.nftContract as `0x${string}`,
             abi: ERC721_ABI,
@@ -104,7 +105,6 @@ export const useDepositNFT = ({ marketplaceAddress, chainId, onSuccess, onError 
         }
       } catch (error) {
         const errorMsg = getErrorMessage(error) || '检查授权状态失败'
-        getMessage().error(errorMsg)
         onError?.(errorMsg)
         setLoading(false)
         setApproving(false)
@@ -114,21 +114,50 @@ export const useDepositNFT = ({ marketplaceAddress, chainId, onSuccess, onError 
     [address, marketplaceAddress, chainId, executeDeposit, writeApproveContract, onError]
   )
 
-  // 授权成功后自动存入
+  // 授权交易哈希变化时，使用 waitForTransactionReceipt 等待交易上链确认
   useEffect(() => {
-    if (isApproveConfirmed && approveHash && pendingParams) {
-      setApproving(false)
-      getMessage().success('授权成功，正在存入 NFT...')
-      executeDeposit(pendingParams)
-      setPendingParams(null)
+    let isMounted = true
+
+    const handleApproveTransaction = async () => {
+      // 当授权交易哈希存在且有待处理的参数时，等待交易上链确认
+      if (approveHash && pendingParams) {
+        try {
+          // 使用 waitForTransactionReceipt 等待授权交易上链确认
+          // 这个函数是幂等的，如果交易已经确认，会立即返回
+          await waitForTransactionReceipt(wagmiConfig, {
+            hash: approveHash,
+          })
+          
+          // 检查组件是否仍然挂载，避免在组件卸载后更新状态
+          if (!isMounted) return
+          
+          // 交易已上链确认，现在可以安全地调用 depositNFT
+          setApproving(false)
+          executeDeposit(pendingParams)
+          setPendingParams(null)
+        } catch (error) {
+          if (!isMounted) return
+          
+          const errorMsg = getErrorMessage(error) || '等待授权交易确认失败'
+          onError?.(errorMsg)
+          setLoading(false)
+          setApproving(false)
+          setPendingParams(null)
+        }
+      }
     }
-  }, [isApproveConfirmed, approveHash, pendingParams, executeDeposit])
+
+    handleApproveTransaction()
+
+    return () => {
+      isMounted = false
+    }
+  }, [approveHash, pendingParams, executeDeposit, onError])
 
   // 存入成功后处理
   useEffect(() => {
     if (isDepositConfirmed && depositHash) {
       setLoading(false)
-      getMessage().success('NFT 存入成功')
       onSuccess?.(depositHash)
     }
   }, [isDepositConfirmed, depositHash, onSuccess])
@@ -137,7 +166,6 @@ export const useDepositNFT = ({ marketplaceAddress, chainId, onSuccess, onError 
   useEffect(() => {
     if (approveError) {
       const errorMsg = getErrorMessage(approveError) || '授权失败'
-      getMessage().error(errorMsg)
       onError?.(errorMsg)
       setLoading(false)
       setApproving(false)
@@ -145,7 +173,6 @@ export const useDepositNFT = ({ marketplaceAddress, chainId, onSuccess, onError 
     }
     if (depositError) {
       const errorMsg = getErrorMessage(depositError) || '存入 NFT 失败'
-      getMessage().error(errorMsg)
       onError?.(errorMsg)
       setLoading(false)
     }

@@ -13,4 +13,5 @@ export { useWithdrawPlatformFees } from './useWithdrawPlatformFees'
 export { useEmergencyWithdraw } from './useEmergencyWithdraw'
 export { useEmergencyWithdrawAll } from './useEmergencyWithdrawAll'
 export { useEmergencyWithdrawBatch } from './useEmergencyWithdrawBatch'
+export { useIsWhitelisted } from './useIsWhitelisted'
 

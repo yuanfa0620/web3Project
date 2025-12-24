@@ -466,6 +466,29 @@
       "walletNotConnected": "请先连接钱包",
       "tokenContractNotConfigured": "当前网络未配置代币合约地址",
       "checkBalanceFailed": "检查余额失败"
+    },
+    "nftMarketplace": {
+      "checkWhitelist": "检查白名单",
+      "checkingWhitelist": "检查中...",
+      "isWhitelisted": "该 NFT 合约已在白名单中，可以上架到 NFT 市场",
+      "notWhitelisted": "该 NFT 合约未在白名单中，无法上架",
+      "checkWhitelistFailed": "检查白名单状态失败",
+      "listNFT": "上架 NFT",
+      "listingNFT": "上架中...",
+      "approving": "授权中...",
+      "depositing": "存入中...",
+      "listNFTSuccess": "NFT 上架成功",
+      "listNFTFailed": "NFT 上架失败",
+      "price": "价格",
+      "pricePlaceholder": "请输入上架价格（ETH）",
+      "priceRequired": "请输入上架价格",
+      "priceInvalid": "价格必须大于 0",
+      "needApprove": "需要授权 NFT，请确认交易",
+      "approveSuccess": "授权成功，正在存入 NFT...",
+      "depositSuccess": "NFT 存入成功",
+      "approveFailed": "授权失败",
+      "depositFailed": "存入 NFT 失败",
+      "marketplaceNotConfigured": "NFT 市场合约地址未配置"
     }
   },
   "assets": {

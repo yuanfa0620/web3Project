@@ -474,6 +474,29 @@
       "walletNotConnected": "請先連接錢包",
       "tokenContractNotConfigured": "當前網絡未配置代幣合約地址",
       "checkBalanceFailed": "檢查餘額失敗"
+    },
+    "nftMarketplace": {
+      "checkWhitelist": "檢查白名單",
+      "checkingWhitelist": "檢查中...",
+      "isWhitelisted": "該 NFT 合約已在白名單中，可以上架到 NFT 市場",
+      "notWhitelisted": "該 NFT 合約未在白名單中，無法上架",
+      "checkWhitelistFailed": "檢查白名單狀態失敗",
+      "listNFT": "上架 NFT",
+      "listingNFT": "上架中...",
+      "approving": "授權中...",
+      "depositing": "存入中...",
+      "listNFTSuccess": "NFT 上架成功",
+      "listNFTFailed": "NFT 上架失敗",
+      "price": "價格",
+      "pricePlaceholder": "請輸入上架價格（ETH）",
+      "priceRequired": "請輸入上架價格",
+      "priceInvalid": "價格必須大於 0",
+      "needApprove": "需要授權 NFT，請確認交易",
+      "approveSuccess": "授權成功，正在存入 NFT...",
+      "depositSuccess": "NFT 存入成功",
+      "approveFailed": "授權失敗",
+      "depositFailed": "存入 NFT 失敗",
+      "marketplaceNotConfigured": "NFT 市場合約地址未配置"
     }
   },
   "assets": {
