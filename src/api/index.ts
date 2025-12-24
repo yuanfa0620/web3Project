@@ -9,6 +9,7 @@ export { userApi } from './modules/user'
 export { tokenApi } from './modules/token'
 export { transactionApi } from './modules/transaction'
 export { alchemyNFTApi } from './modules/alchemy'
+export { graphqlApi } from '../graphql'
 
 // 导出所有类型定义（使用别名避免冲突）
 export type { 
@@ -49,3 +50,26 @@ export type {
   NFTImage,
   NFTMint
 } from './modules/alchemy/types'
+
+// 导出 GraphQL 类型定义（从统一导出导入）
+export type {
+  WhitelistedNFT,
+  Order,
+  ActiveOrder,
+  SoldOrder,
+  NFTDeposited,
+  NFTSold,
+  NFTWithdrawn,
+  NFTWhitelisted,
+  NFTRemovedFromWhitelist,
+  OrderStatusUpdated,
+  PriceSet,
+  PaginatedList,
+  GetWhitelistedNFTsParams,
+  GetOrdersParams,
+  GetActiveOrdersParams,
+  GetSoldOrdersParams,
+  GetEventsParams,
+  PaginationParams,
+  FilterParams,
+} from '../graphql'

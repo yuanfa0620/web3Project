@@ -1,0 +1,251 @@
+type EmergencyWithdrawAll @entity(immutable: true) {
+  id: Bytes!
+  totalWithdrawn: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NFTDeposited @entity(immutable: true) {
+  id: Bytes!
+  nftContract: Bytes! # address
+  tokenId: BigInt! # uint256
+  depositor: Bytes! # address
+  price: BigInt! # uint256
+  orderId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NFTRemovedFromWhitelist @entity(immutable: true) {
+  id: Bytes!
+  nftContract: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NFTSold @entity(immutable: true) {
+  id: Bytes!
+  nftContract: Bytes! # address
+  tokenId: BigInt! # uint256
+  seller: Bytes! # address
+  buyer: Bytes! # address
+  price: BigInt! # uint256
+  platformFee: BigInt! # uint256
+  sellerAmount: BigInt! # uint256
+  orderId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NFTWhitelisted @entity(immutable: true) {
+  id: Bytes!
+  nftContract: Bytes! # address
+  platformFeeRate: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NFTWithdrawn @entity(immutable: true) {
+  id: Bytes!
+  nftContract: Bytes! # address
+  tokenId: BigInt! # uint256
+  depositor: Bytes! # address
+  orderId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OrderStatusUpdated @entity(immutable: true) {
+  id: Bytes!
+  orderId: BigInt! # uint256
+  status: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Paused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PriceSet @entity(immutable: true) {
+  id: Bytes!
+  nftContract: Bytes! # address
+  tokenId: BigInt! # uint256
+  price: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Unpaused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type WhitelistManagerSet @entity(immutable: true) {
+  id: Bytes!
+  manager: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type FeesWithdrawn @entity(immutable: true) {
+  id: Bytes!
+  to: Bytes! # address
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type MarketplaceSet @entity(immutable: true) {
+  id: Bytes!
+  marketplace: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type WhitelistManagerOwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type WhitelistAdded @entity(immutable: true) {
+  id: Bytes!
+  nftContract: Bytes! # address
+  platformFeeRate: BigInt! # uint256
+  payer: Bytes! # address
+  fee: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type WhitelistFeeSet @entity(immutable: true) {
+  id: Bytes!
+  fee: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type WhitelistManagerPaused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type WhitelistManagerUnpaused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+# 有效的白名单NFT合约
+type WhitelistedNFT @entity(immutable: false) {
+  id: Bytes! # NFT合约地址
+  nftContract: Bytes! # address
+  name: String # ERC721 name
+  symbol: String # ERC721 symbol
+  platformFeeRate: BigInt! # uint256 平台手续费率
+  isActive: Boolean! # 是否在白名单中
+  addedAt: BigInt! # 添加到白名单的时间戳
+  removedAt: BigInt # 从白名单移除的时间戳（如果已移除）
+  addedBlockNumber: BigInt! # 添加到白名单的区块号
+  removedBlockNumber: BigInt # 从白名单移除的区块号（如果已移除）
+}
+
+# 有效的订单
+type Order @entity(immutable: false) {
+  id: String! # 订单ID（字符串格式，由 orderId 转换而来）
+  orderId: BigInt! # uint256 订单ID（合约自增ID）
+  nftContract: Bytes! # address NFT合约地址
+  tokenId: BigInt! # uint256 Token ID
+  depositor: Bytes! # address 卖家/上架者地址
+  buyer: Bytes # address 买家地址（如果已售出）
+  price: BigInt! # uint256 价格
+  status: Int! # uint8 订单状态 (0: Listed, 1: Cancelled, 2: Sold, 3: Withdrawn)
+  platformFee: BigInt # uint256 平台手续费（如果已售出）
+  sellerAmount: BigInt # uint256 卖家收到的金额（如果已售出）
+  createdAt: BigInt! # 创建时间戳
+  updatedAt: BigInt! # 更新时间戳
+  soldAt: BigInt # 售出时间戳（如果已售出）
+  withdrawnAt: BigInt # 撤回时间戳（如果已撤回）
+  createdBlockNumber: BigInt! # 创建时的区块号
+  updatedBlockNumber: BigInt # 更新时的区块号
+  soldBlockNumber: BigInt # 售出时的区块号（如果已售出）
+  withdrawnBlockNumber: BigInt # 撤回时的区块号（如果已撤回）
+  createdTransactionHash: Bytes! # 创建时的交易哈希
+  soldTransactionHash: Bytes # 售出时的交易哈希（如果已售出）
+  withdrawnTransactionHash: Bytes # 撤回时的交易哈希（如果已撤回）
+}
+
+# 未出售的订单（当前有效的订单）
+type ActiveOrder @entity(immutable: false) {
+  id: String! # 订单ID（字符串格式，由 orderId 转换而来）
+  orderId: BigInt! # uint256 订单ID（合约自增ID）
+  nftContract: Bytes! # address NFT合约地址
+  tokenId: BigInt! # uint256 Token ID
+  depositor: Bytes! # address 卖家/上架者地址
+  price: BigInt! # uint256 价格
+  status: Int! # uint8 订单状态 (0: Listed, 1: Cancelled, 3: Withdrawn)
+  createdAt: BigInt! # 创建时间戳
+  updatedAt: BigInt! # 更新时间戳
+  withdrawnAt: BigInt # 撤回时间戳（如果已撤回）
+  createdBlockNumber: BigInt! # 创建时的区块号
+  updatedBlockNumber: BigInt # 更新时的区块号
+  withdrawnBlockNumber: BigInt # 撤回时的区块号（如果已撤回）
+  createdTransactionHash: Bytes! # 创建时的交易哈希
+  withdrawnTransactionHash: Bytes # 撤回时的交易哈希（如果已撤回）
+}
+
+# 已出售的订单
+type SoldOrder @entity(immutable: false) {
+  id: String! # 订单ID（字符串格式，由 orderId 转换而来）
+  orderId: BigInt! # uint256 订单ID（合约自增ID）
+  nftContract: Bytes! # address NFT合约地址
+  tokenId: BigInt! # uint256 Token ID
+  depositor: Bytes! # address 卖家/上架者地址
+  buyer: Bytes! # address 买家地址
+  price: BigInt! # uint256 价格
+  platformFee: BigInt! # uint256 平台手续费
+  sellerAmount: BigInt! # uint256 卖家收到的金额
+  createdAt: BigInt! # 创建时间戳
+  soldAt: BigInt! # 售出时间戳
+  createdBlockNumber: BigInt! # 创建时的区块号
+  soldBlockNumber: BigInt! # 售出时的区块号
+  createdTransactionHash: Bytes! # 创建时的交易哈希
+  soldTransactionHash: Bytes! # 售出时的交易哈希
+}

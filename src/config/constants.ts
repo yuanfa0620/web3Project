@@ -15,6 +15,13 @@ export const CONFIG = {
     BASE_URL: import.meta.env.VITE_API_BASE_URL || '/api',
   },
 
+  // GraphQL 配置
+  GRAPHQL: {
+    ENDPOINT: import.meta.env.VITE_GRAPHQL_ENDPOINT || 'https://api.studio.thegraph.com/query/1713860/web-3-project/version/latest',
+    DEPLOYMENT_ID: import.meta.env.VITE_GRAPHQL_DEPLOYMENT_ID || 'QmTHTJT3EiBEGV9BupWkzWtU5b2LR6vZuaC3AbtFTh6EPm',
+    CHAIN_ID: 11155111, // Ethereum Sepolia
+  },
+
   // 应用配置
   APP: {
     TITLE: import.meta.env.VITE_APP_TITLE || 'Web3',
