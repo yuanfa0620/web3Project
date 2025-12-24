@@ -320,7 +320,6 @@ const NFTMarketplacePage: React.FC = () => {
         <FilterBar
           t={t}
           filters={filters}
-          collections={collections}
           onFilterChange={handleFilterChange}
           onReset={handleReset}
         />

@@ -5,25 +5,25 @@ import styles from './index.module.less'
 
 const { Option } = Select
 
+interface FilterBarFilters {
+  searchText: string
+  nftContract: string
+  tokenId: string
+  depositor: string
+  status: number | undefined
+  sortBy: string
+}
+
 interface FilterBarProps {
   t: TFunction
-  filters: {
-    searchText: string
-    nftContract: string
-    tokenId: string
-    depositor: string
-    status: number | undefined
-    sortBy: string
-  }
-  collections: string[]
-  onFilterChange: (key: string, value: any) => void
+  filters: FilterBarFilters
+  onFilterChange: (key: keyof FilterBarFilters, value: any) => void
   onReset: () => void
 }
 
 export const FilterBar: React.FC<FilterBarProps> = ({
   t,
   filters,
-  collections,
   onFilterChange,
   onReset,
 }) => {
