@@ -196,7 +196,22 @@
     "cancel": "Cancel",
     "lastSale": "Last Sale",
     "attributes": "Attributes",
-    "noResults": "No matching NFTs found"
+    "noResults": "No matching NFTs found",
+    "connectWallet": "Please connect wallet",
+    "fetchError": "Failed to fetch order list",
+    "contractAddress": "Contract Address",
+    "contractAddressPlaceholder": "Enter contract address",
+    "tokenId": "Token ID",
+    "tokenIdPlaceholder": "Enter Token ID",
+    "seller": "Seller",
+    "sellerPlaceholder": "Enter seller address",
+    "status": "Status",
+    "allStatus": "All Status",
+    "statusListed": "Listed",
+    "statusCancelled": "Cancelled",
+    "statusWithdrawn": "Withdrawn",
+    "newest": "Newest",
+    "oldest": "Oldest"
   },
   "createNFT": {
     "title": "Create NFT (ERC721)",

@@ -188,7 +188,22 @@
     "cancel": "取消",
     "lastSale": "最近成交",
     "attributes": "属性",
-    "noResults": "没有找到匹配的 NFT"
+    "noResults": "没有找到匹配的 NFT",
+    "connectWallet": "请连接钱包",
+    "fetchError": "获取订单列表失败",
+    "contractAddress": "合约地址",
+    "contractAddressPlaceholder": "输入合约地址",
+    "tokenId": "Token ID",
+    "tokenIdPlaceholder": "输入 Token ID",
+    "seller": "卖家",
+    "sellerPlaceholder": "输入卖家地址",
+    "status": "状态",
+    "allStatus": "全部状态",
+    "statusListed": "已上架",
+    "statusCancelled": "已取消",
+    "statusWithdrawn": "已撤回",
+    "newest": "最新",
+    "oldest": "最旧"
   },
   "createNFT": {
     "title": "创建NFT (ERC721)",
