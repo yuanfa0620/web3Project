@@ -2,12 +2,17 @@ import React from 'react'
 import { Modal, Tag, Divider, Button } from 'antd'
 import { ShoppingCartOutlined } from '@ant-design/icons'
 import type { TFunction } from 'i18next'
+import { useAccount } from 'wagmi'
+import { useBuyNFT } from '@/contracts/nftMarketplace/hooks/useBuyNFT'
+import { getNFTMarketplaceAddress } from '@/config/constants'
+import { AnimatedNumber } from '@/components/AnimatedNumber'
 import type { NFTMarketplaceItem } from '../../index'
 import styles from './index.module.less'
 
 interface PurchaseModalProps {
   nft: NFTMarketplaceItem | null
   onCancel: () => void
+  onPurchaseSuccess?: () => void
   t: TFunction
   getRarityColor: (rarity: string) => string
 }
@@ -15,9 +20,39 @@ interface PurchaseModalProps {
 export const PurchaseModal: React.FC<PurchaseModalProps> = ({
   nft,
   onCancel,
+  onPurchaseSuccess,
   t,
   getRarityColor,
 }) => {
+  const { chainId } = useAccount()
+  const marketplaceAddress = chainId ? getNFTMarketplaceAddress(chainId) : ''
+
+  const { buyNFT, loading: isBuying } = useBuyNFT({
+    marketplaceAddress,
+    chainId: chainId || 0,
+    onSuccess: (hash) => {
+      console.log('购买成功，交易哈希:', hash)
+      onCancel() // 购买成功后关闭弹窗
+      // 通知父组件刷新数据
+      onPurchaseSuccess?.()
+    },
+    onError: (error) => {
+      console.error('购买失败:', error)
+    },
+  })
+
+  const handleConfirmPurchase = () => {
+    if (!nft || !chainId || !marketplaceAddress) {
+      return
+    }
+
+    // 调用购买方法
+    buyNFT(
+      { orderId: nft.activeOrder.orderId },
+      nft.price
+    )
+  }
+
   return (
     <Modal
       open={!!nft}
@@ -25,10 +60,17 @@ export const PurchaseModal: React.FC<PurchaseModalProps> = ({
       className={styles.buyModal}
       onCancel={onCancel}
       footer={[
-        <Button key="cancel" onClick={onCancel}>
+        <Button key="cancel" onClick={onCancel} disabled={isBuying}>
           {t('nftMarketplace.cancel')}
         </Button>,
-        <Button key="confirm" type="primary" icon={<ShoppingCartOutlined />}>
+        <Button
+          key="confirm"
+          type="primary"
+          icon={<ShoppingCartOutlined />}
+          onClick={handleConfirmPurchase}
+          loading={isBuying}
+          disabled={!nft || !chainId || !marketplaceAddress || isBuying}
+        >
           {t('nftMarketplace.confirmPurchase')}
         </Button>,
       ]}
@@ -51,7 +93,8 @@ export const PurchaseModal: React.FC<PurchaseModalProps> = ({
               <div className={styles.modalPriceRow}>
                 <span>{t('nftMarketplace.price')}</span>
                 <strong>
-                  {nft.price} {nft.priceUnit}
+                  <AnimatedNumber value={nft.price} decimals={6} enableAnimation />
+                  <span> {nft.priceUnit}</span>
                 </strong>
               </div>
               <div className={styles.modalStats}>
