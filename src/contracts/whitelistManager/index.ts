@@ -1,4 +1,4 @@
-import { readContract, writeContract, waitForTransactionReceipt } from 'wagmi/actions'
+import { readContract, writeContract, waitForTransactionReceipt, simulateContract } from 'wagmi/actions'
 import { parseEther } from 'viem'
 import { wagmiConfig } from '@/config/network'
 import type { ContractCallResult } from '../data/types'
@@ -30,14 +30,32 @@ export class WhitelistManagerService {
         : params.platformFeeRate
       const ethFee = typeof fee === 'string' ? parseEther(fee) : fee
       
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'addToWhitelist',
+        args: [params.nftContract, platformFeeRate],
+        value: ethFee,
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
       const hash = await this.writeContract('addToWhitelist', [
         params.nftContract,
         platformFeeRate,
-      ], ethFee)
+      ], ethFee, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -50,11 +68,28 @@ export class WhitelistManagerService {
   // 设置市场地址
   async setMarketplace(params: SetMarketplaceParams): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('setMarketplace', [params.marketplace])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'setMarketplace',
+        args: [params.marketplace],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('setMarketplace', [params.marketplace], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -69,11 +104,28 @@ export class WhitelistManagerService {
     try {
       const fee = typeof params.fee === 'string' ? BigInt(params.fee) : params.fee
       
-      const hash = await this.writeContract('setWhitelistFee', [fee])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'setWhitelistFee',
+        args: [fee],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('setWhitelistFee', [fee], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -88,14 +140,31 @@ export class WhitelistManagerService {
     try {
       const amount = typeof params.amount === 'string' ? BigInt(params.amount) : params.amount
       
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'withdrawFees',
+        args: [params.to, amount],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
       const hash = await this.writeContract('withdrawFees', [
         params.to,
         amount,
-      ])
+      ], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -108,11 +177,28 @@ export class WhitelistManagerService {
   // 提取所有费用
   async withdrawAllFees(to: string): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('withdrawAllFees', [to])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'withdrawAllFees',
+        args: [to],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('withdrawAllFees', [to], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -125,11 +211,28 @@ export class WhitelistManagerService {
   // 转移所有权
   async transferOwnership(newOwner: string): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('transferOwnership', [newOwner])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'transferOwnership',
+        args: [newOwner],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('transferOwnership', [newOwner], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -142,11 +245,28 @@ export class WhitelistManagerService {
   // 放弃所有权
   async renounceOwnership(): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('renounceOwnership', [])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'renounceOwnership',
+        args: [],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('renounceOwnership', [], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -159,11 +279,28 @@ export class WhitelistManagerService {
   // 暂停合约
   async pause(): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('pause', [])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'pause',
+        args: [],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('pause', [], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -176,11 +313,28 @@ export class WhitelistManagerService {
   // 恢复合约
   async unpause(): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('unpause', [])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'unpause',
+        args: [],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('unpause', [], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -300,13 +454,14 @@ export class WhitelistManagerService {
   }
 
   // 写入合约方法
-  private async writeContract(functionName: string, args: readonly unknown[], value?: bigint) {
+  private async writeContract(functionName: string, args: readonly unknown[], value?: bigint, gas?: bigint) {
     return writeContract(wagmiConfig, {
       address: this.address as `0x${string}`,
       abi: this.abi,
       functionName,
       args,
       value,
+      gas,
       chainId: this.chainId as any,
     })
   }

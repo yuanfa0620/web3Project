@@ -1,7 +1,7 @@
 import { connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { metaMaskWallet, coinbaseWallet, walletConnectWallet, injectedWallet, safeWallet, trustWallet, ledgerWallet } from '@rainbow-me/rainbowkit/wallets'
 import { createConfig, http } from 'wagmi'
-import { mainnet, polygon, bsc, base, sepolia, bscTestnet, baseSepolia, polygonAmoy } from 'wagmi/chains'
+import { mainnet, polygon, bsc, base, sepolia, bscTestnet, baseSepolia, polygonAmoy, arbitrum, arbitrumSepolia } from 'wagmi/chains'
 import { getWalletConnectProjectId, getRpcUrls } from '@/config/constants'
 import { getChainIconUrl } from '@/utils/chainIcons'
 import tokens1 from './tokens/1.json'
@@ -18,10 +18,12 @@ export const supportedChains = [
   polygon,
   bsc,
   base,
+  arbitrum,
   sepolia,
   polygonAmoy,
   bscTestnet,
   baseSepolia,
+  arbitrumSepolia,
 ] as const
 
 // 链 ID 映射
@@ -30,11 +32,13 @@ export const CHAIN_IDS = {
   POLYGON: 137,
   BSC: 56,
   BASE: 8453,
+  ARBITRUM: 42161,
   // 测试网
   SEPOLIA: 11155111,
   POLYGON_AMOY: 80002,
   BSC_TESTNET: 97,
   BASE_SEPOLIA: 84532,
+  ARBITRUM_SEPOLIA: 421613,
 } as const
 
 export const MAINNET_CHAIN_IDS = [
@@ -58,10 +62,12 @@ export const RPC_URLS = {
   [CHAIN_IDS.POLYGON]: rpcUrls.POLYGON,
   [CHAIN_IDS.BSC]: rpcUrls.BSC,
   [CHAIN_IDS.BASE]: rpcUrls.BASE,
+  [CHAIN_IDS.ARBITRUM]: rpcUrls.ARBITRUM,
   [CHAIN_IDS.SEPOLIA]: rpcUrls.SEPOLIA,
   [CHAIN_IDS.POLYGON_AMOY]: rpcUrls.POLYGON_AMOY,
   [CHAIN_IDS.BSC_TESTNET]: rpcUrls.BSC_TESTNET,
   [CHAIN_IDS.BASE_SEPOLIA]: rpcUrls.BASE_SEPOLIA,
+  [CHAIN_IDS.ARBITRUM_SEPOLIA]: rpcUrls.ARBITRUM_SEPOLIA,
 } as const
 
 // 链信息

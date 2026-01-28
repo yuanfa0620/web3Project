@@ -1,4 +1,4 @@
-import { readContract, writeContract, waitForTransactionReceipt } from 'wagmi/actions'
+import { readContract, writeContract, waitForTransactionReceipt, simulateContract } from 'wagmi/actions'
 import { parseUnits, formatUnits } from 'viem'
 import { wagmiConfig } from '@/config/network'
 import type { ContractCallResult, ERC20TokenInfo, ERC20TransferParams, ERC20ApprovalParams } from './data/types'
@@ -179,11 +179,28 @@ export class ERC20Service {
       const decimals = Number((await this.readContract('decimals')) as unknown as number)
       const amount = parseUnits(params.amount, Number(decimals))
       
-      const hash = await this.writeContract('transfer', [params.to, amount])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'transfer',
+        args: [params.to, amount],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('transfer', [params.to, amount], gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -199,11 +216,28 @@ export class ERC20Service {
       const decimals = Number((await this.readContract('decimals')) as unknown as number)
       const amount = parseUnits(params.amount, Number(decimals))
       
-      const hash = await this.writeContract('approve', [params.spender, amount])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'approve',
+        args: [params.spender, amount],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('approve', [params.spender, amount], gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -219,11 +253,28 @@ export class ERC20Service {
       const decimals = Number((await this.readContract('decimals')) as unknown as number)
       const parsedAmount = parseUnits(amount, Number(decimals))
       
-      const hash = await this.writeContract('transferFrom', [from, to, parsedAmount])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'transferFrom',
+        args: [from, to, parsedAmount],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('transferFrom', [from, to, parsedAmount], gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -263,12 +314,13 @@ export class ERC20Service {
   }
 
   // 写入合约方法
-  private async writeContract(functionName: string, args: readonly unknown[]) {
+  private async writeContract(functionName: string, args: readonly unknown[], gas?: bigint) {
     return writeContract(wagmiConfig, {
       address: this.address as `0x${string}`,
       abi: this.abi,
       functionName,
       args,
+      gas,
       chainId: this.chainId as any,
     })
   }

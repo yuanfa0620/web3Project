@@ -1,4 +1,4 @@
-import { readContract, writeContract, waitForTransactionReceipt } from 'wagmi/actions'
+import { readContract, writeContract, waitForTransactionReceipt, simulateContract } from 'wagmi/actions'
 import { parseEther, formatUnits, parseUnits } from 'viem'
 import { wagmiConfig } from '@/config/network'
 import type { ContractCallResult } from '../data/types'
@@ -248,11 +248,30 @@ export class MFTTokenService extends ERC20Service {
   async mint(params: MintParams): Promise<ContractCallResult<string>> {
     try {
       const value = typeof params.value === 'string' ? parseEther(params.value) : params.value
-      const hash = await this.writeMFTContract('mint', [], value)
+      
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.mftTokenAddress as `0x${string}`,
+        abi: this.mftTokenAbi,
+        functionName: 'mint',
+        args: [],
+        value,
+        chainId: this.mftTokenChainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeMFTContract('mint', [], value, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -267,11 +286,28 @@ export class MFTTokenService extends ERC20Service {
    */
   async setFeeRecipient(params: SetFeeRecipientParams): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeMFTContract('setFeeRecipient', [params.newRecipient])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.mftTokenAddress as `0x${string}`,
+        abi: this.mftTokenAbi,
+        functionName: 'setFeeRecipient',
+        args: [params.newRecipient],
+        chainId: this.mftTokenChainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeMFTContract('setFeeRecipient', [params.newRecipient], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -290,11 +326,29 @@ export class MFTTokenService extends ERC20Service {
       const amount = typeof params.newAmount === 'string'
         ? parseUnits(params.newAmount, decimals)
         : BigInt(params.newAmount.toString())
-      const hash = await this.writeMFTContract('setMintAmount', [amount])
+      
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.mftTokenAddress as `0x${string}`,
+        abi: this.mftTokenAbi,
+        functionName: 'setMintAmount',
+        args: [amount],
+        chainId: this.mftTokenChainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeMFTContract('setMintAmount', [amount], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -312,11 +366,29 @@ export class MFTTokenService extends ERC20Service {
       const cooldown = typeof params.newCooldown === 'string'
         ? BigInt(params.newCooldown)
         : params.newCooldown
-      const hash = await this.writeMFTContract('setMintCooldown', [cooldown])
+      
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.mftTokenAddress as `0x${string}`,
+        abi: this.mftTokenAbi,
+        functionName: 'setMintCooldown',
+        args: [cooldown],
+        chainId: this.mftTokenChainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeMFTContract('setMintCooldown', [cooldown], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -331,11 +403,28 @@ export class MFTTokenService extends ERC20Service {
    */
   async setMintEnabled(params: SetMintEnabledParams): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeMFTContract('setMintEnabled', [params.enabled])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.mftTokenAddress as `0x${string}`,
+        abi: this.mftTokenAbi,
+        functionName: 'setMintEnabled',
+        args: [params.enabled],
+        chainId: this.mftTokenChainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeMFTContract('setMintEnabled', [params.enabled], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -353,11 +442,29 @@ export class MFTTokenService extends ERC20Service {
       const fee = typeof params.newFee === 'string'
         ? parseEther(params.newFee)
         : params.newFee
-      const hash = await this.writeMFTContract('setMintFee', [fee])
+      
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.mftTokenAddress as `0x${string}`,
+        abi: this.mftTokenAbi,
+        functionName: 'setMintFee',
+        args: [fee],
+        chainId: this.mftTokenChainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeMFTContract('setMintFee', [fee], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -372,11 +479,28 @@ export class MFTTokenService extends ERC20Service {
    */
   async transferOwnership(params: TransferOwnershipParams): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeMFTContract('transferOwnership', [params.newOwner])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.mftTokenAddress as `0x${string}`,
+        abi: this.mftTokenAbi,
+        functionName: 'transferOwnership',
+        args: [params.newOwner],
+        chainId: this.mftTokenChainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeMFTContract('transferOwnership', [params.newOwner], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -391,11 +515,28 @@ export class MFTTokenService extends ERC20Service {
    */
   async renounceOwnership(): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeMFTContract('renounceOwnership', [])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.mftTokenAddress as `0x${string}`,
+        abi: this.mftTokenAbi,
+        functionName: 'renounceOwnership',
+        args: [],
+        chainId: this.mftTokenChainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeMFTContract('renounceOwnership', [], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -423,13 +564,14 @@ export class MFTTokenService extends ERC20Service {
   /**
    * 写入合约方法（使用 MFTToken ABI）
    */
-  private async writeMFTContract(functionName: string, args: readonly unknown[], value?: bigint): Promise<`0x${string}`> {
+  private async writeMFTContract(functionName: string, args: readonly unknown[], value?: bigint, gas?: bigint): Promise<`0x${string}`> {
     const hash = await writeContract(wagmiConfig, {
       address: this.mftTokenAddress as `0x${string}`,
       abi: this.mftTokenAbi,
       functionName,
       args,
       value,
+      gas,
       chainId: this.mftTokenChainId as any,
     })
     return hash

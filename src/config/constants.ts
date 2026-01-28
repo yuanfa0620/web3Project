@@ -85,11 +85,13 @@ export const getRpcUrls = () => {
     POLYGON: `https://polygon-mainnet.g.alchemy.com/v2/${infuraKey}`,
     BSC: `https://bnb-mainnet.g.alchemy.com/v2/${infuraKey}`,
     BASE: `https://base-mainnet.g.alchemy.com/v2/${infuraKey}`,
+    ARBITRUM: `https://arbitrum-mainnet.g.alchemy.com/v2/${infuraKey}`,
     // 测试网
     SEPOLIA: `https://eth-sepolia.g.alchemy.com/v2/${infuraKey}`,
     POLYGON_AMOY: `https://polygon-amoy.g.alchemy.com/v2/${infuraKey}`,
     BSC_TESTNET: `https://bnb-testnet.g.alchemy.com/v2/${infuraKey}`,
     BASE_SEPOLIA: `https://base-sepolia.g.alchemy.com/v2/${infuraKey}`,
+    ARBITRUM_SEPOLIA: `https://arbitrum-sepolia.g.alchemy.com/v2/${infuraKey}`,
   }
 }
 

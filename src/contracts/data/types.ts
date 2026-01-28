@@ -90,4 +90,17 @@ export interface ContractCallResult<T = any> {
   error?: string
   warning?: string // 警告信息（部分请求失败但仍返回了部分数据）
   transactionHash?: string
+  receipt?: {
+    transactionHash: `0x${string}`
+    blockNumber: bigint
+    blockHash: `0x${string}`
+    from: `0x${string}`
+    to: `0x${string}` | null
+    gasUsed: bigint
+    effectiveGasPrice: bigint
+    status: 'success' | 'reverted'
+    logs: any[]
+    chainId: number
+    [key: string]: any
+  } // 交易收据（来自 waitForTransactionReceipt）
 }

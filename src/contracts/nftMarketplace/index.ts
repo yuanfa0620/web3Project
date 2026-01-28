@@ -1,4 +1,4 @@
-import { readContract, writeContract, waitForTransactionReceipt } from 'wagmi/actions'
+import { readContract, writeContract, waitForTransactionReceipt, simulateContract } from 'wagmi/actions'
 import { parseEther } from 'viem'
 import { wagmiConfig } from '@/config/network'
 import type { ContractCallResult } from '../data/types'
@@ -34,15 +34,32 @@ export class NFTMarketplaceService {
       const price = typeof params.price === 'string' ? BigInt(params.price) : params.price
       const tokenId = typeof params.tokenId === 'string' ? BigInt(params.tokenId) : params.tokenId
       
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'depositNFT',
+        args: [params.nftContract, tokenId, price],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
       const hash = await this.writeContract('depositNFT', [
         params.nftContract,
         tokenId,
         price,
-      ])
+      ], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -58,11 +75,29 @@ export class NFTMarketplaceService {
       const orderId = typeof params.orderId === 'string' ? BigInt(params.orderId) : params.orderId
       const ethValue = typeof value === 'string' ? parseEther(value) : value
       
-      const hash = await this.writeContract('buyNFTByOrderId', [orderId], ethValue)
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'buyNFTByOrderId',
+        args: [orderId],
+        value: ethValue,
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('buyNFTByOrderId', [orderId], ethValue, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -77,11 +112,28 @@ export class NFTMarketplaceService {
     try {
       const orderId = typeof params.orderId === 'string' ? BigInt(params.orderId) : params.orderId
       
-      const hash = await this.writeContract('withdrawNFTByOrderId', [orderId])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'withdrawNFTByOrderId',
+        args: [orderId],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('withdrawNFTByOrderId', [orderId], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -97,11 +149,28 @@ export class NFTMarketplaceService {
       const orderId = typeof params.orderId === 'string' ? BigInt(params.orderId) : params.orderId
       const price = typeof params.price === 'string' ? BigInt(params.price) : params.price
       
-      const hash = await this.writeContract('setPriceByOrderId', [orderId, price])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'setPriceByOrderId',
+        args: [orderId, price],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('setPriceByOrderId', [orderId, price], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -118,14 +187,31 @@ export class NFTMarketplaceService {
         ? BigInt(params.platformFeeRate) 
         : params.platformFeeRate
       
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'addToWhitelist',
+        args: [params.nftContract, platformFeeRate],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
       const hash = await this.writeContract('addToWhitelist', [
         params.nftContract,
         platformFeeRate,
-      ])
+      ], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -138,11 +224,28 @@ export class NFTMarketplaceService {
   // 从白名单移除
   async removeFromWhitelist(nftContract: string): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('removeFromWhitelist', [nftContract])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'removeFromWhitelist',
+        args: [nftContract],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('removeFromWhitelist', [nftContract], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -159,14 +262,31 @@ export class NFTMarketplaceService {
         ? BigInt(params.platformFeeRate) 
         : params.platformFeeRate
       
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'updateWhitelist',
+        args: [params.nftContract, platformFeeRate],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
       const hash = await this.writeContract('updateWhitelist', [
         params.nftContract,
         platformFeeRate,
-      ])
+      ], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -179,11 +299,28 @@ export class NFTMarketplaceService {
   // 设置白名单管理器
   async setWhitelistManager(params: SetWhitelistManagerParams): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('setWhitelistManager', [params.whitelistManager])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'setWhitelistManager',
+        args: [params.whitelistManager],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('setWhitelistManager', [params.whitelistManager], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -196,11 +333,28 @@ export class NFTMarketplaceService {
   // 暂停合约
   async pause(): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('pause', [])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'pause',
+        args: [],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('pause', [], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -213,11 +367,28 @@ export class NFTMarketplaceService {
   // 恢复合约
   async unpause(): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('unpause', [])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'unpause',
+        args: [],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('unpause', [], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -232,14 +403,31 @@ export class NFTMarketplaceService {
     try {
       const amount = typeof params.amount === 'string' ? BigInt(params.amount) : params.amount
       
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'withdrawPlatformFees',
+        args: [params.to, amount],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
       const hash = await this.writeContract('withdrawPlatformFees', [
         params.to,
         amount,
-      ])
+      ], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -254,15 +442,32 @@ export class NFTMarketplaceService {
     try {
       const tokenId = typeof params.tokenId === 'string' ? BigInt(params.tokenId) : params.tokenId
       
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'emergencyWithdraw',
+        args: [params.nftContract, tokenId, params.to],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
       const hash = await this.writeContract('emergencyWithdraw', [
         params.nftContract,
         tokenId,
         params.to,
-      ])
+      ], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -275,11 +480,28 @@ export class NFTMarketplaceService {
   // 紧急提取所有 NFT
   async emergencyWithdrawAll(): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('emergencyWithdrawAll', [])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'emergencyWithdrawAll',
+        args: [],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('emergencyWithdrawAll', [], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -295,14 +517,31 @@ export class NFTMarketplaceService {
       const startIndex = typeof params.startIndex === 'string' ? BigInt(params.startIndex) : params.startIndex
       const endIndex = typeof params.endIndex === 'string' ? BigInt(params.endIndex) : params.endIndex
       
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'emergencyWithdrawBatch',
+        args: [startIndex, endIndex],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
       const hash = await this.writeContract('emergencyWithdrawBatch', [
         startIndex,
         endIndex,
-      ])
+      ], undefined, gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -461,13 +700,14 @@ export class NFTMarketplaceService {
   }
 
   // 写入合约方法
-  private async writeContract(functionName: string, args: readonly unknown[], value?: bigint) {
+  private async writeContract(functionName: string, args: readonly unknown[], value?: bigint, gas?: bigint) {
     return writeContract(wagmiConfig, {
       address: this.address as `0x${string}`,
       abi: this.abi,
       functionName,
       args,
       value,
+      gas,
       chainId: this.chainId as any,
     })
   }

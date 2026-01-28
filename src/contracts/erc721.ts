@@ -1,4 +1,4 @@
-import { readContract, writeContract, waitForTransactionReceipt } from 'wagmi/actions'
+import { readContract, writeContract, waitForTransactionReceipt, simulateContract } from 'wagmi/actions'
 import type { ContractCallResult, ERC721TokenInfo, ERC721TransferParams, ERC721ApprovalParams, ERC721TokenMetadata } from './data/types'
 import { wagmiConfig } from '@/config/network'
 import ERC721_ABI from './abi/ERC721.json'
@@ -193,11 +193,28 @@ export class ERC721Service {
   // 转账
   async transfer(params: ERC721TransferParams): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('safeTransferFrom', [params.from, params.to, params.tokenId])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'safeTransferFrom',
+        args: [params.from, params.to, params.tokenId],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('safeTransferFrom', [params.from, params.to, params.tokenId], gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -210,11 +227,28 @@ export class ERC721Service {
   // 代授权转账
   async transferFrom(params: ERC721TransferParams): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('transferFrom', [params.from, params.to, params.tokenId])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'transferFrom',
+        args: [params.from, params.to, params.tokenId],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('transferFrom', [params.from, params.to, params.tokenId], gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -227,11 +261,28 @@ export class ERC721Service {
   // 授权单个 NFT
   async approve(params: ERC721ApprovalParams): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('approve', [params.to, params.tokenId])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'approve',
+        args: [params.to, params.tokenId],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('approve', [params.to, params.tokenId], gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -244,11 +295,28 @@ export class ERC721Service {
   // 设置全部授权
   async setApprovalForAll(operator: string, approved: boolean): Promise<ContractCallResult<string>> {
     try {
-      const hash = await this.writeContract('setApprovalForAll', [operator, approved])
+      // 预估 gas
+      const { request } = await simulateContract(wagmiConfig, {
+        address: this.address as `0x${string}`,
+        abi: this.abi,
+        functionName: 'setApprovalForAll',
+        args: [operator, approved],
+        chainId: this.chainId as any,
+      })
+      const gas = request.gas
+      
+      const hash = await this.writeContract('setApprovalForAll', [operator, approved], gas)
+      
+      // 等待交易完成
+      const receipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: hash as `0x${string}`,
+      })
+      
       return {
         success: true,
         data: hash,
         transactionHash: hash,
+        receipt,
       }
     } catch (error) {
       return {
@@ -287,12 +355,14 @@ export class ERC721Service {
   }
 
   // 写入合约方法
-  private async writeContract(functionName: string, args: any[]) {
+  private async writeContract(functionName: string, args: any[], gas?: bigint) {
     return writeContract(wagmiConfig, {
       address: this.address as `0x${string}`,
       abi: this.abi,
       functionName,
       args,
+      gas,
+      chainId: this.chainId as any,
     })
   }
 }
