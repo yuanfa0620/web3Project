@@ -381,6 +381,7 @@ const NFTMarketplacePage: React.FC = () => {
         <PurchaseModal
           nft={selectedNFT}
           onCancel={() => setSelectedNFT(null)}
+          onPurchaseSuccess={fetchActiveOrders}
           t={t}
           getRarityColor={getRarityColor}
         />

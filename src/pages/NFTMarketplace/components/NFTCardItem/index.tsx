@@ -59,7 +59,7 @@ export const NFTCardItem: React.FC<NFTCardItemProps> = ({
         <div className={styles.priceRow}>
           <span className={styles.priceLabel}>{t('nftMarketplace.price')}</span>
           <div className={styles.priceValue}>
-            <AnimatedNumber value={nft.price} decimals={2} enableAnimation />
+            <AnimatedNumber value={nft.price} decimals={6} enableAnimation />
             <span className={styles.priceUnit}> {nft.priceUnit}</span>
           </div>
         </div>
