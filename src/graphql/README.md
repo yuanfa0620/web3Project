@@ -203,4 +203,3 @@ const events = await graphqlApi.getPriceSetEvents({ ... })
 3. 价格以 wei 为单位（BigInt 字符串）
 4. 所有时间戳以秒为单位
 5. 分页列表的 `total` 可能不准确，建议使用 `hasMore` 判断是否有更多数据
-
